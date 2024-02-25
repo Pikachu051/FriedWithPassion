@@ -71,7 +71,9 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
         // header("Location: somewhere.php"); // uncomment and change to appropriate page later
         // exit();
     } else {
-        echo "<script>" . "alert('Wrong username or password')" . "</script>";
+        echo "<div class=\"alert alert-danger\" role=\"alert\">
+        ชื่อบัญชีผู้ใช้หรือรหัสผ่านที่คุณกรอกเข้ามาผิด! โปรดตรวจสอบแล้วลองใหม่อีกครั้ง
+      </div>";
     }
 }
 ?>
