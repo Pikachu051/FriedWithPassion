@@ -23,7 +23,7 @@
                 </div>
             </form>
         </div>
-        <p id="time" class="text-center font-medium"></p>
+        <p id="time" class="relative top-[20%] text-center font-medium"></p>
     </div>
     <div class="w-50 h-[100vh]">
         <img class="object-cover w-[100%] h-[100vh]" src="./public/login.png">
