@@ -42,3 +42,36 @@
     setInterval(refreshTime, 1000);
 </script>
 </html>
+
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "fwp_project"; // change to your db
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+if (isset($_POST["username"]) && isset($_POST["password"])) {
+    $user = $_POST['username'];
+    $pass = $_POST['password'];
+
+    $checksql = "SELECT * FROM accounts WHERE username = '$user' AND pass = '$pass';";
+    $result = mysqli_query($conn, $checksql);
+
+    if (mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_assoc($result);
+        $emp_id = $row['emp_id'];
+
+        $fnsql = "SELECT first_name, position FROM employees WHERE emp_id = $emp_id;";
+        $getfn = mysqli_query($conn, $fnsql);
+        $row = mysqli_fetch_assoc($getfn);
+        echo "<script>alert('Welcome, " . $row['position'] . " " . $row['first_name'] . "');</script>"; // delete later
+        // header("Location: somewhere.php"); // uncomment and change to appropriate page later
+        // exit();
+    } else {
+        echo "<script>" . "alert('Wrong username or password')" . "</script>";
+    }
+}
+?>
