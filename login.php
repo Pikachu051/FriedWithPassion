@@ -10,8 +10,8 @@
 </head>
 <body class="flex">
     <div class="w-50 bg-orange-300 h-[100vh]">
-        <h1 class="text-bold mt-3 ml-5">FWP: Authentication</h1>
-        <div class="relative bg-orange-200 m-5 rounded-lg shadow-2xl">
+        <h1 class="font-bold mt-3 ml-5">FWP<p class="text-2xl">: Authentication</p></h1>
+        <div class="relative top-[11.5%] bg-orange-200 m-5 rounded-lg shadow-2xl border-1 border-orange-400">
             <h2 class="text-center font-bold text-2xl pt-5 pl-5 pr-5">เข้าสู่ระบบ</h2>
             <form action="login.php" class="p-5" method="post">
                 <label>ชื่อผู้ใช้</label>
@@ -26,7 +26,7 @@
         <p id="time" class="text-center font-medium"></p>
     </div>
     <div class="w-50 h-[100vh]">
-        <img class="object-cover" src="./public/login.png">
+        <img class="object-cover w-[100%] h-[100vh]" src="./public/login.png">
     </div>
 
 </body>
