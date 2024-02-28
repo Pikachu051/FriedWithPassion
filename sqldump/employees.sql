@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2024 at 03:39 PM
+-- Generation Time: Feb 28, 2024 at 03:41 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,19 +42,16 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`emp_id`, `first_name`, `last_name`, `sex`, `email`, `phone`, `position`) VALUES
-(10101, 'Sarah', 'Tanner', 'F', 'STanner@fwp.com', '0814569875', 'Manager'),
-(10102, 'Joanne', 'Middleton', 'F', 'JMiddleton@fwp.com', '0937864288', 'Manager'),
-(10103, 'Conner', 'Goodwin', 'M', 'CGoodwin@fwp.com', '0867442312', 'Manager'),
-(10201, 'Isha', 'Atkins', 'F', 'IAtkins@fwp.com', '0826753421', 'Staff'),
-(10202, 'Taylor', 'White', 'M', 'TWhite@fwp.com', '0985673488', 'Staff'),
-(10203, 'Nellie', 'Newton', 'F', 'NNewton@fwp.com', '0934872126', 'Staff'),
-(10204, 'Anna', 'Sampson', 'F', 'ASampson@fwp.com', '0826643829', 'Staff'),
-(10205, 'Frank', 'Douglas', 'M', 'FDouglas@fwp.com', '0867732118', 'Staff'),
-(10206, 'Livia', 'Vincent', 'F', 'LVincent@fwp.com', '0812934856', 'Staff'),
-(10207, 'Robert ', 'Crane', 'M', 'RCrane@fwp.com', '0854723411', 'Staff'),
-(55555, 'Abcde', 'Fghijkl', 'Q', 'AF@test.com', '0801234567', 'Dummy'),
-(66666, 'Qwerty', 'Asdfg', 'W', 'QA@test.com', '0909876543', 'Dummy'),
-(77777, 'Ken', 'Klopp', 'L', 'KKlopp@test.com', '0851236789', 'Dummy');
+(10101, 'เฟเธอรีน', 'ออกัสตัส ออโรร่า', 'ญ', 'FAAurora@fwp.com', '0814569875', 'ผู้จัดการ'),
+(10102, 'ดกจา', 'คิม', 'ช', 'DKim@fwp.com', '0937864288', 'ผู้จัดการ'),
+(10103, 'แบทเลอร์', 'อุชิโระมิยะ', 'ช', 'BUshiromiya@fwp.com', '0867442312', 'ผู้จัดการ'),
+(10201, 'ดาไซ', 'โอซามุ', 'ช', 'DOsamu@fwp.com', '0826753421', 'พนักงาน'),
+(10202, 'แอร์เฌแบ็ต', 'บาโตรี', 'ญ', 'EBathori@fwp.com', '0985673488', 'พนักงาน'),
+(10203, 'ซาคุยะ', 'อิซาโยอิ', 'ญ', 'SIzayoi@fwp.com', '0934872126', 'พนักงาน'),
+(10204, 'โบรเนีย', 'รันด์', 'ญ', 'BRand@fwp.com', '0826643829', 'พนักงาน'),
+(10205, 'เกพาร์ด', 'ลันเดา', 'ช', 'GLandau@fwp.com', '0867732118', 'พนักงาน'),
+(10206, 'จุงฮยอก', 'ยู', 'ช', 'JYoo@fwp.com', '0812934856', 'พนักงาน'),
+(10207, 'โกโจ', 'ซาโตรุ', 'ช', 'GSatoru@fwp.com', '0854723411', 'พนักงาน');
 
 --
 -- Indexes for dumped tables
