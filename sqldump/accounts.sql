@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2024 at 03:41 PM
+-- Generation Time: Feb 28, 2024 at 03:44 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `accounts` (
   `username` varchar(9) NOT NULL,
-  `pass` varchar(30) DEFAULT NULL,
+  `pass` varchar(30) DEFAULT 'fwp1234',
   `emp_id` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
