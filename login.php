@@ -35,8 +35,8 @@
                     $getfn = mysqli_query($conn, $fnsql);
                     $row = mysqli_fetch_assoc($getfn);
                     echo "<script>alert('Welcome, " . $row['position'] . " " . $row['first_name'] . "');</script>"; // delete later
-                    // header("Location: admin.php"); // uncomment and change to appropriate page later
-                    // exit();
+                    header("Location: main_manager.php");
+                    exit();
                 } else {
                     echo "<div id=\"alert\" class=\"block absolute top-4 start-[16%] w-[20rem] bg-orange-100 border text-sm rounded-lg border-red-900 text-red-500\" role=\"alert\">
                     <div class=\"flex p-4\">

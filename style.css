@@ -886,6 +886,10 @@ video {
   width: 100%;
 }
 
+.w-\[100vw\] {
+  width: 100vw;
+}
+
 .flex-initial {
   flex: 0 1 auto;
 }

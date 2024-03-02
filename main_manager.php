@@ -5,10 +5,11 @@
     <title>ระบบบริหารจัดการ</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="styleheet" href="style.css">
     <style>
         * {
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Prompt', 'sans-serif';
         }
 
         body {
@@ -101,7 +102,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container w-[100vw]">
 
         <div class="main">
             <div class="left">
