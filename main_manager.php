@@ -5,7 +5,8 @@
     <title>ระบบบริหารจัดการ</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="styleheet" href="style.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <script src="script.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -102,7 +103,7 @@
 </head>
 
 <body>
-    <div class="container w-[100vw]">
+    <div class="container">
 
         <div class="main">
             <div class="left">
@@ -115,7 +116,8 @@
             </div>
             <div class="content">
                 <h1>ยินดีต้อนรับ</h1>
-                <h2>วันนี้วันที่ 23 กุมภาพันธ์ 2567 12:03:25</h2>
+                <h3 id="date"></h3>
+                <p id="clock"></p>
                 <div class="inside">
                     <div class="sub_left">
                         <h2>ยอดขาย ณ เวลานี้</h2>
@@ -136,6 +138,35 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        function getClock(){
+            var date = new Date();
+            var hours = date.getHours();
+            var minutes = date.getMinutes();
+            var seconds = date.getSeconds();
+
+            if (hours < 10) {
+                hours = "0" + hours;
+            }
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+            if (seconds < 10) {
+                seconds = "0" + seconds;
+            }
+
+            var time = hours + ":" + minutes + ":" + seconds;
+            document.getElementById("clock").innerHTML = time;
+
+            var day = date.getDate();
+
+            var monthNames = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+            var month = monthNames[date.getMonth()];
+            var year = date.getFullYear();
+            var formattedDate = "วันนี้วันที่ " + day + " " + month + " " + year;
+            document.getElementById("date").innerHTML = formattedDate;
+            
+        }
+        setInterval(getClock, 1000);
         // สร้างข้อมูลตัวอย่างสำหรับกราฟ
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
