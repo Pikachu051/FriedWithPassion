@@ -86,7 +86,13 @@
             justify-content: center;
             align-items: left;
         }
-        .inside{
+        .time{
+            
+            display: flex;
+            flex-direction:row;
+        }
+
+        .inside {
             padding: 0;
             flex: 1;
             display: flex;
@@ -116,8 +122,10 @@
             </div>
             <div class="content">
                 <h1>ยินดีต้อนรับ</h1>
-                <h3 id="date"></h3>
-                <p id="clock"></p>
+                <div class="time">
+                    <h3 id="date" style="margin-right: 15px;"></h3>
+                    <p id="clock"></p>
+                </div>
                 <div class="inside">
                     <div class="sub_left">
                         <h2>ยอดขาย ณ เวลานี้</h2>
@@ -138,7 +146,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        function getClock(){
+        function getClock() {
             var date = new Date();
             var hours = date.getHours();
             var minutes = date.getMinutes();
@@ -164,7 +172,7 @@
             var year = date.getFullYear();
             var formattedDate = "วันนี้วันที่ " + day + " " + month + " " + year;
             document.getElementById("date").innerHTML = formattedDate;
-            
+
         }
         setInterval(getClock, 1000);
         // สร้างข้อมูลตัวอย่างสำหรับกราฟ
