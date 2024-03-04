@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title></title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
         body {
+            font-family: 'Prompt', sans-serif;
             background-color: #FFECD9;
         }
         .main{
@@ -22,6 +25,8 @@
             grid-gap: 60px;
             justify-content: center;
             padding: 20px;
+            margin-left: 50%;
+            margin-right: 50%;
         }
 
         .column1 {
@@ -38,12 +43,14 @@
         }
 
         .rectangle {
-            width: 200px;
-            height: 100px;
+            width: 190px;
+            height: 75px;
             background-color: #FFB871;
             justify-content: center;
             /* Initial color */
             cursor: pointer;
+            border-radius: 5px;
+            filter: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
         }
 
         .circle {
@@ -54,6 +61,11 @@
             border-radius: 50%;
             cursor: pointer;
             margin-left: 20px;
+            transition: all 0.3s;
+            filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+        }
+        h3{
+            text-align: center;
         }
     </style>
 </head>
@@ -61,37 +73,37 @@
 <body>
     <div>
         <div class="main">
-            <h1 style="margin: 0; font-size: 70px; text-decoration: underline;">สถานะโต๊ะ</h1>
+            <h2 style="margin: 0; font-size: 44px;">สถานะโต๊ะ</h2>
         </div>
         <div class="table1">
             <div class="column1">
                 <div class="shape-container">
                     <div class="rectangle" id="rectangle1" onclick="changeColor('circle1')">
-                        <h1>โต๊ะ1</h1>
+                        <h3>โต๊ะ 1</h3>
                     </div>
                     <div class="circle" id="circle1"></div>
                 </div>
                 <div class="shape-container">
                     <div class="rectangle" id="rectangle2" onclick="changeColor('circle2')">
-                        <h1>โต๊ะ2</h1>
+                        <h3>โต๊ะ 2</h3>
                     </div>
                     <div class="circle" id="circle2"></div>
                 </div>
                 <div class="shape-container">
                     <div class="rectangle" id="rectangle3" onclick="changeColor('circle3')">
-                        <h1>โต๊ะ3</h1>
+                        <h3>โต๊ะ 3</h3>
                     </div>
                     <div class="circle" id="circle3"></div>
                 </div>
                 <div class="shape-container">
                     <div class="rectangle" id="rectangle4" onclick="changeColor('circle4')">
-                        <h1>โต๊ะ4</h1>
+                        <h3>โต๊ะ 4</h3>
                     </div>
                     <div class="circle" id="circle4"></div>
                 </div>
                 <div class="shape-container">
                     <div class="rectangle" id="rectangle5" onclick="changeColor('circle5')">
-                        <h1>โต๊ะ5</h1>
+                        <h3>โต๊ะ 5</h3>
                     </div>
                     <div class="circle" id="circle5"></div>
                 </div>
@@ -99,31 +111,31 @@
             <div class="column1">
                 <div class="shape-container">
                     <div class="rectangle" id="rectangle6" onclick="changeColor('circle6')">
-                        <h1>โต๊ะ6</h1>
+                        <h3>โต๊ะ 6</h3>
                     </div>
                     <div class="circle" id="circle6"></div>
                 </div>
                 <div class="shape-container">
                     <div class="rectangle" id="rectangle7" onclick="changeColor('circle7')">
-                        <h1>โต๊ะ7</h1>
+                        <h3>โต๊ะ 7</h3>
                     </div>
                     <div class="circle" id="circle7"></div>
                 </div>
                 <div class="shape-container">
                     <div class="rectangle" id="rectangle8" onclick="changeColor('circle8')">
-                        <h1>โต๊ะ8</h1>
+                        <h3>โต๊ะ 8</h3>
                     </div>
                     <div class="circle" id="circle8"></div>
                 </div>
                 <div class="shape-container">
                     <div class="rectangle" id="rectangle9" onclick="changeColor('circle9')">
-                        <h1>โต๊ะ9</h1>
+                        <h3>โต๊ะ 9</h3>
                     </div>
                     <div class="circle" id="circle9"></div>
                 </div>
                 <div class="shape-container">
                     <div class="rectangle" id="rectangle10" onclick="changeColor('circle10')">
-                        <h1>โต๊ะ10</h1>
+                        <h3>โต๊ะ 10</h3>
                     </div>
                     <div class="circle" id="circle10"></div>
                 </div>
@@ -132,35 +144,35 @@
                 <div class="shape-container">
                     <div class="rectangle" id="rectangle11" style="background-color: #833F00;"
                         onclick="changeColor('circle11')">
-                        <h1 style="-webkit-text-fill-color: rgb(255, 255, 255);">โต๊ะ11</h1>
+                        <h3 style="-webkit-text-fill-color: rgb(255, 255, 255);">โต๊ะ 11</h3>
                     </div>
                     <div class="circle" id="circle11"></div>
                 </div>
                 <div class="shape-container">
                     <div class="rectangle" id="rectangle12" style="background-color: #833F00;"
                         onclick="changeColor('circle12')">
-                        <h1 style="-webkit-text-fill-color: rgb(255, 255, 255);">โต๊ะ12</h1>
+                        <h3 style="-webkit-text-fill-color: rgb(255, 255, 255);">โต๊ะ 12</h3>
                     </div>
                     <div class="circle" id="circle12"></div>
                 </div>
                 <div class="shape-container">
                     <div class="rectangle" id="rectangle13" style="background-color: #833F00;"
                         onclick="changeColor('circle13')">
-                        <h1 style="-webkit-text-fill-color: rgb(255, 255, 255);">โต๊ะ13</h1>
+                        <h3 style="-webkit-text-fill-color: rgb(255, 255, 255);">โต๊ะ 13</h3>
                     </div>
                     <div class="circle" id="circle13"></div>
                 </div>
                 <div class="shape-container">
                     <div class="rectangle" id="rectangle14" style="background-color: #833F00;"
                         onclick="changeColor('circle14')">
-                        <h1 style="-webkit-text-fill-color: rgb(255, 255, 255);">โต๊ะ14</h1>
+                        <h3 style="-webkit-text-fill-color: rgb(255, 255, 255);">โต๊ะ 14</h3>
                     </div>
                     <div class="circle" id="circle14"></div>
                 </div>
                 <div class="shape-container">
                     <div class="rectangle" id="rectangle15" style="background-color: #833F00;"
                         onclick="changeColor('circle15')">
-                        <h1 style="-webkit-text-fill-color: rgb(255, 255, 255);">โต๊ะ15</h1>
+                        <h3 style="-webkit-text-fill-color: rgb(255, 255, 255);">โต๊ะ 15</h3>
                     </div>
                     <div class="circle" id="circle15"></div>
                 </div>
