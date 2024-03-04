@@ -11,16 +11,16 @@
     <script src="./node_modules/preline/dist/preline.js"></script>
 </head>
 
-<body class="flex">
-    <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "fwp_project"; // change to your db
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
+<body class="flex prompt">
+<?php
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $dbname = "fwp_project"; // change to your db
+  $conn = mysqli_connect($servername, $username, $password, $dbname);
+  if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+  }
 
     if (isset($_POST["username"]) && isset($_POST["password"])) { // main login verification function
         $user = $_POST['username'];
