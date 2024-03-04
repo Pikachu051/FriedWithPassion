@@ -9,7 +9,7 @@
     <script src="script.js"></script>
     <script src="./node_modules/preline/dist/preline.js"></script>
 </head>
-<body class="flex">
+<body class="flex prompt">
 <?php
             $servername = "localhost";
             $username = "root";

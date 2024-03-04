@@ -8,6 +8,7 @@
     <!-- <link rel="stylesheet" href="style.css"> -->
     <script src="script.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
         * {
             box-sizing: border-box;
             font-family: 'Prompt', 'sans-serif';
@@ -39,9 +40,14 @@
 
         .sub_left {
             text-align: center;
+            margin-top: 20px;
+            margin-left: 25px;
             padding: 20px;
             flex: 1;
             width: 50%;
+            height: 80%;
+            background-color: rgb(253 186 116);
+            border-radius: 10px;
         }
 
         .graph {
@@ -54,6 +60,12 @@
             text-align: center;
             padding: 20px;
             width: 40%;
+            height: 80%;
+            background-color: rgb(253 186 116);
+            border-radius: 10px;
+            margin-top: 20px;
+            margin-left: 5%;
+            margin-right: 2%;
         }
 
         .menu {
@@ -62,7 +74,7 @@
             margin-top: 20px;
         }
 
-        button {
+        input {
             margin: 5px 0;
             padding: 10px;
             width: 100%;
@@ -73,7 +85,7 @@
             border-radius: 5px;
         }
 
-        button:hover {
+        input:hover {
             background-color: #FF774D;
         }
 
@@ -105,6 +117,15 @@
         h2 {
             margin-top: 0;
         }
+        #logout{
+            background-color: rgb(239 68 68);
+            transitions: all 0.5s;
+        }
+        #logout:hover{
+            background-color: rgb(239 68 68 / 85%);
+            transitions: all 0.5s;
+        }
+        
     </style>
 </head>
 
@@ -115,16 +136,17 @@
             <div class="left">
                 <h2>ชื่อผู้ใช้</h2>
                 <p>ผู้จัดการ</p>
-                <button>จัดการบัญชีผู้ใช้</button>
-                <button>สรุปยอดขาย</button>
-                <button>จัดการเมนู</button>
-                <button>ออกจากระบบ</button>
+                <form method="post">
+                    <input type="submit" name="usermng" value="จัดการบัญชีผู้ใช้">
+                    <input type="submit" name="report" value="สรุปยอดขาย">
+                    <input type="submit" name="menumng" value="จัดการเมนู">
+                    <input type="submit" name="logout" value="ออกจากระบบ" id="logout">
+                </form>
             </div>
             <div class="content">
                 <h1>ยินดีต้อนรับ</h1>
                 <div class="time">
-                    <h3 id="date" style="margin-right: 15px;"></h3>
-                    <p id="clock"></p>
+                    <h3 id="date"></h3>
                 </div>
                 <div class="inside">
                     <div class="sub_left">
@@ -163,7 +185,6 @@
             }
 
             var time = hours + ":" + minutes + ":" + seconds;
-            document.getElementById("clock").innerHTML = time;
 
             var day = date.getDate();
 
@@ -171,7 +192,7 @@
             var month = monthNames[date.getMonth()];
             var year = date.getFullYear();
             var formattedDate = "วันนี้วันที่ " + day + " " + month + " " + year;
-            document.getElementById("date").innerHTML = formattedDate;
+            document.getElementById("date").innerHTML = formattedDate + " เวลา " + time;
 
         }
         setInterval(getClock, 1000);
@@ -180,7 +201,7 @@
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม'],
                 datasets: [{
                     label: 'ยอดขาย',
                     data: [12, 19, 3, 5, 2, 3, 9],
