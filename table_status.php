@@ -56,13 +56,13 @@
         .circle {
             width: 50px;
             height: 50px;
-            background-color: #007528;
+            background-color: rgb(0, 177, 0);
             /* Initial color */
             border-radius: 50%;
             cursor: pointer;
             margin-left: 20px;
             transition: all 0.3s;
-            filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+            box-shadow: 0 0 5px 5px #00bf46;/* inner white */
         }
         h3{
             text-align: center;
@@ -73,6 +73,7 @@
 <body>
     <div>
         <div class="main">
+
             <h2 style="margin: 0; font-size: 44px;">สถานะโต๊ะ</h2>
         </div>
         <div class="table1">
@@ -188,10 +189,12 @@
                 var currentColor = shape.style.backgroundColor;
 
                 // Change color of the shape
-                if (currentColor === 'rgb(0, 128, 0)' || currentColor === '') {
-                    shape.style.backgroundColor = 'red';
+                if (currentColor === 'rgb(0, 177, 0)' || currentColor === '') {
+                    shape.style.backgroundColor = 'rgb(230, 0, 0)';
+                    shape.style.boxShadow = 'rgb(255, 0, 0) 0px 0px 5px 5px';
                 } else {
-                    shape.style.backgroundColor = 'rgb(0, 128, 0)';
+                    shape.style.backgroundColor = 'rgb(0, 177, 0)';
+                    shape.style.boxShadow = 'rgb(0, 191, 70) 0px 0px 5px 5px';      
                 }
             }
         }
