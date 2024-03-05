@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>FriedWithPassion: Table Status</title>
+    <link rel="stylesheet" href="style.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
@@ -24,7 +25,7 @@
             grid-template-columns: repeat(3, 1fr);
             grid-gap: 60px;
             justify-content: center;
-            padding: 20px;
+            padding: 0px;
             margin-left: 50%;
             margin-right: 50%;
         }
@@ -64,16 +65,58 @@
             transition: all 0.3s;
             box-shadow: 0 0 5px 5px #00bf46;/* inner white */
         }
-        h3{
+        h2{
+            font-weight: 700;
+        }
+        h2, h3{
             text-align: center;
+        }
+        h3{
+            font-weight: 500;
+            margin: 18px;
+        }
+        @media screen and (max-width: 650px){
+            .table1 {
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 20px;
+            }
+            .rectangle {
+                width: 150px;
+                height: 60px;
+            }
+            .circle {
+                width: 40px; 
+                height: 40px;
+            }
+            
         }
     </style>
 </head>
 
 <body>
+<header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-orange-300 text-sm py-4">
+  <nav class="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between" aria-label="Global">
+    <div class="flex items-center justify-between">
+      <a class="flex-none text-xl font-semibold" href="#">FriedWithPassion</a>
+      <div class="sm:hidden">
+        <button type="button" onclick="menu()" class="p-2 inline-flex justify-center items-center gap-x-2 rounded-lg border border-orange-200 bg-orange-100 text-gray-800 shadow-sm hover:bg-orange-50 disabled:opacity-50 disabled:pointer-events-none" aria-label="Toggle navigation">
+          <svg id="icon_open" class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+          <svg id="icon_close" class="hidden flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="collapse" class="hidden overflow-hidden transition-all duration-300 basis-full grow sm:block">
+      <div class="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
+        <a class="font-medium text-gray-800 hover:text-gray-400" href="main_staff.php">หน้าหลัก</a>
+        <a class="font-medium text-orange-600" href="#" aria-current="page">สถานะโต๊ะ</a>
+        <a class="font-medium text-gray-800 hover:text-gray-400" href="queue.php">คิวอาหาร</a>
+        <a class="font-medium text-gray-800 hover:text-gray-400" href="menu_status.php">สถานะเมนู</a>
+      </div>
+    </div>
+  </nav>
+</header>
     <div>
         <div class="main">
-
             <h2 style="margin: 0; font-size: 44px;">สถานะโต๊ะ</h2>
         </div>
         <div class="table1">
@@ -181,6 +224,20 @@
         </div>
     </div>
     <script>
+        function menu() {
+        var x = document.getElementById("collapse");
+        var y = document.getElementById("icon_open");
+        var z = document.getElementById("icon_close");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            y.style.display = "none";
+            z.style.display = "block";
+        } else {
+            x.style.display = "none";
+            y.style.display = "block";
+            z.style.display = "none";
+        }
+        }
         function changeColor(id) {
             var shape = document.getElementById(id);
 
