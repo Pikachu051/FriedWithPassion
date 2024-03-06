@@ -55,8 +55,8 @@
         }
 
         .circle {
-            width: 50px;
-            height: 50px;
+            width: 22px;
+            height: 22px;
             background-color: rgb(0, 177, 0);
             /* Initial color */
             border-radius: 50%;
@@ -67,8 +67,7 @@
         }
         h2{
             font-weight: 700;
-            font-size: 40
-            px;
+            font-size: 38px;
         }
         h2, h3{
             text-align: center;
@@ -87,8 +86,8 @@
                 height: 60px;
             }
             .circle {
-                width: 40px; 
-                height: 40px;
+                width: 15px; 
+                height: 15px;
             }
             h3{
                 font-weight: 500;
