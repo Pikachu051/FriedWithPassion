@@ -2,10 +2,10 @@
 session_start();
 
 if (isset($_SESSION['mngLoggedin']) && $_SESSION['mngLoggedin'] === true) {
-    header("Refresh: 1; URL = main_manager.php");
+    header("Location: main_manager.php");
     exit();
 } else if (isset($_SESSION['stfLoggedin']) && $_SESSION["stfLoggedin"] === true) {
-    header("Refresh: 1; URL = main_staff.php");
+    header("Location: main_staff.php");
     exit;
 }
 ?>

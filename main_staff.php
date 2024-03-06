@@ -1,3 +1,7 @@
+<?php
+require '_stfStart.php'; // !! ใส่ทุกหน้าของพนักงาน !!
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +37,7 @@
 </header>
 <div>
     <div class="m-11">
-        <h1 class="font-black text-3xl">ยินดีต้อนรับ, คุณ</h1>
+        <h1 class="font-black text-3xl" id="welcome"></h1>
         <h4 class="font-bold text-xl" id="date"></h4>
     </div>
     <div class="m-12 mx-24">
@@ -109,6 +113,8 @@
 </div>
 </body>
 <script>
+    var fname = "<?php echo $_SESSION['user']; ?>";
+    document.getElementById('welcome').innerHTML = "ยินดีต้อนรับ พนักงาน" + fname;
     function menu() {
         var x = document.getElementById("collapse");
         var y = document.getElementById("icon_open");

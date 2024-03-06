@@ -1,3 +1,7 @@
+<?php 
+require '_mngStart.php';  // !! ใส่ทุกหน้าของผู้จัดการ !!
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +13,7 @@
     <script src="script.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
         * {
             box-sizing: border-box;
             font-family: 'Prompt', 'sans-serif';
@@ -98,10 +103,11 @@
             justify-content: center;
             align-items: left;
         }
-        .time{
-            
+
+        .time {
+
             display: flex;
-            flex-direction:row;
+            flex-direction: row;
         }
 
         .inside {
@@ -117,15 +123,16 @@
         h2 {
             margin-top: 0;
         }
-        #logout{
+
+        #logout {
             background-color: rgb(239 68 68);
             transitions: all 0.5s;
         }
-        #logout:hover{
+
+        #logout:hover {
             background-color: rgb(239 68 68 / 85%);
             transitions: all 0.5s;
         }
-        
     </style>
 </head>
 
@@ -135,12 +142,13 @@
         <div class="main">
             <div class="left">
                 <h2>ชื่อผู้ใช้</h2>
-                <p>ผู้จัดการ</p>
+                <p id="welcome"></p>
                 <form method="post">
                     <input type="submit" name="usermng" value="จัดการบัญชีผู้ใช้">
                     <input type="submit" name="report" value="สรุปยอดขาย">
                     <input type="submit" name="menumng" value="จัดการเมนู">
                     <input type="submit" name="logout" value="ออกจากระบบ" id="logout">
+                    <a href="logout.php">Logout</a> <!-- แก้เอา ไม่รู้ -->
                 </form>
             </div>
             <div class="content">
@@ -168,6 +176,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        var fname = "<?php echo $_SESSION['user']; ?>";
+        document.getElementById('welcome').innerHTML = "ผู้จัดการ" + fname;
         function getClock() {
             var date = new Date();
             var hours = date.getHours();
