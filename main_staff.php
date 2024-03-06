@@ -37,26 +37,29 @@
         <div class="grid border rounded-xl shadow-sm divide-y overflow-hidden sm:flex sm:divide-y-0 sm:divide-x">
             <a href="table_status.php">
             <div class="flex flex-col flex-[1_0_0%] bg-white hover:drop-shadow-2xl hover:bg-orange-200 transition-all">
-                <img class="w-full h-auto rounded-t-xl sm:rounded-se-none" src="https://images.unsplash.com/photo-1680868543815-b8666dba60f7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2532&q=80" alt="Image Description">
+                <img class="w-full h-auto rounded-t-xl sm:rounded-se-none" src="public/table.jpg" alt="Image Description">
                 <div class="p-4 flex-1 md:p-5">
                 <h3 class="text-lg font-bold text-gray-800">
                     สถานะโต๊ะ
                 </h3>
                 <p class="mt-1 text-gray-500">
                     โต๊ะว่าง: 5 โต๊ะ
+                </p>
+                <p class="text-gray-500">
                     โต๊ะไม่ว่าง: 10 โต๊ะ
                 </p>
                 </div>
-                <div class="p-4 border-t sm:px-5">
-                <p class="text-xs text-gray-500 ">
-                    อัพเดทล่าสุดเมื่อ 5 นาทีก่อน
+                <div class="flex p-4 border-t sm:px-5">
+                <p id="lastupdate1" class="text-xs text-gray-500 ">
+                    อัพเดทล่าสุดเมื่อ เดี๋ยวนี้
                 </p>
+                <span id="indicator1" class="animate-pulse mx-3 my-0 flex w-3 h-3 me-3 bg-green-500 rounded-full"></span>
                 </div>
             </div>
             </a>
             <a href="queue.php">
             <div class="flex flex-col flex-[1_0_0%] bg-white hover:drop-shadow-2xl hover:bg-orange-200 transition-all">
-                <img class="w-full h-auto" src="https://images.unsplash.com/photo-1680868543815-b8666dba60f7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2532&q=80" alt="Image Description">
+                <img class="w-full h-auto" src="public/queue.jpg" alt="Image Description">
                 <div class="p-4 flex-1 md:p-5">
                 <h3 class="text-lg font-bold text-gray-800">
                     คิวอาหาร
@@ -64,17 +67,21 @@
                 <p class="mt-1 text-gray-500">
                     คิวอาหารทั้งหมดในตอนนี้: 10 คิว
                 </p>
-                </div>
-                <div class="p-4 border-t sm:px-5">
-                <p class="text-xs text-gray-500">
-                    อัพเดทล่าสุดเมื่อ 5 นาทีก่อน
+                <p class="text-gray-500">
+                    คิวที่ช้ามาก: 3 คิว
                 </p>
+                </div>
+                <div class="flex p-4 border-t sm:px-5">
+                <p id="lastupdate2" class="text-xs text-gray-500">
+                    อัพเดทล่าสุดเมื่อ เดี๋ยวนี้
+                </p>
+                <span id="indicator2" class="animate-pulse mx-3 my-0 flex w-3 h-3 me-3 bg-green-500 rounded-full"></span>
                 </div>
             </div> 
             </a>
             <a href="menu_status.php">
             <div class="flex flex-col flex-[1_0_0%] bg-white hover:drop-shadow-2xl hover:bg-orange-200 transition-all">
-                <img class="w-full h-auto sm:rounded-se-xl" src="https://images.unsplash.com/photo-1680868543815-b8666dba60f7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2532&q=80" alt="Image Description">
+                <img class="w-full h-auto sm:rounded-se-xl" src="public/stock.jpg" alt="Image Description">
                 <div class="p-4 flex-1 md:p-5">
                 <h3 class="text-lg font-bold text-gray-800">
                     สถานะเมนู
@@ -82,11 +89,15 @@
                 <p class="mt-1 text-gray-500">
                     เมนูที่เหลืออยู่: 12 เมนู
                 </p>
-                </div>
-                <div class="p-4 border-t sm:px-5">
-                <p class="text-xs text-gray-500">
-                    อัพเดทล่าสุดเมื่อ 5 นาทีก่อน
+                <p class="text-gray-500">
+                    เมนูที่ใกล้หมด: 5 เมนู
                 </p>
+                </div>
+                <div class="flex p-4 border-t sm:px-5">
+                <p id="lastupdate3" class="text-xs text-gray-500">
+                    อัพเดทล่าสุดเมื่อ เดี๋ยวนี้
+                </p>
+                <span id="indicator3" class="animate-pulse mx-3 my-0 flex w-3 h-3 me-3 bg-green-500 rounded-full"></span>
                 </div>
             </div>
             </a>
@@ -109,7 +120,27 @@
             z.style.display = "none";
         }
     }
+    var lastUpdate = Math.floor(new Date().getTime() / 1000);
+    console.log(lastUpdate);
     function getClock() {
+        var now = Math.floor(new Date().getTime() / 1000);
+        var distance = now - lastUpdate;
+        if (distance % 60 === 0) {
+            document.getElementById("lastupdate1").innerHTML = "อัพเดทล่าสุดเมื่อ " + distance / 60 + " นาทีก่อน";
+            document.getElementById("lastupdate2").innerHTML = "อัพเดทล่าสุดเมื่อ " + distance / 60 + " นาทีก่อน";
+            document.getElementById("lastupdate3").innerHTML = "อัพเดทล่าสุดเมื่อ " + distance / 60 + " นาทีก่อน";
+            if (distance % 3600 === 0) {
+                document.getElementById("lastupdate1").innerHTML = "อัพเดทล่าสุดเมื่อ " + distance / 3600 + " ชั่วโมงก่อน";
+                document.getElementById("lastupdate2").innerHTML = "อัพเดทล่าสุดเมื่อ " + distance / 3600 + " ชั่วโมงก่อน";
+                document.getElementById("lastupdate3").innerHTML = "อัพเดทล่าสุดเมื่อ " + distance / 3600 + " ชั่วโมงก่อน";
+            }
+        }
+        if (distance > 120) {
+            document.getElementById("indicator1").style.backgroundColor = "rgb(234 179 8)";
+            document.getElementById("indicator2").style.backgroundColor = "rgb(234 179 8)";
+            document.getElementById("indicator3").style.backgroundColor = "rgb(234 179 8)";
+        }
+
         var date = new Date();
         var hours = date.getHours();
         var minutes = date.getMinutes();

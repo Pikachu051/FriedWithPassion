@@ -73,7 +73,7 @@
         }
         h3{
             font-weight: 500;
-            margin: 18px;
+            margin: 24px;
         }
         @media screen and (max-width: 650px){
             .table1 {
@@ -88,7 +88,10 @@
                 width: 40px; 
                 height: 40px;
             }
-            
+            h3{
+                font-weight: 500;
+                margin: 18px;
+            }
         }
     </style>
 </head>
