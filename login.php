@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if (isset($_SESSION['mngLoggedin']) && $_SESSION['mngLoggedin'] === true) {
+    header("Refresh: 1; URL = main_manager.php");
+    exit();
+} else if (isset($_SESSION['stfLoggedin']) && $_SESSION["stfLoggedin"] === true) {
+    header("Refresh: 1; URL = main_staff.php");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,15 +24,15 @@
 </head>
 
 <body class="flex prompt">
-<?php
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $dbname = "fwp_project"; // change to your db
-  $conn = mysqli_connect($servername, $username, $password, $dbname);
-  if (!$conn) {
-      die("Connection failed: " . mysqli_connect_error());
-  }
+    <?php
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "fwp_project"; // change to your db
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
 
     if (isset($_POST["username"]) && isset($_POST["password"])) { // main login verification function
         $user = $_POST['username'];
@@ -28,20 +40,27 @@
 
         $getPw = "SELECT pass FROM accounts WHERE username = '$user';";
         $getPos = "SELECT position FROM employees JOIN accounts USING (emp_id) WHERE username = '$user';";
+        $getFn = "SELECT first_name FROM employees JOIN accounts USING (emp_id) WHERE username = '$user';";
         $pwResult = mysqli_query($conn, $getPw);
-        $posResult = mysqli_query( $conn, $getPos);
+        $posResult = mysqli_query($conn, $getPos);
+        $fnResult = mysqli_query($conn, $getFn);
 
         if ($pwResult && mysqli_num_rows($pwResult) == 1) {
             $pwRow = mysqli_fetch_assoc($pwResult);
             $hashed_password = $pwRow['pass'];
             $posRow = mysqli_fetch_assoc($posResult);
             $position = $posRow['position'];
+            $fnRow = mysqli_fetch_assoc($fnResult);
+            $fname = $fnRow['first_name'];
 
             if (password_verify($pass, $hashed_password) && $position == 'ผู้จัดการ') { // for manager
+                $_SESSION['mngLoggedin'] = true;
+                $_SESSION['user'] = $fname;
                 header("Location: main_manager.php");
                 exit();
-            }
-            else if (password_verify($pass, $hashed_password) && $position == "พนักงาน") { // for staff
+            } else if (password_verify($pass, $hashed_password) && $position == "พนักงาน") { // for staff
+                $_SESSION['stfLoggedin'] = true;
+                $_SESSION['user'] = $fname;
                 header("Location: main_staff.php");  // change to actual staff page
                 exit();
             }
