@@ -118,6 +118,9 @@
         <a class="font-medium text-orange-600" href="#" aria-current="page">สถานะโต๊ะ</a>
         <a class="font-medium text-gray-800 hover:text-gray-400" href="queue.php">คิวอาหาร</a>
         <a class="font-medium text-gray-800 hover:text-gray-400" href="menu_status.php">สถานะเมนู</a>
+        <form action="logout.php" method="post">
+            <input type="submit" value="ออกจากระบบ" class="font-medium text-gray-800 hover:text-gray-400 hover:cursor-pointer">
+        </form>
       </div>
     </div>
   </nav>

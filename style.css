@@ -1443,6 +1443,14 @@ video {
   transform: scale(1.05) rotate(-1deg);
 }
 
+.hover\:pointer-events-auto:hover {
+  pointer-events: auto;
+}
+
+.hover\:cursor-pointer:hover {
+  cursor: pointer;
+}
+
 .hover\:bg-gray-300:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
@@ -1523,6 +1531,14 @@ video {
 
   .sm\:hidden {
     display: none;
+  }
+
+  .sm\:h-\[100vh\] {
+    height: 100vh;
+  }
+
+  .sm\:w-\[100vw\] {
+    width: 100vw;
   }
 
   .sm\:flex-row {
