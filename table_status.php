@@ -67,6 +67,8 @@
         }
         h2{
             font-weight: 700;
+            font-size: 40
+            px;
         }
         h2, h3{
             text-align: center;
@@ -91,6 +93,9 @@
             h3{
                 font-weight: 500;
                 margin: 18px;
+            }
+            h2{
+                font-size: 32px;
             }
         }
     </style>
@@ -120,7 +125,7 @@
 </header>
     <div>
         <div class="main">
-            <h2 style="margin: 0; font-size: 44px;">สถานะโต๊ะ</h2>
+            <h2 style="margin: 0;">สถานะโต๊ะ</h2>
         </div>
         <div class="table1">
             <div class="column1">

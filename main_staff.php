@@ -121,7 +121,6 @@
         }
     }
     var lastUpdate = Math.floor(new Date().getTime() / 1000);
-    console.log(lastUpdate);
     function getClock() {
         var now = Math.floor(new Date().getTime() / 1000);
         var distance = now - lastUpdate;
