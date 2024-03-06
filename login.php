@@ -6,7 +6,7 @@ if (isset($_SESSION['mngLoggedin']) && $_SESSION['mngLoggedin'] === true) {
     exit();
 } else if (isset($_SESSION['stfLoggedin']) && $_SESSION["stfLoggedin"] === true) {
     header("Location: main_staff.php");
-    exit;
+    exit();
 }
 ?>
 
