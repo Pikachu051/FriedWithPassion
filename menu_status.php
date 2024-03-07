@@ -50,7 +50,7 @@
   </header>
   <div>
     <h1 class="font-bold text-[32px] text-center mt-5 sm:text-[38px]">สถานะเมนู</h1>
-    <div class="w-[100vw] flex flex-col">
+    <div class="flex flex-col">
       <div class="overflow-x-hidden mx-auto my-4">
         <div class="p-1.5 min-w-full inline-block align-middle">
           <div class="overflow-hidden">
@@ -64,26 +64,6 @@
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-200 ">
-                <!-- ด้านล่างคือตัวอย่างการใส่ข้อมูล 1 แถว echo ให้เหมือนเป๊ะๆ ต่างกันแค่ข้อมูลด้านใน และการที่ต้องใช้ \ (Backslash) นำหน้าเครื่องหมาย " (Double-Quote) ทุกครั้ง
-            เช่น echo "<tr class=\"hover:bg-orange-200\">
-              <td class=\"px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800\"><img src=\"favicon.png\"></td>
-              <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">มื้ออาหารในวัง</td>
-              <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">ไม่มีวันหมดเพราะรวยล้นฟ้า</td>
-              <td class=\"px-6 py-4 whitespace-nowrap text-end text-sm font-medium\">
-                <button type=\"button\" class=\"inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none\">Delete</button>
-              </td>
-            </tr>";
-          
-           ถ้าไม่เอาปุ่มก็แค่ลบ th Action กับ td อันสุดท้ายออก -->
-                <!-- <tr class="hover:bg-orange-200">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><img src="favicon.png"></td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">มื้ออาหารในวัง</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">ไม่มีวันหมดเพราะรวยล้นฟ้า</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
-                    <button type="button"
-                      class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Delete</button>
-                  </td>
-                </tr> -->
                 <?php // ตรงนี้คือไฟล์เรียกข้อมูลมาใส่ตาราง
                   require "manageMenuStatus.php"
                 ?>

@@ -21,8 +21,8 @@ if ($ret->numColumns() > 0) {
                   <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">" . $row["menu_name"] . "</td>
                   <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">" . $row["stock"] . "</td>
                   <td class=\"px-6 py-4 whitespace-nowrap text-end text-sm font-medium\">
-                    <button id=\"" . $row["menu_no"] . "\" type=\"button\"
-                      class=\"inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 disabled:opacity-50 disabled:pointer-events-none\">เปลี่ยนสถานะเมนู</button>
+                  <input id=\"" . $row["menu_no"] . "\" value=\"เปลี่ยนสถานะเมนู\" name=\"sold\" type=\"submit\"
+                  class=\"inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 hover:cursor-pointer disabled:opacity-50 disabled:pointer-events-none\"></input>
                   </td>
                 </tr>";
   }
