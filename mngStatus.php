@@ -1,22 +1,29 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "fwp_project"; // change to your db
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+class MyDB extends SQLite3 {
+  function __construct() {
+     $this->open('menu.db');
+  }
 }
-$getMenu = "SELECT img_path, menu_name, stock FROM menu;";
-$result = mysqli_query($conn, $getMenu);
-while ($row = mysqli_fetch_assoc($result)) {
+
+// 2. Open Database 
+$db = new MyDB();
+if(!$db) {
+  die($db->lastErrorMsg());
+} else {
+  
+}
+$sql = "SELECT * FROM menu;";
+$ret = $db->query($sql);
+if ($ret->numColumns() > 0) {
+  while($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
     echo "<tr class=\"hover:bg-orange-200\">
-                  <td class=\"px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800\"><img src=\"" . $row["img_path"] . "\"></td>
+                  <td class=\"px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800\"><img class=\"object-cover h-[75px] w-[75px] rounded-md\" src=\"" . $row["img_path"] . "\"></td>
                   <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">" . $row["menu_name"] . "</td>
-                  <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">" . $row["stock"] . "</td>
+                  <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">" . $row["status"] . "</td>
                   <td class=\"px-6 py-4 whitespace-nowrap text-end text-sm font-medium\">
-                    <button type=\"button\"
-                      class=\"inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none\">Delete</button>
+                    <button id=\"" . $row["menu_no"] . "\" type=\"button\"
+                      class=\"inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 disabled:opacity-50 disabled:pointer-events-none\">เปลี่ยนสถานะเมนู</button>
                   </td>
                 </tr>";
+  }
 }
