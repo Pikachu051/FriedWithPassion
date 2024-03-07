@@ -79,7 +79,7 @@ require '_mngStart.php';  // !! ใส่ทุกหน้าของผู้
             margin-top: 20px;
         }
 
-        input {
+        a {
             margin: 5px 0;
             padding: 10px;
             width: 100%;
@@ -90,7 +90,7 @@ require '_mngStart.php';  // !! ใส่ทุกหน้าของผู้
             border-radius: 5px;
         }
 
-        input:hover {
+        a:hover {
             background-color: #FF774D;
         }
 
@@ -144,11 +144,10 @@ require '_mngStart.php';  // !! ใส่ทุกหน้าของผู้
                 <h2>ชื่อผู้ใช้</h2>
                 <p id="welcome"></p>
                 <form method="post">
-                    <input type="submit" name="usermng" value="จัดการบัญชีผู้ใช้">
-                    <input type="submit" name="report" value="สรุปยอดขาย">
-                    <input type="submit" name="menumng" value="จัดการเมนู">
-                    <input type="submit" name="logout" value="ออกจากระบบ" id="logout">
-                    <a href="logout.php">Logout</a> <!-- แก้เอา ไม่รู้ -->
+                    <a href="#">จัดการบัญชีผู้ใช้</a>
+                    <a href="#">สรุปยอดขาย</a>
+                    <a href="menu_manager.php">จัดการเมนู</a>
+                    <a href="logout.php" id="logout">Logout</a> <!-- แก้เอา ไม่รู้ -->
                 </form>
             </div>
             <div class="content">
