@@ -1,7 +1,7 @@
 <?php
 class MyDB extends SQLite3 {
   function __construct() {
-     $this->open('menu.db');
+     $this->open('fwp.db');
   }
 }
 
@@ -19,7 +19,7 @@ if ($ret->numColumns() > 0) {
     echo "<tr class=\"hover:bg-orange-200\">
                   <td class=\"px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800\"><img class=\"object-cover h-[75px] w-[75px] rounded-md\" src=\"" . $row["img_path"] . "\"></td>
                   <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">" . $row["menu_name"] . "</td>
-                  <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">" . $row["status"] . "</td>
+                  <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">" . $row["stock"] . "</td>
                   <td class=\"px-6 py-4 whitespace-nowrap text-end text-sm font-medium\">
                     <button id=\"" . $row["menu_no"] . "\" type=\"button\"
                       class=\"inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 disabled:opacity-50 disabled:pointer-events-none\">เปลี่ยนสถานะเมนู</button>

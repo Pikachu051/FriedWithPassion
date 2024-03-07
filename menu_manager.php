@@ -37,7 +37,7 @@
 
         if ($ret->numColumns() > 0) {
             echo "<table class='table'>";
-            echo "<thead class='thead-dark'><tr><th>Image</th><th>Menu No</th><th>Menu Name</th><th>Description</th><th>Price</th><th>Status</th></tr></thead>";
+            echo "<thead class='thead-dark'><tr><th>Image</th><th>Menu No</th><th>Menu Name</th><th>Description</th><th>Price</th><th>stock</th></tr></thead>";
             echo "<tbody>";
             while($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
                 echo "<tr>";
@@ -46,7 +46,7 @@
                 echo "<td>" . $row["menu_name"] . "</td>";
                 echo "<td>" . $row["description"] . "</td>";
                 echo "<td>" . $row["price"] . "</td>";
-                echo "<td>" . $row["status"] . "</td>";
+                echo "<td>" . $row["stock"] . "</td>";
                 echo "</tr>";
             }
             echo "</tbody></table>";
@@ -64,10 +64,10 @@
         echo "<div class='form-group'><label for='menu_name'>ชื่อเมนู:</label><input type='text' class='form-control' id='menu_name' name='menu_name' value=''></div>";
         echo "<div class='form-group'><label for='description'>รายละเอียด:</label><input type='text' class='form-control' id='description' name='description' value=''></div>";
         echo "<div class='form-group'><label for='price'>ราคา:</label><input type='text' class='form-control' id='price' name='price' value=''></div>";
-        echo "<div class='form-group'><label for='status'>สถานะ:</label><br>";
-        echo "<input type='radio' id='available' name='status' value='available' checked>";
+        echo "<div class='form-group'><label for='stock'>สถานะ:</label><br>";
+        echo "<input type='radio' id='available' name='stock' value='available' checked>";
         echo "<label for='available'>Available</label><br>";
-        echo "<input type='radio' id='sold_out' name='status' value='sold out'>";
+        echo "<input type='radio' id='sold_out' name='stock' value='sold out'>";
         echo "<label for='sold_out'>Sold Out</label>";
         echo "</div>";
         echo "<button type='submit' class='btn btn-primary' name='update'>Update</button> ";
@@ -87,10 +87,10 @@
             echo "<div class='form-group'><label for='menu_name'>ชื่อเมนู:</label><input type='text' class='form-control' id='menu_name' name='menu_name' value='". $row["menu_name"] ."'></div>";
             echo "<div class='form-group'><label for='description'>รายละเอียด:</label><input type='text' class='form-control' id='description' name='description' value='". $row["description"] ."'></div>";
             echo "<div class='form-group'><label for='price'>ราคา:</label><input type='text' class='form-control' id='price' name='price' value='". $row["price"] ."'></div>";
-            echo "<div class='form-group'><label for='status'>สถานะ:</label><br>";
-            echo "<input type='radio' id='available' name='status' value='available' ".(($row['status'] == 'available') ? 'checked' : '').">";
+            echo "<div class='form-group'><label for='stock'>สถานะ:</label><br>";
+            echo "<input type='radio' id='available' name='stock' value='available' ".(($row['stock'] == 'available') ? 'checked' : '').">";
             echo "<label for='available'>Available</label><br>";
-            echo "<input type='radio' id='sold_out' name='status' value='sold out' ".(($row['status'] == 'sold out') ? 'checked' : '').">";
+            echo "<input type='radio' id='sold_out' name='stock' value='sold out' ".(($row['stock'] == 'sold out') ? 'checked' : '').">";
             echo "<label for='sold_out'>Sold Out</label>";
             echo "</div>"; 
             echo "<button type='submit' class='btn btn-primary' name='update'>Update</button> ";
@@ -102,10 +102,10 @@
             echo "<div class='form-group'><label for='menu_name'>ชื่อเมนู:</label><input type='text' class='form-control' id='menu_name' name='menu_name' value=''></div>";
             echo "<div class='form-group'><label for='description'>รายละเอียด:</label><input type='text' class='form-control' id='description' name='description' value=''></div>";
             echo "<div class='form-group'><label for='price'>ราคา:</label><input type='text' class='form-control' id='price' name='price' value=''></div>";
-            echo "<div class='form-group'><label for='status'>สถานะ:</label><br>";
-            echo "<input type='radio' id='available' name='status' value='available' checked>";
+            echo "<div class='form-group'><label for='stock'>สถานะ:</label><br>";
+            echo "<input type='radio' id='available' name='stock' value='available' checked>";
             echo "<label for='available'>Available</label><br>";
-            echo "<input type='radio' id='sold_out' name='status' value='sold out'>";
+            echo "<input type='radio' id='sold_out' name='stock' value='sold out'>";
             echo "<label for='sold_out'>Sold Out</label>";
             echo "</div>";
             echo "<button type='submit' class='btn btn-primary' name='update'>Update</button> ";
@@ -119,9 +119,9 @@
         $menu_name = $_POST['menu_name'];
         $description = $_POST['description'];
         $price = $_POST['price'];
-        $status = $_POST['status'];
+        $stock = $_POST['stock'];
         
-        $sql = "UPDATE menu SET menu_name='$menu_name', description='$description', price='$price', status='$status' WHERE menu_no=$menu_no";
+        $sql = "UPDATE menu SET menu_name='$menu_name', description='$description', price='$price', stock='$stock' WHERE menu_no=$menu_no";
         if ($db->exec($sql)) {
             echo "<div class='alert alert-success mt-3' role='alert'>Record updated successfully</div>";
             // Refresh the page to reflect updated data
