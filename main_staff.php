@@ -10,7 +10,7 @@ require '_stfStart.php'; // !! ใส่ทุกหน้าของพนั�
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-orange-100 w-[100vw]">
+<body class="bg-orange-100 m-0 h-auto">
 <header class="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-orange-300 text-sm py-4">
   <nav class="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between" aria-label="Global">
     <div class="flex items-center justify-between">
@@ -41,7 +41,7 @@ require '_stfStart.php'; // !! ใส่ทุกหน้าของพนั�
         <h4 class="font-bold text-xl" id="date"></h4>
     </div>
     <div class="m-12 mx-24">
-        <div class="grid border rounded-xl shadow-sm divide-y overflow-hidden sm:flex sm:divide-y-0 sm:divide-x">
+        <div class=" grid border rounded-xl shadow-sm divide-y overflow-hidden sm:flex sm:divide-y-0 sm:divide-x">
             <a href="table_status.php">
             <div class="flex flex-col flex-[1_0_0%] bg-white hover:drop-shadow-2xl hover:bg-orange-200 transition-all">
                 <img class="w-full h-auto rounded-t-xl sm:rounded-se-none" src="public/table.jpg" alt="Image Description">
@@ -113,6 +113,7 @@ require '_stfStart.php'; // !! ใส่ทุกหน้าของพนั�
 </div>
 </body>
 <script>
+    document.querySelector("meta[name=viewport]").setAttribute('content', 'width=device-width, initial-scale='+(1/window.devicePixelRatio));
     var fname = "<?php echo $_SESSION['user']; ?>";
     document.getElementById('welcome').innerHTML = "ยินดีต้อนรับ พนักงาน" + fname;
     function menu() {
