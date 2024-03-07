@@ -1,3 +1,7 @@
+<?php
+    require_once "_mngStart.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

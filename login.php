@@ -81,10 +81,9 @@ if (isset($_SESSION['mngLoggedin']) && $_SESSION['mngLoggedin'] === true) {
                 </div>";
     }
     ?>
-    <div class="w-[50vw] bg-orange-300 h-[100vh]">
+    <div class="w-[100vw] bg-orange-300 h-[100vh] sm:w-[50vw] md:w-[50vw]">
         <div class=" grid grid-cols-2 gap-4 w-[100%]">
-            <h1 class="text-4xl font-bold mt-3 ml-5">FWP<p class="text-2xl">: Authentication</p>
-            </h1>
+            <img src="public/fwp-logo-color.png" class=" w-auto h-[75px] m-4" alt="logo">
             <p id="time" class="mx-4 my-3 text-right font-medium"></p>
         </div>
         <div class="mx-10 my-[20vh] bg-orange-200 rounded-lg shadow-2xl border-1 border-orange-400">
@@ -105,7 +104,7 @@ if (isset($_SESSION['mngLoggedin']) && $_SESSION['mngLoggedin'] === true) {
 
         </div>
     </div>
-    <div class="w-[50vw] h-[100vh]">
+    <div class="w-[50vw] h-[100vh] hidden sm:block md:block">
         <img class="object-cover w-[100%] h-[100vh]" src="./public/login.png">
     </div>
 
