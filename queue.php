@@ -31,6 +31,33 @@
     </div>
   </nav>
 </header>
+<div class="w-[100vw]">
+  <h1 class="text-[32px] font-bold text-center mt-4 sm:text-[38px]">คิวอาหาร</h1>
+  <div class="grid grid-cols-5 gap-4 mt-6 mx-16">
+    <!-- ตัวอย่างการใส่ข้อมูลของคิว 1 คิว -->
+    <div>
+      <div class="bg-red-700 p-4 rounded-lg shadow-md">
+        <div class="flex justify-between">
+          <h1 class="text-3xl text-white font-semibold">คิวที่ 1</h1>
+          <p class="text-sm text-white">เวลา: 12:00</p>
+        </div>
+        <div class="flex justify-between">
+          <p class="text-sm text-white">โต๊ะ: 1</p>
+          <p class="text-sm text-white">จำนวน: 2</p>
+        </div>
+        <div class="flex justify-between">
+          <p class="text-sm text-white">สถานะ: รอ</p>
+          <p class="text-sm text-white">เวลาที่รอ: 10 นาที</p> <!-- คำนวณเวลาปัจจุบันกับเวลาที่สั่งอาหาร -->
+        </div>
+        <div class="flex justify-between">
+          <p class="text-sm text-white">Queue ID: #1</p>
+        </div>
+      </div>
+    </div>
+    <!-- สิ้นสุดตัวอย่างการใส่ข้อมูลของคิว 1 คิว -->
+    </div>
+  </div>
+</div>
 </body>
 <script>
     function menu() {
