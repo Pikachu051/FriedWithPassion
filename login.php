@@ -8,6 +8,7 @@ if (isset($_SESSION['mngLoggedin']) && $_SESSION['mngLoggedin'] === true) {
     header("Location: main_staff.php");
     exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -25,34 +26,42 @@ if (isset($_SESSION['mngLoggedin']) && $_SESSION['mngLoggedin'] === true) {
 
 <body class="flex prompt">
     <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "fwp_project"; // change to your db
-    $conn = mysqli_connect($servername, $username, $password, $dbname);
-    if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
-
+    class MyDB extends SQLite3 {
+        function __construct() {
+           $this->open('fwp.db');
+        }
+     }
+  
+     // 2. Open Database 
+     $db = new MyDB();
+     if(!$db) {
+        die($db->lastErrorMsg());
+     }
     if (isset($_POST["username"]) && isset($_POST["password"])) { // main login verification function
         $user = $_POST['username'];
         $pass = $_POST['password'];
 
+        // ใช้ SQLite แทน MySQL
         $getPw = "SELECT pass FROM accounts WHERE username = '$user';";
         $getPos = "SELECT position FROM employees JOIN accounts USING (emp_id) WHERE username = '$user';";
         $getFn = "SELECT first_name FROM employees JOIN accounts USING (emp_id) WHERE username = '$user';";
-        $pwResult = mysqli_query($conn, $getPw);
-        $posResult = mysqli_query($conn, $getPos);
-        $fnResult = mysqli_query($conn, $getFn);
 
-        if ($pwResult && mysqli_num_rows($pwResult) == 1) {
-            $pwRow = mysqli_fetch_assoc($pwResult);
+        // Execute SQLite queries
+        $pwResult = $db->query($getPw);
+        $posResult = $db->query($getPos);
+        $fnResult = $db->query($getFn);
+
+        if ($pwResult && $pwRow = $pwResult->fetchArray()) {
             $hashed_password = $pwRow['pass'];
-            $posRow = mysqli_fetch_assoc($posResult);
-            $position = $posRow['position'];
-            $fnRow = mysqli_fetch_assoc($fnResult);
-            $fname = $fnRow['first_name'];
-            $_SESSION['user'] = $fname;
+            
+            if ($posResult && $posRow = $posResult->fetchArray()) {
+                $position = $posRow['position'];
+            }
+
+            if ($fnResult && $fnRow = $fnResult->fetchArray()) {
+                $fname = $fnRow['first_name'];
+                $_SESSION['user'] = $fname;
+            }
 
             if (password_verify($pass, $hashed_password) && $position == 'ผู้จัดการ') { // for manager
                 $_SESSION['mngLoggedin'] = true;
@@ -64,6 +73,7 @@ if (isset($_SESSION['mngLoggedin']) && $_SESSION['mngLoggedin'] === true) {
                 exit();
             }
         }
+
         echo "<div id=\"alert\" class=\"block absolute top-4 start-[16%] w-[20rem] bg-orange-100 border text-sm rounded-lg border-red-900 text-red-500\" role=\"alert\">
                     <div class=\"flex p-4\">
                         <div>

@@ -18,7 +18,7 @@
     // 1. Connect to Database 
     class MyDB extends SQLite3 {
        function __construct() {
-          $this->open('menu.db');
+          $this->open('fwp.db');
        }
     }
  

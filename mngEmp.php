@@ -1,11 +1,17 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "fwp_project";
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+// 1. Connect to Database 
+class MyDB extends SQLite3 {
+    function __construct() {
+       $this->open('fwp.db');
+    }
+}
+
+// 2. Open Database 
+$db = new MyDB();
+if(!$db) {
+    die($db->lastErrorMsg());
+} else {
+    
 }
 
 $e_id = $_POST['idbox'];
@@ -17,9 +23,9 @@ $phone = $_POST['phonebox'];
 $position = $_POST['posbox'];
 
 if (isset($_POST["addemp"])) {
-    $addsql = "INSERT INTO employees
-                VALUES($e_id, '$firstname', '$lastname', '$sex', '$email', '$phone', '$position');";
-    mysqli_query($conn, $addsql);
+    $addsql = "INSERT INTO employees (emp_id, first_name, last_name, sex, email, phone, position)
+               VALUES ($e_id, '$firstname', '$lastname', '$sex', '$email', '$phone', '$position')";
+    $db->exec($addsql);
 }
 
 if (isset($_POST["editemp"])) {
@@ -27,13 +33,14 @@ if (isset($_POST["editemp"])) {
                 SET first_name = '$firstname', last_name = '$lastname', sex = '$sex',
                 email = '$email', phone = '$phone', position = '$position'
                 WHERE emp_id = $e_id";
-    mysqli_query($conn, $editsql);
+    $db->exec($editsql);
 }
 
 if (isset($_POST["delemp"])) {
     $delsql = "DELETE FROM employees WHERE emp_id = $e_id";
-    mysqli_query($conn, $delsql);
+    $db->exec($delsql);
 }
 
 header("location:index.php");
 exit();
+?>
