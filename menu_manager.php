@@ -1,5 +1,5 @@
 <?php
-    require_once "_mngStart.php";
+require_once "_managerStart.php";
 ?>
 
 <!DOCTYPE html>

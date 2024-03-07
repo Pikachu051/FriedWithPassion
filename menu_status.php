@@ -85,7 +85,7 @@
                   </td>
                 </tr> -->
                 <?php // ตรงนี้คือไฟล์เรียกข้อมูลมาใส่ตาราง
-                  require "mngStatus.php"
+                  require "manageMenuStatus.php"
                 ?>
                 <!-- ด้านบนคือตัวอย่างการใส่ข้อมูล -->
               </tbody>

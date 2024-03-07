@@ -1,5 +1,5 @@
 <?php
-require '_stfStart.php'; // !! ใส่ทุกหน้าของพนักงาน !!
+require_once '_staffStart.php'; // !! ใส่ทุกหน้าของพนักงาน !!
 ?>
 
 <!DOCTYPE html>

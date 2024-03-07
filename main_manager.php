@@ -1,5 +1,5 @@
 <?php 
-require '_mngStart.php';  // !! ใส่ทุกหน้าของผู้จัดการ !!
+require_once '_managerStart.php';  // !! ใส่ทุกหน้าของผู้จัดการ !!
 ?>
 
 <!DOCTYPE html>
