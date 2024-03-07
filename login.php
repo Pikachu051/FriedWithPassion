@@ -52,15 +52,14 @@ if (isset($_SESSION['mngLoggedin']) && $_SESSION['mngLoggedin'] === true) {
             $position = $posRow['position'];
             $fnRow = mysqli_fetch_assoc($fnResult);
             $fname = $fnRow['first_name'];
+            $_SESSION['user'] = $fname;
 
             if (password_verify($pass, $hashed_password) && $position == 'ผู้จัดการ') { // for manager
                 $_SESSION['mngLoggedin'] = true;
-                $_SESSION['user'] = $fname;
                 header("Location: main_manager.php");
                 exit();
             } else if (password_verify($pass, $hashed_password) && $position == "พนักงาน") { // for staff
                 $_SESSION['stfLoggedin'] = true;
-                $_SESSION['user'] = $fname;
                 header("Location: main_staff.php");  // change to actual staff page
                 exit();
             }
