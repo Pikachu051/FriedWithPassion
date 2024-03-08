@@ -33,7 +33,7 @@
 </header>
 <div class="w-[100vw]">
   <h1 class="text-[32px] font-bold text-center mt-4 sm:text-[38px]">คิวอาหาร</h1>
-  <div class="grid grid-cols-5 gap-4 mt-6 mx-16">
+  <div class="grid grid-cols-1 gap-4 mt-6 mx-16 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
     <!-- ตัวอย่างการใส่ข้อมูลของคิว 1 คิว -->
     <div>
       <div class="bg-red-700 p-4 rounded-lg shadow-md">
