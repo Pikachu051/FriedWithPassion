@@ -18,7 +18,7 @@ if ($ret->numColumns() > 0) {
   while($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
     echo "<tr class=\"hover:bg-orange-200\">
                   <td class=\"px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800\"><img class=\"object-cover h-[75px] w-[75px] rounded-md\" src=\"" . $row["img_path"] . "\"></td>
-                  <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">" . $row["menu_name"] . "</td>
+                  <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 menu-name\">" . $row["menu_name"] . "</td>
                   <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">" . $row["stock"] . "</td>
                   <td class=\"px-6 py-4 whitespace-nowrap text-end text-sm font-medium\">
                   <form action=\"menu_status.php\" method=\"post\">

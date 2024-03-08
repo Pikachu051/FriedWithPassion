@@ -74,5 +74,17 @@
             z.style.display = "none";
         }
     }
+    var lastUpdate = Math.floor(new Date().getTime() / 1000);
+    function getClock() {
+        var now = Math.floor(new Date().getTime() / 1000);
+        var distance = now - lastUpdate;
+        if (distance % 60 === 0) {
+            document.getElementById("lastupdate1").innerHTML = "อัพเดทล่าสุดเมื่อ " + distance / 60 + " นาทีก่อน";
+            document.getElementById("lastupdate2").innerHTML = "อัพเดทล่าสุดเมื่อ " + distance / 60 + " นาทีก่อน";
+            document.getElementById("lastupdate3").innerHTML = "อัพเดทล่าสุดเมื่อ " + distance / 60 + " นาทีก่อน";
+        }
+    }
+    setInterval(getClock, 1000);
+    
 </script>
 </html>
