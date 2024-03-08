@@ -1,3 +1,30 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['sold'])) {
+    $db = new SQLite3('fwp.db');
+    if (!$db) {
+        die($db->lastErrorMsg());
+    }
+
+    $menuNo = $_POST['menu_no'];
+    $sql = "SELECT stock FROM menu WHERE menu_no = $menuNo;";
+    $ret = $db->query($sql);
+    $row = $ret->fetchArray(SQLITE3_ASSOC);
+    if ($row['stock'] == 'หมด') {
+        $sql = "UPDATE menu SET stock = 'มีอยู่' WHERE menu_no = $menuNo;";
+    } else {
+        $sql = "UPDATE menu SET stock = 'หมด' WHERE menu_no = $menuNo;";
+    }
+
+    $ret = $db->exec($sql);
+    if (!$ret) {
+        echo $db->lastErrorMsg();
+    } else {
+        header("Location: ".$_SERVER['PHP_SELF']);
+        exit;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
