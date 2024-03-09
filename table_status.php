@@ -131,105 +131,94 @@
         </div>
         <div class="table1">
             <div class="column1">
-                <div class="shape-container">
-                    <div class="rectangle" id="rectangle1" onclick="changeColor('circle1')">
-                        <h3>โต๊ะ 1</h3>
-                    </div>
-                    <div class="circle" id="circle1"></div>
-                </div>
-                <div class="shape-container">
-                    <div class="rectangle" id="rectangle2" onclick="changeColor('circle2')">
-                        <h3>โต๊ะ 2</h3>
-                    </div>
-                    <div class="circle" id="circle2"></div>
-                </div>
-                <div class="shape-container">
-                    <div class="rectangle" id="rectangle3" onclick="changeColor('circle3')">
-                        <h3>โต๊ะ 3</h3>
-                    </div>
-                    <div class="circle" id="circle3"></div>
-                </div>
-                <div class="shape-container">
-                    <div class="rectangle" id="rectangle4" onclick="changeColor('circle4')">
-                        <h3>โต๊ะ 4</h3>
-                    </div>
-                    <div class="circle" id="circle4"></div>
-                </div>
-                <div class="shape-container">
-                    <div class="rectangle" id="rectangle5" onclick="changeColor('circle5')">
-                        <h3>โต๊ะ 5</h3>
-                    </div>
-                    <div class="circle" id="circle5"></div>
-                </div>
+            <?php
+            // 1. Connect to Database 
+            class MyDB extends SQLite3 {
+               function __construct() {
+                  $this->open('fwp.db');
+               }
+            }
+         
+            // 2. Open Database 
+            $db = new MyDB();
+            if(!$db) {
+               die($db->lastErrorMsg());
+            } else {
+               
+            }
+                $table_no = 1;
+                while ($table_no <= 5) {
+                    $query = "SELECT table_no, table_status FROM table_status LIMIT 1 OFFSET ".($table_no - 1);
+                    $result = $db->query($query);
+            
+                    // Fetch table status
+                    if ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                        $table_no = $row['table_no'];
+                        $table_status = $row['table_status'];
+                    
+                        // Display table status
+                        echo "<div class=\"shape-container\">";
+                        echo "<div class=\"rectangle\" id=\"rectangle$table_no\" onclick=\"changeColor('circle$table_no')\">";
+                        echo "<h3>โต๊ะ $table_no</h3>";
+                        echo "</div>";
+                        echo "<div class=\"circle\" id=\"circle$table_no\"></div>";
+                        echo "</div>";
+                    }
+            
+                    $table_no++;
+                }
+
+                ?>
             </div>
             <div class="column1">
-                <div class="shape-container">
-                    <div class="rectangle" id="rectangle6" onclick="changeColor('circle6')">
-                        <h3>โต๊ะ 6</h3>
-                    </div>
-                    <div class="circle" id="circle6"></div>
-                </div>
-                <div class="shape-container">
-                    <div class="rectangle" id="rectangle7" onclick="changeColor('circle7')">
-                        <h3>โต๊ะ 7</h3>
-                    </div>
-                    <div class="circle" id="circle7"></div>
-                </div>
-                <div class="shape-container">
-                    <div class="rectangle" id="rectangle8" onclick="changeColor('circle8')">
-                        <h3>โต๊ะ 8</h3>
-                    </div>
-                    <div class="circle" id="circle8"></div>
-                </div>
-                <div class="shape-container">
-                    <div class="rectangle" id="rectangle9" onclick="changeColor('circle9')">
-                        <h3>โต๊ะ 9</h3>
-                    </div>
-                    <div class="circle" id="circle9"></div>
-                </div>
-                <div class="shape-container">
-                    <div class="rectangle" id="rectangle10" onclick="changeColor('circle10')">
-                        <h3>โต๊ะ 10</h3>
-                    </div>
-                    <div class="circle" id="circle10"></div>
-                </div>
+                <?php
+                $table_no = 6;
+                while ($table_no <= 10) {
+                    $query = "SELECT table_no, table_status FROM table_status LIMIT 1 OFFSET ".($table_no - 1);
+                    $result = $db->query($query);
+            
+                    // Fetch table status
+                    if ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                        $table_no = $row['table_no'];
+                        $table_status = $row['table_status'];
+                    
+                        // Display table status
+                        echo "<div class=\"shape-container\">";
+                        echo "<div class=\"rectangle\" id=\"rectangle$table_no\" onclick=\"changeColor('circle$table_no')\">";
+                        echo "<h3>โต๊ะ $table_no</h3>";
+                        echo "</div>";
+                        echo "<div class=\"circle\" id=\"circle$table_no\"></div>";
+                        echo "</div>";
+                    }
+            
+                    $table_no++;
+                }
+                ?>
             </div>
             <div class="column1">
-                <div class="shape-container">
-                    <div class="rectangle" id="rectangle11" style="background-color: #833F00;"
-                        onclick="changeColor('circle11')">
-                        <h3 style="-webkit-text-fill-color: rgb(255, 255, 255);">โต๊ะ 11</h3>
-                    </div>
-                    <div class="circle" id="circle11"></div>
-                </div>
-                <div class="shape-container">
-                    <div class="rectangle" id="rectangle12" style="background-color: #833F00;"
-                        onclick="changeColor('circle12')">
-                        <h3 style="-webkit-text-fill-color: rgb(255, 255, 255);">โต๊ะ 12</h3>
-                    </div>
-                    <div class="circle" id="circle12"></div>
-                </div>
-                <div class="shape-container">
-                    <div class="rectangle" id="rectangle13" style="background-color: #833F00;"
-                        onclick="changeColor('circle13')">
-                        <h3 style="-webkit-text-fill-color: rgb(255, 255, 255);">โต๊ะ 13</h3>
-                    </div>
-                    <div class="circle" id="circle13"></div>
-                </div>
-                <div class="shape-container">
-                    <div class="rectangle" id="rectangle14" style="background-color: #833F00;"
-                        onclick="changeColor('circle14')">
-                        <h3 style="-webkit-text-fill-color: rgb(255, 255, 255);">โต๊ะ 14</h3>
-                    </div>
-                    <div class="circle" id="circle14"></div>
-                </div>
-                <div class="shape-container">
-                    <div class="rectangle" id="rectangle15" style="background-color: #833F00;"
-                        onclick="changeColor('circle15')">
-                        <h3 style="-webkit-text-fill-color: rgb(255, 255, 255);">โต๊ะ 15</h3>
-                    </div>
-                    <div class="circle" id="circle15"></div>
-                </div>
+                <?php
+                 $table_no = 11;
+                 while ($table_no <= 15) {
+                     $query = "SELECT table_no, table_status FROM table_status LIMIT 1 OFFSET ".($table_no - 1);
+                     $result = $db->query($query);
+             
+                     // Fetch table status
+                     if ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                         $table_no = $row['table_no'];
+                         $table_status = $row['table_status'];
+                     
+                         // Display table status
+                         echo "<div class=\"shape-container\">";
+                         echo "<div class=\"rectangle\" id=\"rectangle$table_no\" style=\"background-color: #833F00;\" onclick=\"changeColor('circle$table_no')\">";
+                         echo "<h3 style=\"-webkit-text-fill-color: rgb(255, 255, 255);\">โต๊ะ $table_no</h3>";
+                         echo "</div>";
+                         echo "<div class=\"circle\" id=\"circle$table_no\"></div>";
+                         echo "</div>";;
+                     }
+             
+                     $table_no++;
+                 }
+                ?>
             </div>
         </div>
     </div>
@@ -248,23 +237,68 @@
             z.style.display = "none";
         }
         }
-        function changeColor(id) {
-            var shape = document.getElementById(id);
+    function changeColor(id) {
+    var shape = document.getElementById(id);
 
-            // Check if clicked shape is a rectangle or a circle
-            if (shape.classList.contains('rectangle') || shape.classList.contains('circle')) {
-                var currentColor = shape.style.backgroundColor;
-
-                // Change color of the shape
-                if (currentColor === 'rgb(0, 177, 0)' || currentColor === '') {
-                    shape.style.backgroundColor = 'rgb(230, 0, 0)';
-                    shape.style.boxShadow = 'rgb(255, 0, 0) 0px 0px 5px 5px';
-                } else {
-                    shape.style.backgroundColor = 'rgb(0, 177, 0)';
-                    shape.style.boxShadow = 'rgb(0, 191, 70) 0px 0px 5px 5px';      
-                }
-            }
+    
+    if (shape.classList.contains('rectangle') || shape.classList.contains('circle')) {
+        var currentColor = shape.style.backgroundColor;
+        if (currentColor === 'rgb(0, 177, 0)'|| currentColor === '') {
+            shape.style.backgroundColor = 'rgb(230, 0, 0)';
+            shape.style.boxShadow = 'rgb(255, 0, 0) 0px 0px 5px 5px';
+            updateTableStatus(id, 'ไม่ว่าง'); 
+        } else {
+            shape.style.backgroundColor = 'rgb(0, 177, 0)';
+            shape.style.boxShadow = 'rgb(0, 191, 70) 0px 0px 5px 5px';
+            updateTableStatus(id, 'ว่าง'); 
         }
+    }
+    
+}
+
+function updateTableStatus(tableId, newStatus) {
+    var tableNumber = tableId.replace('circle', ''); 
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText); 
+        }
+    };
+    xhttp.open("POST", "update_table_status.php", true); 
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("table_number=" + tableNumber + "&new_status=" + newStatus); 
+}
+
+function setButtonColorBasedOnStatus(tableNo, buttonId, status) {
+    var button = document.getElementById(buttonId);
+
+
+        if (status === 'ไม่ว่าง') {
+            changeColor(buttonId)
+        }
+        else{
+            button.style.backgroundColor = 'rgb(0, 177, 0)';
+            button.style.boxShadow = 'rgb(0, 191, 70) 0px 0px 5px 5px';
+        }
+    }
+
+    window.onload = function() {
+    <?php
+    $query = "SELECT table_no, table_status FROM table_status";
+    $result = $db->query($query);
+
+    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+        $table_no = $row['table_no'];
+        $table_status = $row['table_status'];
+
+        // Display table status
+        echo "setButtonColorBasedOnStatus($table_no, 'circle$table_no', '$table_status');\n";
+    }
+    ?>
+}
+
+
+
     </script>
 </body>
 
