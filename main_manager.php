@@ -6,10 +6,10 @@ require_once '_managerStart.php';  // !! ใส่ทุกหน้าของ
 <html lang="en">
 
 <head>
-    <title>ระบบบริหารจัดการ</title>
+    <title>FriedWithPassion: Management</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -18,151 +18,38 @@ require_once '_managerStart.php';  // !! ใส่ทุกหน้าของ
             box-sizing: border-box;
             font-family: 'Prompt', 'sans-serif';
         }
-
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .left {
-            background-color: #FFB871;
-            padding: 20px;
-            width: 20%;
-        }
-
-        .main {
-            display: flex;
-            flex: 1;
-            background-color: #FFECD9;
-            padding: 20px;
-        }
-
-        .sub_left {
-            text-align: center;
-            margin-top: 20px;
-            margin-left: 25px;
-            padding: 20px;
-            flex: 1;
-            width: 50%;
-            height: 80%;
-            background-color: rgb(253 186 116);
-            border-radius: 10px;
-        }
-
-        .graph {
-            background-color: #FFB871;
-            height: 300px;
-            margin-top: 20px;
-        }
-
-        .sub_right {
-            text-align: center;
-            padding: 20px;
-            width: 40%;
-            height: 80%;
-            background-color: rgb(253 186 116);
-            border-radius: 10px;
-            margin-top: 20px;
-            margin-left: 5%;
-            margin-right: 2%;
-        }
-
-        .menu {
-            background-color: #FFB871;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        a {
-            margin: 5px 0;
-            padding: 10px;
-            width: 100%;
-            background-color: #FF914D;
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        a:hover {
-            background-color: #FF774D;
-        }
-
-        .content {
-            background-color: #FFECD9;
-            padding: 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: left;
-        }
-
-        .time {
-
-            display: flex;
-            flex-direction: row;
-        }
-
-        .inside {
-            padding: 0;
-            flex: 1;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: left;
-        }
-
-        h1,
-        h2 {
-            margin-top: 0;
-        }
-
-        #logout {
-            background-color: rgb(239 68 68);
-            transitions: all 0.5s;
-        }
-
-        #logout:hover {
-            background-color: rgb(239 68 68 / 85%);
-            transitions: all 0.5s;
-        }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="container">
 
-        <div class="main">
-            <div class="left">
-                <h2>ชื่อผู้ใช้</h2>
-                <p id="welcome"></p>
+        <div class="main flex h-[100vh] w-[100vw]">
+            <div class="left bg-orange-300 p-4 w-1/5">
+                <a class="" href="main_manager.php"><img src="public/fwp-logo-color.png" class="my-0 mx-auto w-auto h-[50px]"></a>
+                <p id="welcome" class="mt-4 font-semibold text-lg"></p>
+                <p>(Manager)</p>
                 <form method="post">
-                    <a href="#">จัดการบัญชีผู้ใช้</a>
-                    <a href="#">สรุปยอดขาย</a>
-                    <a href="menu_manager.php">จัดการเมนู</a>
-                    <a href="logout.php" id="logout">Logout</a> <!-- แก้เอา ไม่รู้ -->
+                    <a href="#" class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">จัดการบัญชีผู้ใช้</a>
+                    <a href="#" class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">สรุปยอดขาย</a>
+                    <a href="menu_manager.php" class="block bg-orange-400 hover:bg-orange-500 text-white text-base rounded-md py-2 px-4 mt-4">จัดการเมนู</a>
+                    <a href="logout.php" id="logout" class="block bg-red-400 hover:bg-red-500 text-white text-base rounded-md py-2 px-4 mt-4">ออกจากระบบ</a>
                 </form>
             </div>
-            <div class="content">
-                <h1>ยินดีต้อนรับ</h1>
-                <div class="time">
+            <div class="content bg-orange-100 p-4 flex-1">
+                <h1 class="font-bold text-3xl ml-4 mt-3">ยินดีต้อนรับ</h1>
+                <div class="time font-semibold text-xl ml-4">
                     <h3 id="date"></h3>
                 </div>
-                <div class="inside">
-                    <div class="sub_left">
-                        <h2>ยอดขาย ณ เวลานี้</h2>
+                <div class="inside flex mt-8 mx-6">
+                    <div class="sub_left bg-orange-300 p-4 flex-1 mr-4 rounded-lg">
+                        <h2 class="font-medium text-lg">ยอดขาย ณ เวลานี้</h2>
                         <canvas id="myChart" class="graph"></canvas>
                     </div>
 
-                    <div class="sub_right">
-                        <h2>สถานะเมนู</h2>
+                    <div class="sub_right bg-orange-300 rounded-lg p-4 w-2/5">
+                        <h2 class="font-medium text-lg">สถานะเมนู</h2>
                         <div class="menu">
 
                         </div>
@@ -210,7 +97,7 @@ require_once '_managerStart.php';  // !! ใส่ทุกหน้าของ
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม'],
+                labels: ['08:00 - 12:00', '12:01 - 15:00', '15:01 - 18:00', '18:01 - 20:00'],
                 datasets: [{
                     label: 'ยอดขาย',
                     data: [12, 19, 3, 5, 2, 3, 9],
