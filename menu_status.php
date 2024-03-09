@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['sold'])) {
               </thead>
               <tbody class="divide-y divide-gray-200 ">
                 <?php // ตรงนี้คือไฟล์เรียกข้อมูลมาใส่ตาราง
-                  require "manageMenuStatus.php"
+                  require_once "manageMenuStatus.php"
                 ?>
                 <!-- ด้านบนคือตัวอย่างการใส่ข้อมูล -->
               </tbody>

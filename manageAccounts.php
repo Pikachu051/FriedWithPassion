@@ -23,13 +23,15 @@ $phone = $_POST['phonebox'];
 $position = $_POST['posbox'];
 
 if (isset($_POST["addemp"])) {
-    $addsql = "INSERT INTO employees (emp_id, first_name, last_name, sex, email, phone, position)
+    $addEmpSql = "INSERT INTO employees (emp_id, first_name, last_name, sex, email, phone, position)
                VALUES ($e_id, '$firstname', '$lastname', '$sex', '$email', '$phone', '$position')";
-    $db->exec($addsql);
+    $addAccSql = "INSERT INTO accounts (username, pass, emp_id) VALUES (CONCAT(fwp, $e_id), 'fwp1234', $e_id)";
+    $db->exec($addEmpSql);
+    $db->exec($addAccSql);
 }
 
 if (isset($_POST["editemp"])) {
-    $editsql = "UPDATE employees
+    $editSql = "UPDATE employees
                 SET first_name = '$firstname', last_name = '$lastname', sex = '$sex',
                 email = '$email', phone = '$phone', position = '$position'
                 WHERE emp_id = $e_id";
@@ -37,10 +39,8 @@ if (isset($_POST["editemp"])) {
 }
 
 if (isset($_POST["delemp"])) {
-    $delsql = "DELETE FROM employees WHERE emp_id = $e_id";
-    $db->exec($delsql);
+    $delAccSql = "DELETE FROM accounts WHERE emp_id = $e_id";
+    $delEmpSql = "DELETE FROM employees WHERE emp_id = $e_id";
+    $db->exec($delAccSql);
+    $db->exec($delEmpSql);
 }
-
-header("location:index.php");
-exit();
-?>
