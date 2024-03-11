@@ -45,7 +45,7 @@ require_once '_managerStart.php';  // !! ใส่ทุกหน้าของ
                 <div class="inside flex mt-8 mx-6">
                     <div class="sub_left bg-orange-300 p-4 flex-1 mr-4 rounded-lg">
                         <h2 class="font-medium text-lg">ยอดขาย ณ เวลานี้</h2>
-                        <canvas id="myChart" class="graph"></canvas>
+                        <div id="myChart"></div> <!-- ตรงนี้ ตอนแรกเป็น <canvas> แต่มันไม่ขึ้น T-T --> 
                     </div>
 
                     <div class="sub_right bg-orange-300 rounded-lg p-4 w-2/5">
@@ -92,45 +92,48 @@ require_once '_managerStart.php';  // !! ใส่ทุกหน้าของ
 
         }
         setInterval(getClock, 1000);
-        // สร้างข้อมูลตัวอย่างสำหรับกราฟ
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['08:00 - 12:00', '12:01 - 15:00', '15:01 - 18:00', '18:01 - 20:00'],
-                datasets: [{
-                    label: 'ยอดขาย',
-                    data: [12, 19, 3, 5, 2, 3, 9],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 99, 132, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(255, 99, 132, 1)'
-                    ],
-                    borderWidth: 1
+        // graph
+        <?php
+        require_once "saleChart.php";
+        ?>
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("myChart", {
+                //backgroundColor: "#FFEDD5",
+                animationEnabled: true,
+                title: {
+                    text: "รายได้ของร้าน FWP",
+                    fontFamily: 'Prompt',
+                    padding: {
+     top: 10,
+   },
+                },
+                toolTip:{
+                    fontFamily: 'Prompt',
+ },
+                axisY: {
+                    labelFontFamily: 'Prompt',
+                    titleFontFamily: 'Prompt',
+                    margin: 10,
+                    title: "จำนวนเงิน (หน่วย: บาท)",
+                    includeZero: true,
+                    suffix: " บาท",
+                },
+                axisX: {
+                    labelFontFamily: 'Prompt',
+                    titleFontFamily: 'Prompt',
+                    margin: 10,
+                },
+                data: [{
+                    indexLabelFontFamily: 'Prompt',
+                    type: "column",
+                    yValueFormatString: "#,###,### บาท",
+                    dataPoints: <?php echo $dataPoints; ?>
                 }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+            });
+            chart.render();
+        }
     </script>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </body>
 
 </html>
