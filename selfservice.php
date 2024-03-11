@@ -1,8 +1,24 @@
 <?php
     session_start();
+
+    // Check if the order type is set and update the session variable
+    if (isset($_POST['takeaway'])) {
+        $_SESSION['order_type'] = 'takeaway';
+        header('Location: ' . $_SERVER['REQUEST_URI']); // Redirect to the same page
+        exit; // Stop script execution after redirect
+    }
+
     if (isset($_POST['table_no'])) {
         $_SESSION['table_no'] = $_POST['table_no'];
-        header('Location: ' . $_SERVER['REQUEST_URI']); // Redirect to same page
+        unset($_SESSION['order_type']); // Clear order type when selecting a table
+        header('Location: ' . $_SERVER['REQUEST_URI']); // Redirect to the same page
+        exit; // Stop script execution after redirect
+    }
+
+    if (isset($_POST['change_option'])) {
+        unset($_SESSION['table_no']); // Clear old table selection
+        unset($_SESSION['order_type']); // Clear old order type
+        header('Location: ' . $_SERVER['REQUEST_URI']); // Redirect to the same page to start fresh
         exit; // Stop script execution after redirect
     }
 ?>
@@ -82,7 +98,18 @@
     <div class="bg-orange-100">
         <header class="bg-orange-300">
             <div class="p-4">
-            <h1 id="selectedTable" class="text-2xl font-bold">โต๊ะ: <?php echo isset($_SESSION['table_no']) ? $_SESSION['table_no'] : '-'; ?></h1>
+            <h1 id="selectedTable" class="text-2xl font-bold"><?php
+                    if (isset($_SESSION['table_no'])) {
+                        echo $_SESSION['table_no'];
+                    } elseif (isset($_SESSION['order_type']) && $_SESSION['order_type'] == 'takeaway') {
+                        echo 'สั่งกลับบ้าน';
+                    } else {
+                        echo 'กรุณาเลือกรูปแบบการสั่งซื้อ';
+                    }
+                ?></h1>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+            <input type="submit" name="change_option" value="เลือกรูปแบบการสั่งซื้อใหม่" class="text-center p-2 m-4 bg-red-300 rounded-md hover:cursor-pointer hover:bg-red-200 " onclick= "resetTableStatus()">
+            </form>
             </div>
         </header>
     <div id="openingModal" class="modal">
@@ -91,8 +118,8 @@
             <h1 class="text-center font-bold text-2xl">ยินดีต้อนรับ</h1>
             <h3 class="text-center font-semibold text-xl">กรุณาเลือกรูปแบบการสั่งซื้อ</h3>
             <div class="item-center grid grid-cols-2 mt-4">
-            <form action="">
-                <input type="submit" name="takeaway" value="สั่งกลับบ้าน (Takeaway)" class="w-[90%] text-center p-2 m-4 bg-orange-300 rounded-md hover:cursor-pointer hover:bg-orange-200"></input>
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                <input type="submit" name="takeaway" value="สั่งกลับบ้าน (Takeaway)" class="w-[90%] text-center p-2 m-4 bg-orange-300 rounded-md hover:cursor-pointer hover:bg-orange-200">
             </form>
             <button onclick="openDineInModal()" value="ทานที่นี่ (Dine-in)" class="text-center p-2 m-4 mt-4 bg-orange-300 rounded-md hover:cursor-pointer hover:bg-orange-200">ทานที่นี่ (Dine-in)</button>
 
@@ -104,7 +131,7 @@
         <div class="modal-content rounded-md">
             <span class="close" onclick="closeDineInModal()"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg></span>
             <h3 class="text-center font-semibold text-xl">กรุณาเลือกโต๊ะที่ท่านต้องการนั่ง</h3>
-            <form action="selfservice.php">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
             <div class="item-center grid grid-cols-4 mt-4">
                 <?php
                     class MyDB extends SQLite3 {
@@ -123,7 +150,7 @@
                         if ($ret->numColumns() > 0) {
                             while($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
                                 if ($row["table_status"] == "ว่าง") {
-                                    echo "<input type=\"submit\" name=\"" . $row["table_no"] . "\" value=\"โต๊ะที่ " . $row["table_no"] . "\" class=\"text-center p-2 m-4 bg-orange-300 rounded-md hover:cursor-pointer hover:bg-orange-200\"></input>";
+                                    echo "<input type=\"submit\" name=\"table_no\" value=\"โต๊ะที่ " . $row["table_no"] . "\" class=\"text-center p-2 m-4 bg-orange-300 rounded-md hover:cursor-pointer hover:bg-orange-200\" onclick=\"selectTable('" . $row["table_no"] . "')\">";
                                 } else {
                                     echo "<button value=\"โต๊ะที่ " . $row["table_no"] . "\" disabled class=\"text-center p-2 m-4 bg-red-300 rounded-md hover:cursor-no-drop hover:bg-red-200\">โต๊ะที่ " . $row["table_no"] . "</button>";
                                 }
@@ -131,6 +158,7 @@
                         }
                      }
                 ?>
+            </div>
             </form>
         </div>
     </div>
@@ -165,12 +193,40 @@
         }
 
         window.addEventListener('DOMContentLoaded', function() {
-            if (<?php echo isset($_SESSION['table_no']) ? 'true' : 'false'; ?>) {
-            document.getElementById("openingModal").style.display = "none"; // Hide opening modal if table selected
-            } else {
-                openModal(); // Open opening modal if no table selected
-            }
-        });
+    var orderType = '<?php echo isset($_SESSION['order_type']) ? $_SESSION['order_type'] : ''; ?>';
+    if (orderType === 'takeaway') {
+        document.getElementById("openingModal").style.display = "none"; // Hide opening modal if order type is already set to takeaway
+    } else if (<?php echo isset($_SESSION['table_no']) ? 'true' : 'false'; ?>) {
+        document.getElementById("openingModal").style.display = "none"; // Hide opening modal if table selected
+    } else {
+        openModal(); // Open opening modal if neither table nor order type is set
+    }
+});
+
+
+    function updateTableStatus(tableId, newStatus) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "update_table_status.php", true); 
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("table_number=" + tableId + "&new_status=" + newStatus); 
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+        console.log(xhttp.responseText);
+    }
+}
+
+
+    // ปรับปรุง function ให้เซตสถานะของโต๊ะที่เลือกเป็น "ไม่ว่าง"
+    function selectTable(tableId) {
+        updateTableStatus(tableId, 'ไม่ว่าง');
+    }
+
+    // เพิ่ม function เพื่อเซตสถานะของโต๊ะเก่าเป็น "ว่าง" เมื่อกดปุ่ม "เลือกรูปแบบการสั่งซื้อใหม่"
+    function resetTableStatus() {
+    var oldTableId = <?php echo isset($_SESSION['table_no']) ? "'" . str_replace('โต๊ะที่ ', '', $_SESSION['table_no']) . "'" : "''"; ?>;
+    if (oldTableId) {
+        updateTableStatus(oldTableId, 'ว่าง');
+    }
+}
 
     </script>
 
