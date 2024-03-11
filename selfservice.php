@@ -96,22 +96,55 @@
 </head>
 <body class="bg-orange-100">
     <div class="bg-orange-100">
-        <header class="bg-orange-300">
-            <div class="p-4">
-            <h1 id="selectedTable" class="text-2xl font-bold"><?php
-                    if (isset($_SESSION['table_no'])) {
-                        echo $_SESSION['table_no'];
-                    } elseif (isset($_SESSION['order_type']) && $_SESSION['order_type'] == 'takeaway') {
-                        echo 'สั่งกลับบ้าน';
-                    } else {
-                        echo 'กรุณาเลือกรูปแบบการสั่งซื้อ';
-                    }
-                ?></h1>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-            <input type="submit" name="change_option" value="เลือกรูปแบบการสั่งซื้อใหม่" class="text-center p-2 m-4 bg-red-300 rounded-md hover:cursor-pointer hover:bg-red-200 " onclick= "resetTableStatus()">
-            </form>
-            </div>
+        <header class="bg-orange-300 grid grid-cols-2">
+                <h1 id="selectedTable" class="text-xl font-bold m-5"><?php
+                        if (isset($_SESSION['table_no'])) {
+                            echo "<p class=\"\">สั่งอาหารสำหรับ" . $_SESSION['table_no'] . "</p>";
+                        } elseif (isset($_SESSION['order_type']) && $_SESSION['order_type'] == 'takeaway') {
+                            echo 'สั่งกลับบ้าน';
+                        } else {
+                            echo 'กรุณาเลือกรูปแบบการสั่งซื้อ';
+                        }
+                    ?></h1>
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                    <input type="submit" name="change_option" value="เลือกรูปแบบการสั่งซื้อใหม่ / ยกเลิก" class="text-center p-2 m-4 bg-orange-200 rounded-md hover:cursor-pointer hover:bg-orange-100 float-right" onclick="resetTableStatus()">
+                </form>
         </header>
+        <h1 class="text-3xl font-bold text-center mt-6">เมนู</h1>
+    <div class="mx-6 mt-6 grid grid-cols-2 gap-6">
+        <div class="bg-white p-5 rounded-md text-center">
+            <img src="menu_img/menu101.png" alt="เบอร์เกอร์ไก่" class="w-[150px] object-cover rounded-md mx-auto">
+            <h3 class="font-semibold text-lg">เบอร์เกอร์อะไรสักอย่าง</h3>
+            <p>ราคา: 45 บาท</p>
+            <div class="w-[100%] flex mt-3 justify-center">
+                <div class="item-center flex justify-center">
+                    <button class="w-6 mx-3 rounded-full bg-orange-100 hover:bg-orange-200" id="button-1" onclick="decrement('quantity1', 'button-1')" disabled>-</button>
+                        <p class="mx-3" id="quantity1">0</p>
+                    <button class="w-6 mx-3 rounded-full bg-orange-300 hover:bg-orange-200 transition-all" onclick="increment('quantity1', 'button-1')">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white p-5 rounded-md text-center">
+            <img src="menu_img/menu102.png" alt="เบอร์เกอร์ไก้" class="w-[150px] object-cover rounded-md mx-auto">
+            <h3 class="font-semibold text-lg">เบอร์เกอร์หมูเบคอนฮาลาล</h3>
+            <p>ราคา: 45 บาท</p>
+            <div class="w-[100%] flex mt-2 justify-center">
+                <div class="item-center flex justify-center">
+                    <button class="w-6 mx-3 rounded-full bg-orange-100 hover:bg-orange-200" id="button-2" onclick="decrement('quantity2', 'button-2')" disabled>-</button>
+                        <p class="mx-3" id="quantity2">0</p>
+                    <button class="w-6 mx-3 rounded-full bg-orange-300 hover:bg-orange-200 transition-all" onclick="increment('quantity2', 'button-2')">+</button>
+                </div>
+            </div>
+        </div> 
+    </div>
+    <div>
+    <form action="cart.php" method="post" class="mx-auto fixed bottom-[20px] right-[20px]">
+        <label class="">
+            <input type="submit" name="submit" value="สั่งอาหาร" class="hidden rounded-full text-center p-2 m-4 bg-orange-300 hover:cursor-pointer hover:bg-orange-200 big round">
+            <svg xmlns="http://www.w3.org/2000/svg"  width="48"  height="18"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="shadow-md icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart bg-orange-300 rounded-full text-3xl h-12 hover:cursor-pointer hover:bg-orange-200 transition-all"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" /><path d="M6 5l14 1l-1 7h-13" /></svg>
+        </label>
+    </form>
+    </div>
     <div id="openingModal" class="modal">
         <div class="modal-content rounded-md">
             <span class="close" onclick="closeModal()"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg></span>
@@ -122,9 +155,8 @@
                 <input type="submit" name="takeaway" value="สั่งกลับบ้าน (Takeaway)" class="w-[90%] text-center p-2 m-4 bg-orange-300 rounded-md hover:cursor-pointer hover:bg-orange-200">
             </form>
             <button onclick="openDineInModal()" value="ทานที่นี่ (Dine-in)" class="text-center p-2 m-4 mt-4 bg-orange-300 rounded-md hover:cursor-pointer hover:bg-orange-200">ทานที่นี่ (Dine-in)</button>
-
-            </div>
         </div>
+    </div>
     </div>
 
     <div id="dineInModal" class="modal">
@@ -140,7 +172,6 @@
                         }
                      }
                   
-                     // 2. Open Database 
                      $db = new MyDB();
                      if(!$db) {
                         die($db->lastErrorMsg());
@@ -164,6 +195,28 @@
     </div>
 
     <script>
+        function increment(id, buttonId) {
+            var quantity = parseInt(document.getElementById(id).innerHTML);
+            document.getElementById(id).innerHTML = quantity + 1;
+            quantity = quantity + 1;
+            if (quantity > 0) {
+                document.getElementById(buttonId).disabled = false;
+                document.getElementById(buttonId).classList.remove("bg-orange-100");
+                document.getElementById(buttonId).classList.add("bg-orange-300");
+            }
+        }
+        function decrement(id, buttonId) {
+            var quantity = parseInt(document.getElementById(id).innerHTML);
+            if (quantity > 0) {
+                document.getElementById(id).innerHTML = quantity - 1;
+            }
+            quantity = quantity - 1;
+            if (quantity == 0) {
+                document.getElementById(buttonId).disabled = true;
+                document.getElementById(buttonId).classList.remove("bg-orange-300");
+                document.getElementById(buttonId).classList.add("bg-orange-100");
+            }
+        }
         var formSubmitted = <?php echo isset($_SESSION['form_submitted']) && $_SESSION['form_submitted'] ? 'true' : 'false'; ?>;
         if (formSubmitted) {
             document.getElementById("openingModal").style.display = "none";
