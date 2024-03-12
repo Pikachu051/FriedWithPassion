@@ -50,36 +50,42 @@
                         </tr>
                     </thead>
                     <tbody>
-    <?php
+                    <?php
     $sql = "SELECT * FROM `order` WHERE queue_no =" .$_SESSION['queue_no'];
     $ret = $db->query($sql);
       
-    // ตรวจสอบว่ามีข้อผิดพลาดหรือไม่
+    // Check for errors
     if(!$ret) {
         echo $db->lastErrorMsg();
     }
     $totalPrice = 0;
 
- 
-        while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
-            $stringDateTime = $row['date_time']->format('Y-m-d H:i:s');
-            $totalPrice += number_format($row['total'], 2);
-            echo '<tr>';
-            echo '<td>' .$row['menu_name']. '</td>';
-            echo '<td class="text-right">' .number_format($row['total'], 2) .'</td>';
-            echo '<td class="text-right">' .$row['quantity'] .'</td>';
+    while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+        $query = "SELECT menu_name FROM menu WHERE menu_no =" .$row['menu_no'];
+        $menu_result = $db->query($query);
+        $menu_row = $menu_result->fetchArray(SQLITE3_ASSOC);
+        
+        $totalPrice += $row['total'];
+        $date_time = $row["date_time"];
+
+
+        
+        echo '<tr>';
+        echo '<td>' . $menu_row['menu_name'] . '</td>';
+        echo '<td class="text-right">' . number_format($row['total'], 2) . '</td>';
+        echo '<td class="text-right">' . $row['quantity'] . '</td>';
         echo '</tr>';
+    }
 
-        }
-    
+?>
 
-
-    ?>
 </tbody>
 
+
+
                 </table>
-                <p class="text-right text-xl mt-4 font-semibold">ราคารวม: <?php echo number_format($totalPrice, 2); ?> บาท</p>
-                <p class="text-right text-sm mt-4">สั่งเมื่อ: <?php echo $stringDateTime; ?></p>
+                <p class="text-right text-xl mt-4 font-semibold">ราคารวม: <?php  echo number_format($totalPrice, 2); ?> บาท</p>
+                <p class="text-right text-sm mt-4">สั่งเมื่อ: <?php  echo  $date_time; ?></p>
             </div>
         </div>
 </body>

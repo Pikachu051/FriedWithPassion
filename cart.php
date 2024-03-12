@@ -60,7 +60,7 @@ if ($row && isset($row['max_queue_no'])) {
       $type = isset($_SESSION['order_type']) ? ($_SESSION['order_type'] == 'takeaway' ? 'สั่งกลับบ้าน' : '') : 'ทานที่ร้าน';
       $quantity = $item['quantity'];
       $note = ''; // สำหรับเพิ่มรายการหมายเหตุ
-      $total += $item['price'] * $quantity;
+      $total = $item['price'] * $quantity;
       
 
       // เตรียมคำสั่ง SQL สำหรับเพิ่มข้อมูลลงในฐานข้อมูล
