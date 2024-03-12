@@ -8,12 +8,54 @@ require_once "_managerStart.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Database</title>
+    <link rel="stylesheet" href="style.css">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
 </head>
-<body>
-
-<div class="container">
+<body class='bg-orange-100 overflow-x-hidden'>
+    <style>
+        .menu-link {
+        color: red;
+        }
+        .container {
+                /* background-color: #fff; */
+                width: 100%;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <div class="main flex w-[100vw]">
+        <div class="left bg-orange-300 p-6 w-1/5">
+                    <a class="" href="main_manager.php"><img src="public/fwp-logo-color.png" class="my-0 mx-auto w-auto h-[50px]"></a>
+                    <p id="welcome" class="mt-4 font-semibold text-lg"></p>
+                    <p>(Manager)</p>
+                    <form method="post">
+                        <a href="manage_Accounts.php" class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">จัดการบัญชีผู้ใช้</a>
+                        <a href="history_manager.php" class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">ประวัติการสั่งซื้อ</a>
+                        <a href="menu_manager.php" class="block bg-orange-400 hover:bg-orange-500 text-white text-base rounded-md py-2 px-4 mt-4">จัดการเมนู</a>
+                        <a href="logout.php" id="logout" class="block bg-red-400 hover:bg-red-500 text-white text-base rounded-md py-2 px-4 mt-4">ออกจากระบบ</a>
+                    </form>
+                </div>
+    <div class="container">
+    
+    <div class="flex flex-col">
+        <div class="overflow-x-hidden mx-auto my-4">
+            <div class="p-1.5 min-w-full inline-block align-middle">
+            <div class="overflow-hidden">
+                <div class="text-center">
+                    <h1 class="font-bold text-[32px] text-center mt-0 sm:text-[38px]">จัดการเมนู</h1>
+                </div>
+                <table class="min-w-full divide-y divide-gray-200 rounded-md">
+                <thead>
+                    <tr>
+                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">รูป</th>
+                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">รหัสเมนู</th>
+                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">ชื่อเมนู</th>
+                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">คำอธิบาย</th>
+                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">ราคา</th>
+                    <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">สถานะสินค้า</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 ">
     <?php
     // 1. Connect to Database 
     class MyDB extends SQLite3 {
@@ -36,17 +78,26 @@ require_once "_managerStart.php";
         $ret = $db->query($sql); 
 
         if ($ret->numColumns() > 0) {
-            echo "<table class='table'>";
-            echo "<thead class='thead-dark'><tr><th>Image</th><th>Menu No</th><th>Menu Name</th><th>Description</th><th>Price</th><th>stock</th></tr></thead>";
-            echo "<tbody>";
+            // echo "<table >";
+            // echo "<thead>
+            // <tr>
+            //     <th>Image</th>
+            //     <th>Menu No</th>
+            //     <th>Menu Name</th>
+            //     <th>Description</th>
+            //     <th>Price</th>
+            //     <th>stock</th>
+            // </tr>
+            // </thead>";
+            // echo "<tbody>";
             while($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
                 echo "<tr>";
-                echo "<td><img src='" . $row["img_path"] . "' alt='Menu Image' style='width:100px;height:auto;'></td>";
-                echo "<td><a href='?invalue=" . $row["menu_no"] . "'>" . $row["menu_no"] . "</a></td>";
-                echo "<td>" . $row["menu_name"] . "</td>";
-                echo "<td>" . $row["description"] . "</td>";
-                echo "<td>" . $row["price"] . "</td>";
-                echo "<td>" . $row["stock"] . "</td>";
+                echo "<td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\"><img src='" . $row["img_path"] . "' alt='Menu Image' style='width:100px;height:auto;'></td>";
+                echo "<td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\"><a href='?invalue=" . $row["menu_no"] . "' class='menu-link'>" . $row["menu_no"] . "</a></td>";
+                echo "<td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">" . $row["menu_name"] . "</td>";
+                echo "<td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">" . $row["description"] . "</td>";
+                echo "<td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">" . $row["price"] . "</td>";
+                echo "<td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-end\">" . $row["stock"] . "</td>";
                 echo "</tr>";
             }
             echo "</tbody></table>";
@@ -65,13 +116,13 @@ require_once "_managerStart.php";
         echo "<div class='form-group'><label for='description'>รายละเอียด:</label><input type='text' class='form-control' id='description' name='description' value=''></div>";
         echo "<div class='form-group'><label for='price'>ราคา:</label><input type='text' class='form-control' id='price' name='price' value=''></div>";
         echo "<div class='form-group'><label for='stock'>สถานะ:</label><br>";
-        echo "<input type='radio' id='available' name='stock' value='available' checked>";
-        echo "<label for='available'>Available</label><br>";
-        echo "<input type='radio' id='sold_out' name='stock' value='sold out'>";
-        echo "<label for='sold_out'>Sold Out</label>";
+        echo "<input type='radio' id='available' name='stock' value='มีอยู่' checked>";
+        echo "<label for='available'>มีอยู่</label><br>";
+        echo "<input type='radio' id='sold_out' name='stock' value='หมด'>";
+        echo "<label for='sold_out'>หมด</label>";
         echo "</div>";
-        echo "<button type='submit' class='btn btn-primary' name='update'>Update</button> ";
-        echo "<button type='submit' class='btn btn-danger' name='delete'>Delete</button>";
+        echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button> ";
+        echo "<button type='submit' class='p-2 bg-red-300 rounded-md hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
         echo "</form><br>";
     }
 
@@ -83,19 +134,20 @@ require_once "_managerStart.php";
         if ($result->numColumns() > 0) {
             $row = $result->fetchArray(SQLITE3_ASSOC);
             echo "<form method='post' class='mt-3'>";
-            echo "<div class='form-group'><label for='menu_no'>รหัสเมนู:</label><input type='text' class='form-control' id='menu_no' name='menu_no' value='". $row["menu_no"]."'></div>";
-            echo "<div class='form-group'><label for='menu_name'>ชื่อเมนู:</label><input type='text' class='form-control' id='menu_name' name='menu_name' value='". $row["menu_name"] ."'></div>";
-            echo "<div class='form-group'><label for='description'>รายละเอียด:</label><input type='text' class='form-control' id='description' name='description' value='". $row["description"] ."'></div>";
-            echo "<div class='form-group'><label for='price'>ราคา:</label><input type='text' class='form-control' id='price' name='price' value='". $row["price"] ."'></div>";
+            echo "<div class='form-group'><label for='menu_no'>รหัสเมนู:</label> <input type='text' class='form-control' id='menu_no' name='menu_no' value='". $row["menu_no"]."'></div>";
+            echo "<div class='form-group'><label for='menu_name'>ชื่อเมนู:</label> <input type='text' class='form-control' id='menu_name' name='menu_name' value='". $row["menu_name"] ."'></div>";
+            echo "<div class='form-group'><label for='description'>รายละเอียด:</label> <input type='text' class='form-control' id='description' name='description' value='". $row["description"] ."'></div>";
+            echo "<div class='form-group'><label for='price'>ราคา:</label> <input type='text' class='form-control' id='price' name='price' value='". $row["price"] ."'></div>";
             echo "<div class='form-group'><label for='stock'>สถานะ:</label><br>";
-            echo "<input type='radio' id='available' name='stock' value='available' ".(($row['stock'] == 'available') ? 'checked' : '').">";
-            echo "<label for='available'>Available</label><br>";
-            echo "<input type='radio' id='sold_out' name='stock' value='sold out' ".(($row['stock'] == 'sold out') ? 'checked' : '').">";
-            echo "<label for='sold_out'>Sold Out</label>";
+            echo "<input type='radio' id='available' name='stock' value='มีอยู่' ".(($row['stock'] == 'available') ? 'checked' : '').">";
+            echo "<label for='available'>มีอยู่</label><br>";
+            echo "<input type='radio' id='sold_out' name='stock' value='หมด' ".(($row['stock'] == 'sold out') ? 'checked' : '').">";
+            echo "<label for='sold_out'>หมด</label>";
             echo "</div>"; 
-            echo "<button type='submit' class='btn btn-primary' name='update'>Update</button> ";
-            echo "<button type='submit' class='btn btn-danger' name='delete'>Delete</button>";
+            echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button> ";
+            echo "<button type='submit' class='p-2 bg-red-300 rounded-md hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
             echo "</form><br>";
+
         } else {
             echo "<form method='post' class='mt-3'>";
             echo "<div class='form-group'><label for='menu_no'>รหัสเมนู:</label><input type='text' class='form-control' id='menu_no' name='menu_no' value=''></div>";
@@ -103,14 +155,15 @@ require_once "_managerStart.php";
             echo "<div class='form-group'><label for='description'>รายละเอียด:</label><input type='text' class='form-control' id='description' name='description' value=''></div>";
             echo "<div class='form-group'><label for='price'>ราคา:</label><input type='text' class='form-control' id='price' name='price' value=''></div>";
             echo "<div class='form-group'><label for='stock'>สถานะ:</label><br>";
-            echo "<input type='radio' id='available' name='stock' value='available' checked>";
-            echo "<label for='available'>Available</label><br>";
-            echo "<input type='radio' id='sold_out' name='stock' value='sold out'>";
-            echo "<label for='sold_out'>Sold Out</label>";
+            echo "<input type='radio' id='available' name='stock' value='มีอยู่' checked>";
+            echo "<label for='available'>มีอยู่</label><br>";
+            echo "<input type='radio' id='sold_out' name='stock' value='หมด'>";
+            echo "<label for='sold_out'>หมด</label>";
             echo "</div>";
-            echo "<button type='submit' class='btn btn-primary' name='update'>Update</button> ";
-            echo "<button type='submit' class='btn btn-danger' name='delete'>Delete</button>";
+            echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button> ";
+            echo "<button type='submit' class='p-2 bg-red-300 rounded-md hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
             echo "</form><br>";
+            
         }
     }
 
@@ -136,9 +189,9 @@ require_once "_managerStart.php";
         $sql = "DELETE FROM menu WHERE menu_no=$id";
         if ($db->exec($sql)) {
             echo "<div class='alert alert-success mt-3' role='alert'>Record deleted successfully</div>";
-            // Refresh the page to reflect updated data
-            echo "<meta http-equiv='refresh' content='0'>";
+            
         } else {
+            $error = $db->lastErrorMsg();
             echo "<div class='alert alert-danger mt-3' role='alert'>Error deleting record</div>";
         }
     }
@@ -150,8 +203,9 @@ require_once "_managerStart.php";
     $db->close();
     ?>
 </div>
+</div>
 
 <!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 </body>
 </html>
