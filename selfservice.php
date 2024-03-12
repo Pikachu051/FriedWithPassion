@@ -42,6 +42,17 @@
             'quantity' => $quantity
         );
     }
+    // Check if the menu is already in the cart
+    function isMenuInCart($menu_no) {
+        if (isset($_SESSION['cart'])) {
+            foreach ($_SESSION['cart'] as $item) {
+                if ($item['menu_no'] == $menu_no) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -116,7 +127,6 @@
     </style>
 </head>
 <body class="bg-orange-100">
-    <div class="bg-orange-100">
         <header class="bg-orange-300 grid grid-cols-2">
                 <h1 id="selectedTable" class="text-xl font-bold m-5"><?php
                         if (isset($_SESSION['table_no'])) {
@@ -143,27 +153,48 @@
             if ($ret->numColumns() > 0) {
                 echo '<div class="mx-6 mt-6 grid grid-cols-2 gap-6">';
                 while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
-                    echo '<div class="bg-white p-5 rounded-md text-center">';
-                    echo '<img src="' . $row["img_path"] . '" alt="' . $row["menu_name"] . '" class="w-[150px] object-cover rounded-md mx-auto">';
-                    echo '<h3 class="font-semibold text-lg">' . $row["menu_name"] . '</h3>';
-                    echo '<p>' . $row["description"] . '</p>';
-                    echo '<p>ราคา: ' . $row["price"] . ' บาท</p>';
-                    // เพิ่มฟอร์มสำหรับส่งข้อมูลเมนูที่เลือกไปยัง cart.php
-                    echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
-                    echo '<input type="hidden" name="menu_no" value="' . $row["menu_no"] . '">';
-                    echo '<input type="hidden" name="menu_name" value="' . $row["menu_name"] . '">';
-                    echo '<input type="hidden" name="price" value="' . $row["price"] . '">';
-                    // เพิ่มปุ่มสำหรับเพิ่มรายการอาหารลงในตะกร้า
-                    echo '<div class="w-full flex justify-center mt-4">';
-                    echo '<button type="submit" name="add_to_cart" id="'. $row["menu_no"] .'" class="p-2 mx-3 rounded-full bg-orange-300 hover:bg-orange-200">ใส่รถเข็น</button>';
-                    echo '</div>';
-                    echo '</form>';
-                    echo '</div>';
+                    $menuInCart = isMenuInCart($row["menu_no"]);
+                    if ($menuInCart) {
+                        echo '<div class="bg-white p-5 rounded-md text-center mx-0 my-auto">';
+                        echo '<img src="' . $row["img_path"] . '" alt="' . $row["menu_name"] . '" class="w-[150px] object-cover rounded-md mx-auto">';
+                        echo '<h3 class="font-semibold text-lg mt-4">' . $row["menu_name"] . '</h3>';
+                        echo '<p>' . $row["description"] . '</p>';
+                        echo '<p>ราคา: ' . $row["price"] . ' บาท</p>';
+                        // เพิ่มฟอร์มสำหรับส่งข้อมูลเมนูที่เลือกไปยัง cart.php
+                        echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
+                        echo '<input type="hidden" name="menu_no" value="' . $row["menu_no"] . '">';
+                        echo '<input type="hidden" name="menu_name" value="' . $row["menu_name"] . '">';
+                        echo '<input type="hidden" name="price" value="' . $row["price"] . '">';
+                        // เพิ่มปุ่มสำหรับเพิ่มรายการอาหารลงในตะกร้า
+                        echo '<div class="w-full flex justify-center mt-4">';
+                        echo '<button type="submit" disabled name="add_to_cart" id="'. $row["menu_no"] .'" class="p-3 mx-3 rounded-full bg-orange-100 hover:cursor-no-drop">อยู่ในตะกร้าแล้ว</button>';
+                        echo '</div>';
+                        echo '</form>';
+                        echo '</div>';
+                    } else {
+                        echo '<div class="bg-white p-5 rounded-md text-center my-auto mx-0">';
+                        echo '<img src="' . $row["img_path"] . '" alt="' . $row["menu_name"] . '" class="w-[150px] object-cover rounded-md mx-auto">';
+                        echo '<h3 class="font-semibold text-lg mt-4">' . $row["menu_name"] . '</h3>';
+                        echo '<p>' . $row["description"] . '</p>';
+                        echo '<p>ราคา: ' . $row["price"] . ' บาท</p>';
+                        // เพิ่มฟอร์มสำหรับส่งข้อมูลเมนูที่เลือกไปยัง cart.php
+                        echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
+                        echo '<input type="hidden" name="menu_no" value="' . $row["menu_no"] . '">';
+                        echo '<input type="hidden" name="menu_name" value="' . $row["menu_name"] . '">';
+                        echo '<input type="hidden" name="price" value="' . $row["price"] . '">';
+                        // เพิ่มปุ่มสำหรับเพิ่มรายการอาหารลงในตะกร้า
+                        echo '<div class="w-full flex justify-center mt-4">';
+                        echo '<button type="submit" name="add_to_cart" id="'. $row["menu_no"] .'" class="p-3 mx-3 rounded-full bg-orange-300 hover:bg-orange-200">ใส่รถเข็น</button>';
+                        echo '</div>';
+                        echo '</form>';
+                        echo '</div>';
+                    }
                 }
                 echo '</div>';
             }
         }
     ?>
+    
 <form action="cart.php" method="post" class="mx-auto fixed bottom-[20px] right-[20px]">
     <label class="">
         <input type="submit" name="submit" value="สั่งอาหาร" class="hidden rounded-full text-center p-2 m-4 bg-orange-300 hover:cursor-pointer hover:bg-orange-200 big round">
