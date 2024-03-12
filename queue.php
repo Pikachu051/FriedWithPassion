@@ -1,3 +1,56 @@
+<?php
+class MyDB extends SQLite3 {
+    function __construct() {
+       $this->open('fwp.db');
+    }
+}
+
+$db = new MyDB();
+if(!$db) {
+    die($db->lastErrorMsg());
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['queue_no'])) {
+    $queue_no = $_POST['queue_no'];
+    $result = $db->query("SELECT MAX(history_no) AS max_history_no FROM order_history");
+    $row = $result->fetchArray(SQLITE3_ASSOC);
+    if ($row && isset($row['max_history_no'])) {
+        $history_no = $row['max_history_no'] + 1;
+    } else {
+        $history_no = 1;
+    }
+    
+    // Assuming the variables $menu_no, $type, $quantity, $dateTime, and $total are defined elsewhere in your code
+    
+    // Prepare the INSERT INTO order_history query
+    $sqlHistory = "INSERT INTO order_history (history_no, menu_no, `type`, quantity, note, date_time, total, review_id) 
+                    SELECT $history_no, menu_no, `type`, quantity, NULL, date_time, total, NULL
+                    FROM `order` 
+                    WHERE queue_no = $queue_no";
+    
+    // Execute the query
+    $retHistory = $db->exec($sqlHistory);
+    
+    if(!$retHistory) {
+        echo $db->lastErrorMsg();
+        exit;
+    }
+    
+    // Prepare the DELETE FROM order query
+    $sqlDelete = "DELETE FROM `order` WHERE queue_no = $queue_no";
+    
+    // Execute the query
+    $retDelete = $db->exec($sqlDelete);
+    
+    if(!$retDelete) {
+        echo $db->lastErrorMsg();
+    } else {
+        header("Location: queue.php");
+        exit; // Ensure script stops executing after redirection
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,29 +84,57 @@
     </div>
   </nav>
 </header>
-<div class="w-[100vw]">
+<div class="">
   <h1 class="text-[32px] font-bold text-center mt-4 sm:text-[38px]">คิวอาหาร</h1>
-  <div class="grid grid-cols-1 gap-4 mt-6 mx-16 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+  <div class="grid grid-cols-1 gap-4 mt-6 mx-16 sm:grid-cols-3 lg:grid-cols-4">
     <!-- ตัวอย่างการใส่ข้อมูลของคิว 1 คิว -->
-    <div>
-      <div class="bg-red-700 p-4 rounded-lg shadow-md">
-        <div class="flex justify-between">
-          <h1 class="text-3xl text-white font-semibold">คิวที่ 1</h1>
-          <p class="text-sm text-white">เวลา: 12:00</p>
-        </div>
-        <div class="flex justify-between">
-          <p class="text-sm text-white">โต๊ะ: 1</p>
-          <p class="text-sm text-white">จำนวน: 2</p>
-        </div>
-        <div class="flex justify-between">
-          <p class="text-sm text-white">สถานะ: รอ</p>
-          <p class="text-sm text-white">เวลาที่รอ: 10 นาที</p> <!-- คำนวณเวลาปัจจุบันกับเวลาที่สั่งอาหาร -->
-        </div>
-        <div class="flex justify-between">
-          <p class="text-sm text-white">Queue ID: #1</p>
-        </div>
-      </div>
-    </div>
+    <?php
+    $sql = "SELECT o.queue_no, o.date_time, SUM(o.quantity) AS total_quantity, GROUP_CONCAT(m.menu_name || ' x ' || o.quantity, '<br>') AS menu_list
+            FROM `order` AS o
+            INNER JOIN menu AS m ON o.menu_no = m.menu_no
+            GROUP BY o.queue_no, o.date_time
+            ORDER BY o.queue_no, o.date_time";
+
+    $ret = $db->query($sql);
+
+    if (!$ret) {
+        echo $db->lastErrorMsg();
+    } else {
+        while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+            $queue_no = $row['queue_no'];
+            $date_time = $row['date_time'];
+            $total_quantity = $row['total_quantity'];
+            $menu_list = $row['menu_list'];
+
+            // Calculate waiting time
+            $current_time = time();
+            $order_time = strtotime($date_time);
+            $waiting_time = round(($current_time - $order_time) / 60);
+
+            // Display order details
+            echo "<div class=\"bg-orange-600 p-4 rounded-lg shadow-md hover:bg-orange-700\">
+                    <div class=\"flex justify-between\">
+                        <h1 class=\"text-2xl text-white font-semibold\">คิวที่ $queue_no</h1>
+                        <p class=\"text-sm text-white\">เวลา: $date_time</p>
+                    </div>
+                    <div class=\"flex justify-between\">
+                        <p class=\"text-sm text-white\">เวลาที่รอ: $waiting_time นาที</p>
+                        <p class=\"text-sm text-white\">จำนวนรวม: $total_quantity</p>
+                    </div>
+                    <div>
+                        <h2 class=\"text-white font-semibold text-xl\">รายการอาหาร</h2>
+                        <p class=\"text-sm text-white\">$menu_list</p>
+                    </div>
+                    <form action='queue.php' method='post'>
+                        <input type='hidden' name='queue_no' value='$queue_no'>
+                        <button type=\"submit\" class=\"float-right bg-orange-500 text-white font-semibold px-4 py-2 rounded-lg mt-3 hover:bg-orange-400\">เสร็จสิ้น</button>
+                    </form>
+                  </div>";
+        }
+    }
+    ?>
+
+
     <!-- สิ้นสุดตัวอย่างการใส่ข้อมูลของคิว 1 คิว -->
     </div>
   </div>
@@ -79,9 +160,7 @@
         var now = Math.floor(new Date().getTime() / 1000);
         var distance = now - lastUpdate;
         if (distance % 60 === 0) {
-            document.getElementById("lastupdate1").innerHTML = "อัพเดทล่าสุดเมื่อ " + distance / 60 + " นาทีก่อน";
-            document.getElementById("lastupdate2").innerHTML = "อัพเดทล่าสุดเมื่อ " + distance / 60 + " นาทีก่อน";
-            document.getElementById("lastupdate3").innerHTML = "อัพเดทล่าสุดเมื่อ " + distance / 60 + " นาทีก่อน";
+            location.reload();
         }
     }
     setInterval(getClock, 1000);

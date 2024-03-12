@@ -1,4 +1,14 @@
 <?php
+    class MyDB extends SQLite3 {
+        function __construct() {
+        $this->open('fwp.db');
+        }
+    }
+
+    $db = new MyDB();
+    if(!$db) {
+        die($db->lastErrorMsg());
+    }
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $rating = $_POST['hs-ratings-readonly'];
         if ($rating == 5) {
@@ -13,7 +23,15 @@
             $rating = 5;
         }
         $comment = $_POST['comment'];
-        echo "คุณให้คะแนน $rating คะแนน และคำติชมว่า $comment";
+        $sql = "INSERT INTO review (comment, score) VALUES ('$comment', $rating)";
+        $ret = $db->exec($sql);
+        $sql2 = "INSERT INTO order_history (review_id) VALUES ((SELECT MAX(review_id) FROM review))";
+        $ret2 = $db->exec($sql2);
+        if(!$ret || !$ret2) {
+            echo $db->lastErrorMsg();
+        } else {
+            header('Location: selfservice.php');
+        }
     }
 ?>
 <!DOCTYPE html>
