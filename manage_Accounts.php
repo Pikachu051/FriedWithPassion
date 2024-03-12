@@ -67,69 +67,87 @@ if (isset($_POST["delemp"])) {
     <title>Customer History</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
 
     <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class='bg-orange-100 overflow-x-hidden'>
     <style>
         body{
-            background-color: #FFECD9;
-            padding-top: 10px;
+            /* background-color: #FFECD9; */
+            
         }
         .container {
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 30px;
+            /* background-color: #fff; */
+            width: 70%;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
     </style>
-    <div class="container">
+    <div class="main flex w-[100vw]">
+    <div class="left bg-orange-300 p-6 w-1/5">
+                <a class="" href="main_manager.php"><img src="public/fwp-logo-color.png" class="my-0 mx-auto w-auto h-[50px]"></a>
+                <p id="welcome" class="mt-4 font-semibold text-lg"></p>
+                <p>(Manager)</p>
+                <form method="post">
+                    <a href="manage_Accounts.php" class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">จัดการบัญชีผู้ใช้</a>
+                    <a href="#" class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">สรุปยอดขาย</a>
+                    <a href="menu_manager.php" class="block bg-orange-400 hover:bg-orange-500 text-white text-base rounded-md py-2 px-4 mt-4">จัดการเมนู</a>
+                    <a href="logout.php" id="logout" class="block bg-red-400 hover:bg-red-500 text-white text-base rounded-md py-2 px-4 mt-4">ออกจากระบบ</a>
+                </form>
+            </div>
+    
+    <div class="container flex-1">
+    
         <div class="text-center">
-            <h1>จัดการบัญชีผู้ใช้</h1>
+            <h1 class="font-bold text-[32px] text-center mt-5 sm:text-[38px]">จัดการบัญชีผู้ใช้</h1>
         </div>
         <div class="text-center">
             <form method="post" action="add_user.php">
-                <button type="submit" name="add" class="btn btn-success"><i class="fas fa-plus"></i> เพิ่มผู้ใช้ใหม่</button>
+                <button type="submit" name="add" class='p-2 bg-green-300 rounded-md hover:bg-green-200 px-6'><i class="fas fa-plus"></i> เพิ่มผู้ใช้ใหม่</button>
             </form>
         </div>
-        <?php
+        <div class="flex flex-col">
+      <div class="overflow-x-hidden mx-auto my-4">
+        <div class="p-1.5 min-w-full inline-block align-middle">
+          <div class="overflow-hidden">
+            <table class="min-w-full divide-y divide-gray-200 rounded-md">
+              <thead>
+                <tr>
+                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">รหัสพนักงาน</th>
+                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">ชื่อ</th>
+                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">นามสกุล</th>
+                  <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">เพศ</th>
+                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">อีเมล</th>
+                  <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">เบอร์โทรศัพท์</th>
+                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">ตำเเหน่ง</th>
+                  <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 ">
+            <?php
             // SQL SELECT 
             $sql ="SELECT * FROM employees";
             $ret = $db->query($sql);   
 
-            echo "<table class='table'>";
-            echo "<thead class='thead-dark'>";
-            echo "<tr>";
-            echo "<th>รหัสพนักงาน</th>";
-            echo "<th>ชื่อ</th>";
-            echo "<th>นามสกุล</th>";
-            echo "<th>เพศ</th>";
-            echo "<th>อีเมล</th>";
-            echo "<th>เบอร์โทรศัพท์</th>";
-            echo "<th>ตำเเหน่ง</th>";
-            echo "<th>Actions</th>";
-            echo "</tr>";
-            echo "</thead>";
-            echo "<tbody>";
             while($row = $ret->fetchArray(SQLITE3_ASSOC)) {
                 echo "<tr>";
-                echo "<td>".$row["emp_id"]."</td>";
-                echo "<td>".$row["first_name"]."</td> ";
-                echo "<td>". $row["last_name"]."</td>";
-                echo "<td>".$row["sex"]."</td>";
-                echo "<td>".$row["email"]."</td>";
-                echo "<td>".$row["phone"]."</td>";
-                echo "<td>".$row["position"]."</td>";
-                echo "<td>";
+                echo "<td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">".$row["emp_id"]."</td>";
+                echo "<td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">".$row["first_name"]."</td> ";
+                echo "<td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">". $row["last_name"]."</td>";
+                echo "<td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">".$row["sex"]."</td>";
+                echo "<td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">".$row["email"]."</td>";
+                echo "<td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">".$row["phone"]."</td>";
+                echo "<td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">".$row["position"]."</td>";
+                echo "<td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800\">";
                 echo "<form method='post' action='edit_user.php'>";
                 echo "<input type='hidden' name='idbox' value='".$row["emp_id"]."'>";
-                echo "<button type='submit' name='editemp' class='btn btn-primary'><i class='fas fa-edit'></i> แก้ไข</button>";
+                echo "<button type='submit' name='editemp' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4'><i class='fas fa-edit'></i> แก้ไข</button>";
                 echo "</form>";
                 echo "<form method='post' action='".htmlspecialchars($_SERVER["PHP_SELF"])."'>";
                 echo "<input type='hidden' name='idbox' value='".$row["emp_id"]."'>";
-                echo "<button type='submit' name='delemp' class='btn btn-danger'><i class='fas fa-trash'></i> ลบ</button>";
+                echo "<button type='submit' name='delemp' class='p-2 bg-red-300 rounded-md hover:bg-red-200 px-6 mt-3'><i class='fas fa-trash'></i> ลบ</button>";
                 echo "</form>";
                 echo "</td>";
                 echo "</tr>";
@@ -139,7 +157,15 @@ if (isset($_POST["delemp"])) {
             // Close database
             $db->close();
         ?>
+                <!-- ด้านบนคือตัวอย่างการใส่ข้อมูล -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+        </div>
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
