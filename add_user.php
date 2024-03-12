@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
             background-color: #FFECD9;
             padding-top: 50px;
         }
+
         .container {
             max-width: 600px;
             background-color: #fff;
@@ -17,14 +19,17 @@
             padding: 30px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             margin-bottom: 30px;
         }
+
         .form-group {
             margin-bottom: 20px;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="text-center">
@@ -33,9 +38,16 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <form method="post" action="manage_Accounts.php">
-                <div class="form-group">
+                    <div class="form-group">
+                        <label for="posbox">ตำเเหน่ง:</label>
+                        <select class="form-control" id="posbox" name="posbox" required onchange="toggleIdBox()">
+                            <option value="พนักงาน">พนักงาน</option>
+                            <option value="ผู้จัดการ">ผู้จัดการ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="idbox">รหัสพนักงาน:</label>
-                        <input type="text" class="form-control" id="idbox" name="idbox" required>
+                        <input type="text" class="form-control" id="idbox" name="idbox" required readonly>
                     </div>
                     <div class="form-group">
                         <label for="fnbox">ชื่อ:</label>
@@ -60,14 +72,8 @@
                         <label for="phonebox">เบอร์โทรศัพท์:</label>
                         <input type="text" class="form-control" id="phonebox" name="phonebox" required>
                     </div>
-                    <div class="form-group">
-                        <label for="posbox">ตำเเหน่ง:</label>
-                        <select class="form-control" id="posbox" name="posbox" required>
-                            <option value="พนักงาน">พนักงาน</option>
-                            <option value="ผู้จัดการ">ผู้จัดการ</option>
-                        </select>
-                    </div>
-                    <button type="submit" name="addemp" class="btn btn-success"><i class="fas fa-plus"></i> เพิ่มผู้ใช้ใหม่</button>
+                    <button type="submit" name="addemp" class="btn btn-success"><i class="fas fa-plus"></i>
+                        เพิ่มผู้ใช้ใหม่</button>
                 </form>
             </div>
         </div>
@@ -77,5 +83,18 @@
 
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        function toggleIdBox() {
+            var posbox = document.getElementById('posbox');
+            var idbox = document.getElementById('idbox');
+
+            if (posbox.value === 'ผู้จัดการ') {
+                idbox.readOnly = false;
+            } else {
+                idbox.readOnly = true;
+            }
+        }
+    </script>
 </body>
+
 </html>
