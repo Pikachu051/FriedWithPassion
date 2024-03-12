@@ -23,52 +23,24 @@
     }
 
     if (isset($_POST['submit'])) {
-        // Connect to the database
-        class MyDB extends SQLite3 {
-            function __construct() {
-                $this->open('fwp.db');
-            }
-        }
-
-        // Open the database
-        $db = new MyDB();
-        if(!$db) {
-            die($db->lastErrorMsg());
-        }
-
-        // Iterate through menu items and insert into "order" table
-        foreach ($_SESSION['cart'] as $menu_no => $quantity) {
-            if ($quantity > 0) {
-                $type = isset($_SESSION['order_type']) ? $_SESSION['order_type'] : '';
-                $note = '';  // Add logic to capture any additional notes if needed
-                $date_time = date('Y-m-d H:i:s');
-                $total = 0;   // Add logic to calculate the total based on menu price and quantity
-
-                // Prepare and execute the SQL statement to insert into "order" table
-                $stmt = $db->prepare('INSERT INTO "order" (menu_no, type, quantity, note, date_time, total) VALUES (:menu_no, :type, :quantity, :note, :date_time, :total)');
-                $stmt->bindValue(':menu_no', $menu_no, SQLITE3_INTEGER);
-                $stmt->bindValue(':type', $type, SQLITE3_TEXT);
-                $stmt->bindValue(':quantity', $quantity, SQLITE3_INTEGER);
-                $stmt->bindValue(':note', $note, SQLITE3_TEXT);
-                $stmt->bindValue(':date_time', $date_time, SQLITE3_TEXT);
-                $stmt->bindValue(':total', $total, SQLITE3_FLOAT);
-                $result = $stmt->execute();
-
-                if (!$result) {
-                    die("Error inserting data into 'order' table: " . $db->lastErrorMsg());
-                }
-            }
-        }
-
-        // Close the database connection
-        $db->close();
-
-        // Clear the cart after successfully inserting into the "order" table
-        $_SESSION['cart'] = array();
-
-        // Redirect to the same page to avoid form resubmission
-        header('Location: ' . $_SERVER['REQUEST_URI']);
-        exit; // Stop script execution after redirect
+        header('Location: cart.php');
+        exit;
+    }
+    if (isset($_POST['menu_no']) && isset($_POST['menu_name']) && isset($_POST['price'])) {
+        // รับค่าข้อมูลจากฟอร์ม
+        $menu_no = $_POST['menu_no'];
+        $menu_name = $_POST['menu_name'];
+        $price = $_POST['price'];
+        $quantity= 1;
+        
+        // ทำการเพิ่มข้อมูลลงในตะกร้า
+        // ตัวอย่าง: เพิ่มข้อมูลลงใน session เพื่อเก็บข้อมูลของสินค้าที่ถูกเพิ่มลงในตะกร้า
+        $_SESSION['cart'][] = array(
+            'menu_no' => $menu_no,
+            'menu_name' => $menu_name,
+            'price' => $price,
+            'quantity' => $quantity
+        );
     }
 ?>
 <!DOCTYPE html>
@@ -177,15 +149,13 @@
                     echo '<p>' . $row["description"] . '</p>';
                     echo '<p>ราคา: ' . $row["price"] . ' บาท</p>';
                     // เพิ่มฟอร์มสำหรับส่งข้อมูลเมนูที่เลือกไปยัง cart.php
-                    echo '<form action="cart.php" method="post">';
+                    echo '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
                     echo '<input type="hidden" name="menu_no" value="' . $row["menu_no"] . '">';
                     echo '<input type="hidden" name="menu_name" value="' . $row["menu_name"] . '">';
                     echo '<input type="hidden" name="price" value="' . $row["price"] . '">';
                     // เพิ่มปุ่มสำหรับเพิ่มรายการอาหารลงในตะกร้า
                     echo '<div class="w-full flex justify-center mt-4">';
-                    echo '<button type="submit" name="add_to_cart" class="w-6 mx-3 rounded-full bg-orange-300 hover:bg-orange-200">+</button>';
-                    echo '<p class="mx-3" id="quantity' . $row["menu_no"] . '">0</p>';
-                    echo '<button type="button" class="w-6 mx-3 rounded-full bg-orange-100 hover:bg-orange-200" onclick="decrement(\'quantity' . $row["menu_no"] . '\')">-</button>';
+                    echo '<button type="submit" name="add_to_cart" class="p-2 mx-3 rounded-full bg-orange-300 hover:bg-orange-200">ใส่รถเข็น</button>';
                     echo '</div>';
                     echo '</form>';
                     echo '</div>';
@@ -194,12 +164,12 @@
             }
         }
     ?>
-    <form action="cart.php" method="post" class="mx-auto fixed bottom-[20px] right-[20px]">
-        <label class="">
-            <input type="submit" name="submit" value="สั่งอาหาร" class="hidden rounded-full text-center p-2 m-4 bg-orange-300 hover:cursor-pointer hover:bg-orange-200 big round">
-            <svg xmlns="http://www.w3.org/2000/svg"  width="48"  height="18"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="shadow-md icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart bg-orange-300 rounded-full text-3xl h-12 hover:cursor-pointer hover:bg-orange-200 transition-all"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" /><path d="M6 5l14 1l-1 7h-13" /></svg>
-        </label>
-    </form>
+<form action="cart.php" method="post" class="mx-auto fixed bottom-[20px] right-[20px]">
+    <label class="">
+        <input type="submit" name="submit" value="สั่งอาหาร" class="hidden rounded-full text-center p-2 m-4 bg-orange-300 hover:cursor-pointer hover:bg-orange-200 big round">
+        <svg xmlns="http://www.w3.org/2000/svg"  width="48"  height="18"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="shadow-md icon icon-tabler icons-tabler-outline icon-tabler-shopping-cart bg-orange-300 rounded-full text-3xl h-12 hover:cursor-pointer hover:bg-orange-200 transition-all"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17h-11v-14h-2" /><path d="M6 5l14 1l-1 7h-13" /></svg>
+    </label>
+</form>
     </div>
     <div id="openingModal" class="modal">
         <div class="modal-content rounded-md">
