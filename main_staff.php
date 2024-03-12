@@ -1,5 +1,15 @@
 <?php
-require_once '_staffStart.php'; // !! ใส่ทุกหน้าของพนักงาน !!
+    require_once '_staffStart.php'; // !! ใส่ทุกหน้าของพนักงาน !!
+    class MyDB extends SQLite3 {
+        function __construct() {
+           $this->open('fwp.db');
+        }
+    }
+    
+    $db = new MyDB();
+    if(!$db) {
+        die($db->lastErrorMsg());
+    }
 ?>
 
 <!DOCTYPE html>
@@ -50,10 +60,20 @@ require_once '_staffStart.php'; // !! ใส่ทุกหน้าของพ
                     สถานะโต๊ะ
                 </h3>
                 <p class="mt-1 text-gray-500">
-                    โต๊ะว่าง: 5 โต๊ะ
+                    <?php 
+                        $sql = "SELECT COUNT(*) FROM table_status WHERE table_status = 'ไม่ว่าง'";
+                        $result = $db->query($sql);
+                        $row = $result->fetchArray(SQLITE3_NUM);
+                        echo "โต๊ะที่ไม่ว่าง: " . $row[0] . " โต๊ะ";
+                    ?>
                 </p>
                 <p class="text-gray-500">
-                    โต๊ะไม่ว่าง: 10 โต๊ะ
+                    <?php
+                        $sql = "SELECT COUNT(*) FROM table_status WHERE table_status = 'ว่าง'";
+                        $result = $db->query($sql);
+                        $row = $result->fetchArray(SQLITE3_NUM);
+                        echo "โต๊ะว่าง: " . $row[0] . " โต๊ะ";
+                    ?>
                 </p>
                 </div>
                 <div class="flex p-4 border-t sm:px-5">
@@ -72,10 +92,26 @@ require_once '_staffStart.php'; // !! ใส่ทุกหน้าของพ
                     คิวอาหาร
                 </h3>
                 <p class="mt-1 text-gray-500">
-                    คิวอาหารทั้งหมดในตอนนี้: 10 คิว
+                    <?php
+                        $sql = "SELECT COUNT(*) FROM `order`";
+                        $result = $db->query($sql);
+                        $row = $result->fetchArray(SQLITE3_NUM);
+                        if ($row[0] == 0) {
+                            echo "จำนวนคิวทั้งหมด: 0 คิว";
+                        } else {
+                            echo "จำนวนคิวทั้งหมด: " . $row[0] . " คิว";
+                        }
+                    ?>
                 </p>
                 <p class="text-gray-500">
-                    คิวที่ช้ามาก: 3 คิว
+                    <?php
+                        date_default_timezone_set('Asia/Bangkok');
+                        $fifteenMinutesAgo = date('Y-m-d H:i:s', strtotime('-15 minutes'));
+                        $sql = "SELECT COUNT(*) FROM `order` WHERE `date_time` < '$fifteenMinutesAgo'";
+                        $result = $db->query($sql);
+                        $row = $result->fetchArray(SQLITE3_NUM);
+                        echo "คิวที่ช้ามาก: " . $row[0] . " คิว";
+                    ?>
                 </p>
                 </div>
                 <div class="flex p-4 border-t sm:px-5">
@@ -94,10 +130,20 @@ require_once '_staffStart.php'; // !! ใส่ทุกหน้าของพ
                     สถานะเมนู
                 </h3>
                 <p class="mt-1 text-gray-500">
-                    เมนูที่เหลืออยู่: 12 เมนู
+                    <?php
+                        $sql = "SELECT COUNT(*) FROM menu WHERE stock = 'มีอยู่'";
+                        $result = $db->query($sql);
+                        $row = $result->fetchArray(SQLITE3_NUM);
+                        echo "เมนูที่มีอยู่: " . $row[0] . " เมนู";
+                    ?>
                 </p>
                 <p class="text-gray-500">
-                    เมนูที่ใกล้หมด: 5 เมนู
+                    <?php
+                        $sql = "SELECT COUNT(*) FROM menu WHERE stock = 'หมด'";
+                        $result = $db->query($sql);
+                        $row = $result->fetchArray(SQLITE3_NUM);
+                        echo "เมนูที่หมดแล้ว: " . $row[0] . " เมนู";
+                    ?>
                 </p>
                 </div>
                 <div class="flex p-4 border-t sm:px-5">

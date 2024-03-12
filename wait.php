@@ -1,5 +1,15 @@
 <?php
     session_start();
+    class MyDB extends SQLite3 {
+        function __construct() {
+           $this->open('fwp.db');
+        }
+    }
+    
+    $db = new MyDB();
+    if(!$db) {
+        die($db->lastErrorMsg());
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,6 +72,15 @@
 <script>
     setTimeout(function() {
         location.reload();
+        // 
+        //     $sql = "SELECT order FROM order WHERE queue_no = เลขคิวของลูกค้าที่สั่งจริงๆ";
+        //     $ret = $db->query($sql);
+        //     $row = $ret->fetchArray(SQLITE3_ASSOC);
+        //     if ($row === false) {
+        //         header("Location: complete.php");
+        //         exit;
+        //     }
+        //
     }, 30000);
 </script>
 </html>
