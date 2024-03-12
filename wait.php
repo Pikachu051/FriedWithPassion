@@ -54,8 +54,14 @@
 </tbody>
 
                 </table>
+                <p class="text-right text-xl mt-4 font-semibold">ราคารวม: <?php echo number_format($totalPrice, 2); ?> บาท</p>
                 <p class="text-right text-sm mt-4">สั่งเมื่อ: <?php echo date('Y-m-d H:i:s'); ?></p>
             </div>
         </div>
 </body>
+<script>
+    setTimeout(function() {
+        location.reload();
+    }, 30000);
+</script>
 </html>
