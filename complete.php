@@ -20,8 +20,13 @@
     </header>
     <div class="bg-orange-100 text-center">
         <h1 class="text-3xl font-bold text-center mt-6">คิวของคุณ</h1>
-        <h1>Order Completed</h1>
-        <p>Thank you for your order. We have received your payment and will process your order shortly.</p>
+        <div class="bg-white p-5 rounded-lg w-[450px] m-5 shadow-md text-center mx-auto">
+            <h3 class="text-xl font-semibold">คิวหมายเลข #....</h3>
+            <h3 class="text-lg font-semibold text-green-500">อาหารพร้อมแล้ว</h3>
+            <p class="mt-4">ขอบคุณที่ใช้บริการ <strong>FriedWithPassion</strong><br>หวังว่าคุณจะชอบอาหารและบริการของพวกเรา</p>
+            <p class="mb-6 mt-2">โปรดนำเงินไปชำระที่เคาน์เตอร์และรับอาหารได้เลยครับ</p>
+            <a href="review.php" class="block bg-orange-400 hover:bg-orange-500 text-white text-base rounded-md py-2 px-20 mt-18">เสร็จสิ้น</a>
+        </div>
     </div>
 </body>
 </html>

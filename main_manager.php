@@ -19,7 +19,6 @@ require_once '_managerStart.php';  // !! ใส่ทุกหน้าของ
             font-family: 'Prompt', 'sans-serif';
         }
     </style>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
 <body>
