@@ -50,10 +50,10 @@
             <table class="min-w-full divide-y divide-gray-200 rounded-md">
               <thead>
                 <tr>
-                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">รูป</th>
-                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase sm:w-[300px]">ชื่อเมนู</th>
-                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">จำนวน</th>
-                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">ราคา</th>
+                  <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">รูป</th>
+                  <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase sm:w-[300px]">ชื่อเมนู</th>
+                  <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">จำนวน</th>
+                  <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">ราคา</th>
                   <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase"></th>
                 </tr>
               </thead>
@@ -65,8 +65,14 @@
                   <tr class="hover:bg-orange-200">
                       <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><img class="object-cover h-[75px] w-[75px] rounded-md" src="menu_img/menu<?php echo $menu_no; ?>.png"></td>
                       <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 menu-name"><?php echo $item['menu_name']; ?></td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><?php echo $item['quantity']; ?></td>
-                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><?php echo $item['price'] * $item['quantity']; ?> บาท</td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                          <div class="flex justify-center">
+                              <button type="button" id="decrement-<?php echo $menu_no; ?>" onclick="decrement('quantity-<?php echo $menu_no; ?>', '<?php echo $menu_no; ?>', <?php echo $item['price']; ?>)" class="w-6 mx-3 rounded-full bg-orange-300 hover:bg-orange-200">-</button>
+                              <p id="quantity-<?php echo $menu_no; ?>"><?php echo $item['quantity']; ?></p>
+                              <button type="button" id="increment-<?php echo $menu_no; ?>" onclick="increment('quantity-<?php echo $menu_no; ?>', '<?php echo $menu_no; ?>', <?php echo $item['price']; ?>)" class="w-6 mx-3 rounded-full bg-orange-300 hover:bg-orange-200">+</button>
+                          </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800" id="total-<?php echo $menu_no; ?>"><?php echo $item['price'] * $item['quantity']; ?> บาท</td>
                       <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                         <input value="ลบ" name="delete" type="submit"
@@ -84,6 +90,44 @@
         </div>
       </div>
     </div>
+    <form action="wait.php" method="post" class="flex justify-center">
+      <button type="submit" class="w-[100%] bg-orange-300 hover:bg-orange-200 p-3 rounded-md mx-20">สั่งซื้อ</button>
+    </form>
     </div>
 </body>
+<script>
+  function increment(id, menu_no, price) {
+    var quantityElement = document.getElementById(id);
+    var quantity = parseInt(quantityElement.innerHTML);
+    quantityElement.innerHTML = quantity + 1;
+    updateTotal(menu_no, price, quantity + 1);
+    quantity = quantity + 1;
+    if (quantity >= 0) {
+        document.getElementById('quantity-' + id).disabled = false;
+        document.getElementById('quantity-' + id).classList.remove("bg-orange-100");
+        document.getElementById('quantity-' + id).classList.add("bg-orange-300");
+    }
+  }
+
+  function decrement(id, menu_no, price) {
+      var quantityElement = document.getElementById(id);
+      var quantity = parseInt(quantityElement.innerHTML);
+      if (quantity > 0) {
+          quantityElement.innerHTML = quantity - 1;
+          updateTotal(menu_no, price, quantity - 1);
+      }
+      quantity = quantity - 1;
+      if (quantity == 0) {
+        document.getElementById('quantity-' + id).disabled = true;
+        document.getElementById('quantity-' + id).classList.remove("bg-orange-300");
+        document.getElementById('quantity-' + id).classList.add("bg-orange-100");
+      }
+  }
+  function updateTotal(menu_no, price, quantity) {
+    var totalElement = document.getElementById('total-' + menu_no);
+    var totalPrice = price * quantity;
+    totalElement.innerHTML = totalPrice + ' บาท';
+  }
+
+</script>
 </html>

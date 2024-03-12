@@ -182,7 +182,7 @@
                     echo '<input type="hidden" name="menu_name" value="' . $row["menu_name"] . '">';
                     echo '<input type="hidden" name="price" value="' . $row["price"] . '">';
                     // เพิ่มปุ่มสำหรับเพิ่มรายการอาหารลงในตะกร้า
-                    echo '<div class="w-full flex justify-center">';
+                    echo '<div class="w-full flex justify-center mt-4">';
                     echo '<button type="submit" name="add_to_cart" class="w-6 mx-3 rounded-full bg-orange-300 hover:bg-orange-200">+</button>';
                     echo '<p class="mx-3" id="quantity' . $row["menu_no"] . '">0</p>';
                     echo '<button type="button" class="w-6 mx-3 rounded-full bg-orange-100 hover:bg-orange-200" onclick="decrement(\'quantity' . $row["menu_no"] . '\')">-</button>';
