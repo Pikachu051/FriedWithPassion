@@ -9,6 +9,8 @@ $db = new MyDB();
 if(!$db) {
     die($db->lastErrorMsg());
 }
+date_default_timezone_set('Asia/Bangkok');
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['queue_no'])) {
     $queue_no = $_POST['queue_no'];
@@ -159,11 +161,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['queue_no'])) {
     function getClock() {
         var now = Math.floor(new Date().getTime() / 1000);
         var distance = now - lastUpdate;
-        if (distance % 60 === 0) {
-            location.reload();
-        }
     }
-    setInterval(getClock, 1000);
+    setTimeout(function() {
+        location.reload();
+    }, 10000);
     
 </script>
 </html>

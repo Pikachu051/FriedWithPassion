@@ -25,7 +25,7 @@
         $comment = $_POST['comment'];
         $sql = "INSERT INTO review (comment, score) VALUES ('$comment', $rating)";
         $ret = $db->exec($sql);
-        $sql2 = "INSERT INTO order_history (review_id) VALUES ((SELECT MAX(review_id) FROM review))";
+        $sql2 = "UPDATE order_history SET review_id = (SELECT MAX(review_id) FROM review) WHERE history_no = (SELECT MAX(history_no) FROM order_history)";
         $ret2 = $db->exec($sql2);
         if(!$ret || !$ret2) {
             echo $db->lastErrorMsg();

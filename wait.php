@@ -12,6 +12,15 @@
     }
 
     date_default_timezone_set('Asia/Bangkok');
+
+    // Check if there are any active queues remaining
+    $sql_check_queue = "SELECT * FROM `order` WHERE queue_no = " . $_SESSION['queue_no'];
+    $ret_check_queue = $db->query($sql_check_queue);
+    if(!$ret_check_queue || $ret_check_queue->fetchArray(SQLITE3_ASSOC) === false) {
+        // No active queues remaining, redirect to complete.php
+        header("Location: complete.php");
+        exit;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,51 +59,48 @@
                         </tr>
                     </thead>
                     <tbody>
-    <?php
+                    <?php
     $sql = "SELECT * FROM `order` WHERE queue_no =" .$_SESSION['queue_no'];
     $ret = $db->query($sql);
       
-    // ตรวจสอบว่ามีข้อผิดพลาดหรือไม่
+    // Check for errors
     if(!$ret) {
-        echo $db->lastErrorMsg();
+        header("Location: complete.php");
     }
     $totalPrice = 0;
 
- 
-        while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
-            $stringDateTime = $row['date_time']->format('Y-m-d H:i:s');
-            $totalPrice += number_format($row['total'], 2);
-            echo '<tr>';
-            echo '<td>' .$row['menu_name']. '</td>';
-            echo '<td class="text-right">' .number_format($row['total'], 2) .'</td>';
-            echo '<td class="text-right">' .$row['quantity'] .'</td>';
+    while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+        $query = "SELECT menu_name FROM menu WHERE menu_no =" .$row['menu_no'];
+        $menu_result = $db->query($query);
+        $menu_row = $menu_result->fetchArray(SQLITE3_ASSOC);
+        
+        $totalPrice += $row['total'];
+        $date_time = $row["date_time"];
+
+
+        
+        echo '<tr>';
+        echo '<td>' . $menu_row['menu_name'] . '</td>';
+        echo '<td class="text-right">' . number_format($row['total'], 2) . '</td>';
+        echo '<td class="text-right">' . $row['quantity'] . '</td>';
         echo '</tr>';
+    }
 
-        }
-    
+?>
 
-
-    ?>
 </tbody>
 
+
+
                 </table>
-                <p class="text-right text-xl mt-4 font-semibold">ราคารวม: <?php echo number_format($totalPrice, 2); ?> บาท</p>
-                <p class="text-right text-sm mt-4">สั่งเมื่อ: <?php echo $stringDateTime; ?></p>
+                <p class="text-right text-xl mt-4 font-semibold">ราคารวม: <?php  echo number_format($totalPrice, 2); ?> บาท</p>
+                <p class="text-right text-sm mt-4">สั่งเมื่อ: <?php  echo  $date_time; ?></p>
             </div>
         </div>
 </body>
 <script>
     setTimeout(function() {
         location.reload();
-        <?php
-            $sql = "SELECT order FROM order WHERE queue_no = " . $_SESSION['queue_no'];
-            $ret = $db->query($sql);
-            $row = $ret->fetchArray(SQLITE3_ASSOC);
-            if ($row === false) {
-                header("Location: complete.php");
-                exit;
-            }
-        ?>
-    }, 30000);
+    }, 15000);
 </script>
 </html>
