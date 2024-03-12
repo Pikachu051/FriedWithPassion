@@ -93,10 +93,14 @@
                 </h3>
                 <p class="mt-1 text-gray-500">
                     <?php
-                        $sql = "SELECT COUNT(*) FROM order";
+                        $sql = "SELECT COUNT(*) FROM `order`";
                         $result = $db->query($sql);
                         $row = $result->fetchArray(SQLITE3_NUM);
-                        echo "จำนวนคิวทั้งหมด ณ ตอนนี้: " . $row[0] . " คิว";
+                        if ($row[0] == 0) {
+                            echo "จำนวนคิวทั้งหมด: 0 คิว";
+                        } else {
+                            echo "จำนวนคิวทั้งหมด: " . $row[0] . " คิว";
+                        }
                     ?>
                 </p>
                 <p class="text-gray-500">
@@ -106,7 +110,7 @@
                         $sql = "SELECT COUNT(*) FROM `order` WHERE `date_time` < '$fifteenMinutesAgo'";
                         $result = $db->query($sql);
                         $row = $result->fetchArray(SQLITE3_NUM);
-                        echo "คิวที่ช้ามากกว่า 15 นาที: " . $row[0] . " คิว";
+                        echo "คิวที่ช้ามาก: " . $row[0] . " คิว";
                     ?>
                 </p>
                 </div>
