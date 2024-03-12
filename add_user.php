@@ -47,7 +47,7 @@
                     </div>
                     <div class="form-group">
                         <label for="idbox">รหัสพนักงาน:</label>
-                        <input type="text" class="form-control" id="idbox" name="idbox" required readonly>
+                        <input type="text" class="form-control" id="idbox" name="idbox" required disabled>
                     </div>
                     <div class="form-group">
                         <label for="fnbox">ชื่อ:</label>
@@ -89,9 +89,10 @@
             var idbox = document.getElementById('idbox');
 
             if (posbox.value === 'ผู้จัดการ') {
-                idbox.readOnly = false;
+                idbox.disabled = false;
             } else {
-                idbox.readOnly = true;
+                idbox.disabled = true;
+                idbox.value = null;
             }
         }
     </script>
