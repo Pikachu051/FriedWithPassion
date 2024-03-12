@@ -68,6 +68,13 @@ if (isset($_POST['idbox'])) {
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <form method="post" action="manage_Accounts.php">
+                <div class="form-group">
+                    <label for="posbox">ตำเเหน่ง:</label>
+                        <select class="form-control" id="posbox" name="posbox" required>
+                            <option value="พนักงาน" <?php if ($position === 'พนักงาน') echo 'selected'; ?>>พนักงาน</option>
+                            <option value="ผู้จัดการ" <?php if ($position === 'ผู้จัดการ') echo 'selected'; ?>>ผู้จัดการ</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="idbox">รหัสพนักงาน:</label>
                         <input type="text" class="form-control" id="idbox" name="idbox" value="<?php echo $emp_id; ?>" required>
@@ -94,13 +101,6 @@ if (isset($_POST['idbox'])) {
                     <div class="form-group">
                         <label for="phonebox">เบอร์โทรศัพท์:</label>
                         <input type="text" class="form-control" id="phonebox" name="phonebox" value="<?php echo $phone; ?>" required>
-                    </div>
-                    <div class="form-group">
-                    <label for="posbox">ตำเเหน่ง:</label>
-                        <select class="form-control" id="posbox" name="posbox" required>
-                            <option value="พนักงาน" <?php if ($position === 'พนักงาน') echo 'selected'; ?>>พนักงาน</option>
-                            <option value="ผู้จัดการ" <?php if ($position === 'ผู้จัดการ') echo 'selected'; ?>>ผู้จัดการ</option>
-                        </select>
                     </div>
                     <button type='submit' name='editemp' class='btn btn-primary'><i class='fas fa-edit'></i> เเก้ไข</button>
                 </form>
