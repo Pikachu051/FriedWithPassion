@@ -15,32 +15,20 @@ if (!$db) {
 }
 
 if (isset($_POST["addemp"])) {
+    $e_id = $_POST['idbox'];
     $firstname = $_POST['fnbox'];
     $lastname = $_POST['lnbox'];
     $sex = $_POST['sexbox'];
     $email = $_POST['emailbox'];
     $phone = $_POST['phonebox'];
     $position = $_POST['posbox'];
-    $hash = password_hash("fwp1234", PASSWORD_DEFAULT); 
+    $hash = password_hash("fwp1234", PASSWORD_DEFAULT);
 
-    if (isset($_POST['idbox'])) {
-        $e_id = $_POST['idbox'];
-        $addEmpSql = "INSERT INTO employees (emp_id, first_name, last_name, sex, email, phone, position)
+    $addEmpSql = "INSERT INTO employees (emp_id, first_name, last_name, sex, email, phone, position)
                VALUES ($e_id, '$firstname', '$lastname', '$sex', '$email', '$phone', '$position')";
-        $db->exec($addEmpSql);
-        $addAccSql = "INSERT INTO accounts (username, pass, emp_id) VALUES ('fwp' || $e_id, $hash, $e_id)";
-        $db->exec($addAccSql);
-    } else {
-        $addEmpSql = "INSERT INTO employees (first_name, last_name, sex, email, phone, position)
-        VALUES ('$firstname', '$lastname', '$sex', '$email', '$phone', '$position')";
-        $db->exec($addEmpSql);
-        $sql = "SELECT emp_id FROM employees ORDER BY emp_id DESC LIMIT 1";
-        $ret = $db->query($sql);
-        $row = $ret->fetchArray(SQLITE3_ASSOC);
-        $e_id = $row["emp_id"];
-        $addAccSql = "INSERT INTO accounts (username, pass, emp_id) VALUES ('fwp' || $e_id, '$hash', $e_id)";
-        $db->exec($addAccSql);
-    }
+    $db->exec($addEmpSql);
+    $addAccSql = "INSERT INTO accounts (username, pass, emp_id) VALUES ('fwp' || $e_id, '$hash', $e_id)";
+    $db->exec($addAccSql);
 
 }
 

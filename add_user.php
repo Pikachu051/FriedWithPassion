@@ -37,6 +37,26 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-10">
+                <?php
+                
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('fwp.db');
+    }
+}
+
+// 2. Open Database 
+$db = new MyDB();
+if (!$db) {
+    die($db->lastErrorMsg());
+}
+                $sql = "SELECT emp_id FROM employees WHERE emp_id LIKE '102%' ORDER BY emp_id DESC LIMIT 1";
+                $ret = $db->query($sql);
+                $row = $ret->fetchArray(SQLITE3_ASSOC);
+                $e_id = $row["emp_id"]+1;
+                ?>
                 <form method="post" action="manage_Accounts.php">
                     <div class="form-group">
                         <label for="posbox">ตำเเหน่ง:</label>
@@ -47,7 +67,7 @@
                     </div>
                     <div class="form-group">
                         <label for="idbox">รหัสพนักงาน:</label>
-                        <input type="text" class="form-control" id="idbox" name="idbox" required disabled>
+                        <input type="text" class="form-control" id="idbox" name="idbox" value="<?php echo $e_id; ?>" required readonly>
                     </div>
                     <div class="form-group">
                         <label for="fnbox">ชื่อ:</label>
@@ -84,18 +104,23 @@
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script>
-        function toggleIdBox() {
-            var posbox = document.getElementById('posbox');
-            var idbox = document.getElementById('idbox');
-
-            if (posbox.value === 'ผู้จัดการ') {
-                idbox.disabled = false;
-            } else {
-                idbox.disabled = true;
-                idbox.value = null;
-            }
+    function toggleIdBox() {
+        <?php
+        $sql2 = "SELECT emp_id FROM employees WHERE emp_id LIKE '101%' ORDER BY emp_id DESC LIMIT 1";
+        $ret2 = $db->query($sql2);
+        $row2 = $ret2->fetchArray(SQLITE3_ASSOC);
+        $em_id = $row2["emp_id"]+1;
+        ?>
+        var posbox = document.getElementById('posbox');
+        var idbox = document.getElementById('idbox');
+        
+        if (posbox.value === 'ผู้จัดการ') {
+            idbox.value = <?php echo $em_id; ?>;
+        } else {
+            idbox.value = <?php echo $e_id; ?>;
         }
-    </script>
+    }
+</script>
 </body>
 
 </html>
