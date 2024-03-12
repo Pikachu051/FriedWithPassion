@@ -1,5 +1,19 @@
 <?php
+// 1. Connect to Database 
+class MyDB extends SQLite3 {
+    function __construct() {
+        $this->open('fwp.db');
+    }
+}
+
+// 2. Open Database 
+$db = new MyDB();
+if(!$db) {
+    die($db->lastErrorMsg());
+}
+
 session_start();
+date_default_timezone_set('Asia/Bangkok');
 
 // เพิ่มหรือลบจำนวนรายการอาหารในตะกร้า
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -16,10 +30,62 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 if (isset($_POST['delete'])) {
-  $menu_no = $_POST['menu_no'];
-  // ลบรายการอาหารที่ถูกเลือกออกจาก session cart
-  unset($_SESSION['cart'][$menu_no]);
+    $menu_no = $_POST['menu_no'];
+    // ลบรายการอาหารที่ถูกเลือกออกจาก session cart
+    unset($_SESSION['cart'][$menu_no]);
 }
+
+// เมื่อกดสั่งซื้อ
+if ( isset($_POST['submit_cart']) && isset($_SESSION['cart'])) {
+  // กำหนดค่าเริ่มต้น
+  $total = 0;
+  $dateTime = date('Y-m-d H:i:s');
+  $result = $db->query("SELECT MAX(queue_no) AS max_queue_no FROM `order`");
+$row = $result->fetchArray(SQLITE3_ASSOC);
+
+// Determine the new queue_no
+if ($row && isset($row['max_queue_no'])) {
+    $queue_no = $row['max_queue_no'] + 1;
+} else {
+    $queue_no = 1; // If table is empty
+}
+
+    session_start();
+
+    $_SESSION['queue_no'] = $queue_no;
+  
+  // วนลูปเพื่อเพิ่มข้อมูลลงในฐานข้อมูล
+  foreach ($_SESSION['cart'] as $menu_no => $item) {
+      $menuNo = $item['menu_no'];
+      $type = isset($_SESSION['order_type']) ? ($_SESSION['order_type'] == 'takeaway' ? 'สั่งกลับบ้าน' : '') : 'ทานที่ร้าน';
+      $quantity = $item['quantity'];
+      $note = ''; // สำหรับเพิ่มรายการหมายเหตุ
+      $total += $item['price'] * $quantity;
+      
+
+      // เตรียมคำสั่ง SQL สำหรับเพิ่มข้อมูลลงในฐานข้อมูล
+      $sql =<<<EOF
+      INSERT INTO `order` (queue_no, menu_no, `type`, quantity, note, date_time, total)
+        VALUES ('$queue_no', '$menuNo', '$type', '$quantity', '$note', '$dateTime', '$total');
+    EOF;
+
+      // ทำการ execute คำสั่ง SQL
+      $ret = $db->exec($sql);
+      
+      // ตรวจสอบว่ามีข้อผิดพลาดหรือไม่
+      if(!$ret) {
+          echo $db->lastErrorMsg();
+      } else {
+          // ลบรายการที่เพิ่มแล้วออกจาก session
+          unset($_SESSION['cart'][$menu_no]);
+      }
+  }
+  
+  // เมื่อเสร็จสิ้นการสั่งซื้อ สามารถทำการ redirect หรือทำงานอื่นต่อได้ตามต้องการ
+  header("Location: wait.php");
+  exit(); // จบการทำงานของ script
+}
+
 
 
 ?>
@@ -100,8 +166,8 @@ if (isset($_POST['delete'])) {
                 </div>
             </div>
         </div>
-        <form action="wait.php" method="post" class="flex justify-center">
-            <button type="submit" class="w-[100%] bg-orange-300 hover:bg-orange-200 p-3 rounded-md mx-20 mb-4">สั่งซื้อ</button>
+        <form action="" method="post" class="flex justify-center">
+            <button type="submit" name = "submit_cart" class="w-[100%] bg-orange-300 hover:bg-orange-200 p-3 rounded-md mx-20 mb-4">สั่งซื้อ</button>
         </form>
     </div>
 </body>
@@ -112,6 +178,7 @@ if (isset($_POST['delete'])) {
         var totalPrice = price * quantity;
         totalElement.innerHTML = totalPrice + ' บาท';
     }
+    
 </script>
 
 </html>

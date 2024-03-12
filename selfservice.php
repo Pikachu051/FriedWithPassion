@@ -18,7 +18,9 @@
     if (isset($_POST['change_option'])) {
         unset($_SESSION['table_no']); // Clear old table selection
         unset($_SESSION['order_type']); // Clear old order type
-        header('Location: ' . $_SERVER['REQUEST_URI']); // Redirect to the same page to start fresh
+        session_destroy();
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+        // session_destroy();// Redirect to the same page to start fresh
         exit; // Stop script execution after redirect
     }
 

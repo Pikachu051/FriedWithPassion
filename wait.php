@@ -10,6 +10,8 @@
     if(!$db) {
         die($db->lastErrorMsg());
     }
+
+    date_default_timezone_set('Asia/Bangkok');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +37,7 @@
         <h1 class="text-3xl font-bold text-center mt-6">คิวของคุณ</h1>
         <div class="flex justify-center mt-10">
             <div class="bg-white rounded-lg shadow-lg p-6 w-[400px]">
-                <h2 class="text-xl font-semibold mb-4">หมายเลยคิว: #1</h2>
+                <h2 class="text-xl font-semibold mb-4"><?php echo "หมายเลขคิว: #" . $_SESSION['queue_no']; ?></h2>
                 <p class="text-base">โปรดรอพนักงานเรียกคิวของคุณ</p>
                 <p class="text-base">เวลารอโดยประมาณ: 15 นาที</p>
                 <h2 class="text-xl font-semibold mt-4">รายละเอียดออเดอร์</h2>
@@ -49,23 +51,35 @@
                     </thead>
                     <tbody>
     <?php
-    $totalPrice = 0; // ตัวแปรเก็บรวมราคาทั้งหมด
-    foreach ($_SESSION['cart'] as $menu_no => $item) {
-        $totalPrice += $item['price'] * $item['quantity']; // บวกราคารวมของแต่ละรายการอาหาร
-    ?>
-        <tr>
-            <td><?php echo $item['menu_name']; ?></td>
-            <td class="text-right"><?php echo number_format($item['price'], 2); ?></td>
-            <td class="text-right"><?php echo $item['quantity']; ?></td>
-        </tr>
-    <?php
+    $sql = "SELECT * FROM `order` WHERE queue_no =" .$_SESSION['queue_no'];
+    $ret = $db->query($sql);
+      
+    // ตรวจสอบว่ามีข้อผิดพลาดหรือไม่
+    if(!$ret) {
+        echo $db->lastErrorMsg();
     }
+    $totalPrice = 0;
+
+ 
+        while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+            $stringDateTime = $row['date_time']->format('Y-m-d H:i:s');
+            $totalPrice += number_format($row['total'], 2);
+            echo '<tr>';
+            echo '<td>' .$row['menu_name']. '</td>';
+            echo '<td class="text-right">' .number_format($row['total'], 2) .'</td>';
+            echo '<td class="text-right">' .$row['quantity'] .'</td>';
+        echo '</tr>';
+
+        }
+    
+
+
     ?>
 </tbody>
 
                 </table>
                 <p class="text-right text-xl mt-4 font-semibold">ราคารวม: <?php echo number_format($totalPrice, 2); ?> บาท</p>
-                <p class="text-right text-sm mt-4">สั่งเมื่อ: <?php echo date('Y-m-d H:i:s'); ?></p>
+                <p class="text-right text-sm mt-4">สั่งเมื่อ: <?php echo $stringDateTime; ?></p>
             </div>
         </div>
 </body>
