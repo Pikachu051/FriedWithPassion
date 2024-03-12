@@ -22,6 +22,17 @@ require_once "_managerStart.php";
                 width: 100%;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        .col-25 {
+        float: left;
+        width: 25%;
+        margin-top: 6px;
+        }
+
+        .col-75 {
+        float: left;
+        width: 75%;
+        margin-top: 6px;
+        }
     </style>
     <div class="main flex w-[100vw]">
         <div class="left bg-orange-300 p-6 w-1/5">
@@ -111,15 +122,47 @@ require_once "_managerStart.php";
         displayRecordDetails($db, $id);
     } else {
         echo "<form method='post' class='mt-3'>";
-        echo "<div class='form-group'><label for='menu_no'>รหัสเมนู:</label><input type='text' class='form-control' id='menu_no' name='menu_no' value=''></div>";
-        echo "<div class='form-group'><label for='menu_name'>ชื่อเมนู:</label><input type='text' class='form-control' id='menu_name' name='menu_name' value=''></div>";
-        echo "<div class='form-group'><label for='description'>รายละเอียด:</label><input type='text' class='form-control' id='description' name='description' value=''></div>";
-        echo "<div class='form-group'><label for='price'>ราคา:</label><input type='text' class='form-control' id='price' name='price' value=''></div>";
-        echo "<div class='form-group'><label for='stock'>สถานะ:</label><br>";
+        echo "<div class='row'>
+                <div class='col-25'>
+                <label for='menu_no'>รหัสเมนู:</label>
+                </div>
+                <div class='col-75'>
+                <input type='text' class='form-control' id='menu_no' name='menu_no' value=''>
+                </div>
+            </div>";
+        echo "<div class='row'>
+                <div class='col-25'>
+                <label for='menu_name'>ชื่อเมนู:</label>
+                </div>
+                <div class='col-75'>
+                <input type='text' class='form-control' id='menu_name' name='menu_name' value=''>
+                </div>
+            </div>";
+        echo "<div class='row'>
+                <div class='col-25'>
+                <label for='description'>รายละเอียด:</label>
+                </div>
+                <div class='col-75'>
+                <input type='text' class='form-control' id='description' name='description' value=''>
+                </div>
+            </div>";
+        echo "<div class='row'>
+                <div class='col-25'>
+                <label for='price'>ราคา:</label>
+                </div>
+                <div class='col-75'>
+                <input type='text' class='form-control' id='price' name='price' value=''>
+                </div>
+            </div>";
+        echo "<div class='row'>
+            <div class='col-25'>
+            <label for='stock'>สถานะ:</label>
+            </div>
+            <div class='col-75'>";
         echo "<input type='radio' id='available' name='stock' value='มีอยู่' checked>";
         echo "<label for='available'>มีอยู่</label><br>";
         echo "<input type='radio' id='sold_out' name='stock' value='หมด'>";
-        echo "<label for='sold_out'>หมด</label>";
+        echo "<label for='sold_out'>หมด</label></div>";
         echo "</div>";
         echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button> ";
         echo "<button type='submit' class='p-2 bg-red-300 rounded-md hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
@@ -134,35 +177,101 @@ require_once "_managerStart.php";
         if ($result->numColumns() > 0) {
             $row = $result->fetchArray(SQLITE3_ASSOC);
             echo "<form method='post' class='mt-3'>";
-            echo "<div class='form-group'><label for='menu_no'>รหัสเมนู:</label> <input type='text' class='form-control' id='menu_no' name='menu_no' value='". $row["menu_no"]."'></div>";
-            echo "<div class='form-group'><label for='menu_name'>ชื่อเมนู:</label> <input type='text' class='form-control' id='menu_name' name='menu_name' value='". $row["menu_name"] ."'></div>";
-            echo "<div class='form-group'><label for='description'>รายละเอียด:</label> <input type='text' class='form-control' id='description' name='description' value='". $row["description"] ."'></div>";
-            echo "<div class='form-group'><label for='price'>ราคา:</label> <input type='text' class='form-control' id='price' name='price' value='". $row["price"] ."'></div>";
-            echo "<div class='form-group'><label for='stock'>สถานะ:</label><br>";
-            echo "<input type='radio' id='available' name='stock' value='มีอยู่' ".(($row['stock'] == 'available') ? 'checked' : '').">";
-            echo "<label for='available'>มีอยู่</label><br>";
-            echo "<input type='radio' id='sold_out' name='stock' value='หมด' ".(($row['stock'] == 'sold out') ? 'checked' : '').">";
-            echo "<label for='sold_out'>หมด</label>";
-            echo "</div>"; 
-            echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button> ";
-            echo "<button type='submit' class='p-2 bg-red-300 rounded-md hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
-            echo "</form><br>";
+        echo "<div class='row'>
+                <div class='col-25'>
+                <label for='menu_no'>รหัสเมนู:</label>
+                </div>
+                <div class='col-75'>
+                <input type='text' class='form-control' id='menu_no' name='menu_no' value='". $row["menu_no"]."'>
+                </div>
+            </div>";
+        echo "<div class='row'>
+                <div class='col-25'>
+                <label for='menu_name'>ชื่อเมนู:</label>
+                </div>
+                <div class='col-75'>
+                <input type='text' class='form-control' id='menu_name' name='menu_name' value='". $row["menu_name"] ."'>
+                </div>
+            </div>";
+        echo "<div class='row'>
+                <div class='col-25'>
+                <label for='description'>รายละเอียด:</label>
+                </div>
+                <div class='col-75'>
+                <input type='text' class='form-control' id='description' name='description' value='". $row["description"] ."'>
+                </div>
+            </div>";
+        echo "<div class='row'>
+                <div class='col-25'>
+                <label for='price'>ราคา:</label>
+                </div>
+                <div class='col-75'>
+                <input type='text' class='form-control' id='price' name='price' value='". $row["price"] ."'>
+                </div>
+            </div>";
+        echo "<div class='row'>
+            <div class='col-25'>
+            <label for='stock'>สถานะ:</label>
+            </div>
+            <div class='col-75'>";
+        echo "<input type='radio' id='available' name='stock' value='มีอยู่' checked>";
+        echo "<label for='available'>มีอยู่</label><br>";
+        echo "<input type='radio' id='sold_out' name='stock' value='หมด'>";
+        echo "<label for='sold_out'>หมด</label></div>";
+        echo "</div>";
+        echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button> ";
+        echo "<button type='submit' class='p-2 bg-red-300 rounded-md hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
+        echo "</form><br>";
+
+            
 
         } else {
             echo "<form method='post' class='mt-3'>";
-            echo "<div class='form-group'><label for='menu_no'>รหัสเมนู:</label><input type='text' class='form-control' id='menu_no' name='menu_no' value=''></div>";
-            echo "<div class='form-group'><label for='menu_name'>ชื่อเมนู:</label><input type='text' class='form-control' id='menu_name' name='menu_name' value=''></div>";
-            echo "<div class='form-group'><label for='description'>รายละเอียด:</label><input type='text' class='form-control' id='description' name='description' value=''></div>";
-            echo "<div class='form-group'><label for='price'>ราคา:</label><input type='text' class='form-control' id='price' name='price' value=''></div>";
-            echo "<div class='form-group'><label for='stock'>สถานะ:</label><br>";
-            echo "<input type='radio' id='available' name='stock' value='มีอยู่' checked>";
-            echo "<label for='available'>มีอยู่</label><br>";
-            echo "<input type='radio' id='sold_out' name='stock' value='หมด'>";
-            echo "<label for='sold_out'>หมด</label>";
-            echo "</div>";
-            echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button> ";
-            echo "<button type='submit' class='p-2 bg-red-300 rounded-md hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
-            echo "</form><br>";
+        echo "<div class='row'>
+                <div class='col-25'>
+                <label for='menu_no'>รหัสเมนู:</label>
+                </div>
+                <div class='col-75'>
+                <input type='text' class='form-control' id='menu_no' name='menu_no' value=''>
+                </div>
+            </div>";
+        echo "<div class='row'>
+                <div class='col-25'>
+                <label for='menu_name'>ชื่อเมนู:</label>
+                </div>
+                <div class='col-75'>
+                <input type='text' class='form-control' id='menu_name' name='menu_name' value=''>
+                </div>
+            </div>";
+        echo "<div class='row'>
+                <div class='col-25'>
+                <label for='description'>รายละเอียด:</label>
+                </div>
+                <div class='col-75'>
+                <input type='text' class='form-control' id='description' name='description' value=''>
+                </div>
+            </div>";
+        echo "<div class='row'>
+                <div class='col-25'>
+                <label for='price'>ราคา:</label>
+                </div>
+                <div class='col-75'>
+                <input type='text' class='form-control' id='price' name='price' value=''>
+                </div>
+            </div>";
+        echo "<div class='row'>
+            <div class='col-25'>
+            <label for='stock'>สถานะ:</label>
+            </div>
+            <div class='col-75'>";
+        echo "<input type='radio' id='available' name='stock' value='มีอยู่' checked>";
+        echo "<label for='available'>มีอยู่</label><br>";
+        echo "<input type='radio' id='sold_out' name='stock' value='หมด'>";
+        echo "<label for='sold_out'>หมด</label></div>";
+        echo "</div>";
+        echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button> ";
+        echo "<button type='submit' class='p-2 bg-red-300 rounded-md hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
+        echo "</form><br>";
             
         }
     }

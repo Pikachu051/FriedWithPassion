@@ -6,6 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FriedWithPassion: Menu Status</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .main {
+      min-height: 100%;
+      display: flex;
+
+    }
+  </style>
 </head>
 
 <body class="bg-orange-100 overflow-x-hidden">
@@ -21,7 +34,7 @@
                         <a href="logout.php" id="logout" class="block bg-red-400 hover:bg-red-500 text-white text-base rounded-md py-2 px-4 mt-4">ออกจากระบบ</a>
                     </form>
                 </div>
-  <div>
+  <div class="justify-center">
     <h1 class="font-bold text-[32px] text-center mt-5 sm:text-[38px]">ประวัติการสั่งซื้อ</h1>
     <div class="flex items-center justify-center my-4">
       <input type="text" id="searchInput" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300" placeholder="วันที่และเวลา...">
