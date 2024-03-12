@@ -56,15 +56,17 @@
                 <tr>
                   <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">รูป</th>
                   <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase sm:w-[300px]">ชื่อเมนู</th>
-                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">สถานะ</th>
-                  <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Action</th>
+                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">จำนวน</th>
+                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">ราคา</th>
+                  <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase"></th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-200 ">
               <tr class="hover:bg-orange-200">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><img class="object-cover h-[75px] w-[75px] rounded-md" src="" . $row["img_path"] . ""></td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 menu-name">" . $row["menu_name"] . "</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">" . $row["stock"] . "</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800"><img class="object-cover h-[75px] w-[75px] rounded-md" src="menu_img/menu102.png"></td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 menu-name">เบอร์เกอร์หมูเบคอนฮาลาล</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">1</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">45 บาท</td>
                   <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                   <form action="menu_status.php" method="post">
                     <input value="ลบ" name="delete" type="submit"
