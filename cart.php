@@ -15,6 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+if (isset($_POST['delete'])) {
+  $menu_no = $_POST['menu_no'];
+  // ลบรายการอาหารที่ถูกเลือกออกจาก session cart
+  unset($_SESSION['cart'][$menu_no]);
+}
+
 
 ?>
 

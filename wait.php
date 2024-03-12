@@ -38,17 +38,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>ผัดไทเส้นพาสต้า</td>
-                            <td class="text-right">฿50.00</td>
-                            <td class="text-right">1</td>
-                        </tr>
-                        <tr>
-                            <td>ต้มยำหมูสับฮาลาล</td>
-                            <td class="text-right">฿80.00</td>
-                            <td class="text-right">1</td>
-                        </tr>
-                    </tbody>
+    <?php
+    $totalPrice = 0; // ตัวแปรเก็บรวมราคาทั้งหมด
+    foreach ($_SESSION['cart'] as $menu_no => $item) {
+        $totalPrice += $item['price'] * $item['quantity']; // บวกราคารวมของแต่ละรายการอาหาร
+    ?>
+        <tr>
+            <td><?php echo $item['menu_name']; ?></td>
+            <td class="text-right"><?php echo number_format($item['price'], 2); ?></td>
+            <td class="text-right"><?php echo $item['quantity']; ?></td>
+        </tr>
+    <?php
+    }
+    ?>
+</tbody>
+
                 </table>
                 <p class="text-right text-sm mt-4">สั่งเมื่อ: <?php echo date('Y-m-d H:i:s'); ?></p>
             </div>

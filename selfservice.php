@@ -155,7 +155,7 @@
                     echo '<input type="hidden" name="price" value="' . $row["price"] . '">';
                     // เพิ่มปุ่มสำหรับเพิ่มรายการอาหารลงในตะกร้า
                     echo '<div class="w-full flex justify-center mt-4">';
-                    echo '<button type="submit" name="add_to_cart" class="p-2 mx-3 rounded-full bg-orange-300 hover:bg-orange-200">ใส่รถเข็น</button>';
+                    echo '<button type="submit" name="add_to_cart" id="'. $row["menu_no"] .'" class="p-2 mx-3 rounded-full bg-orange-300 hover:bg-orange-200">ใส่รถเข็น</button>';
                     echo '</div>';
                     echo '</form>';
                     echo '</div>';
