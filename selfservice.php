@@ -21,6 +21,55 @@
         header('Location: ' . $_SERVER['REQUEST_URI']); // Redirect to the same page to start fresh
         exit; // Stop script execution after redirect
     }
+
+    if (isset($_POST['submit'])) {
+        // Connect to the database
+        class MyDB extends SQLite3 {
+            function __construct() {
+                $this->open('fwp.db');
+            }
+        }
+
+        // Open the database
+        $db = new MyDB();
+        if(!$db) {
+            die($db->lastErrorMsg());
+        }
+
+        // Iterate through menu items and insert into "order" table
+        foreach ($_SESSION['cart'] as $menu_no => $quantity) {
+            if ($quantity > 0) {
+                $type = isset($_SESSION['order_type']) ? $_SESSION['order_type'] : '';
+                $note = '';  // Add logic to capture any additional notes if needed
+                $date_time = date('Y-m-d H:i:s');
+                $total = 0;   // Add logic to calculate the total based on menu price and quantity
+
+                // Prepare and execute the SQL statement to insert into "order" table
+                $stmt = $db->prepare('INSERT INTO "order" (menu_no, type, quantity, note, date_time, total) VALUES (:menu_no, :type, :quantity, :note, :date_time, :total)');
+                $stmt->bindValue(':menu_no', $menu_no, SQLITE3_INTEGER);
+                $stmt->bindValue(':type', $type, SQLITE3_TEXT);
+                $stmt->bindValue(':quantity', $quantity, SQLITE3_INTEGER);
+                $stmt->bindValue(':note', $note, SQLITE3_TEXT);
+                $stmt->bindValue(':date_time', $date_time, SQLITE3_TEXT);
+                $stmt->bindValue(':total', $total, SQLITE3_FLOAT);
+                $result = $stmt->execute();
+
+                if (!$result) {
+                    die("Error inserting data into 'order' table: " . $db->lastErrorMsg());
+                }
+            }
+        }
+
+        // Close the database connection
+        $db->close();
+
+        // Clear the cart after successfully inserting into the "order" table
+        $_SESSION['cart'] = array();
+
+        // Redirect to the same page to avoid form resubmission
+        header('Location: ' . $_SERVER['REQUEST_URI']);
+        exit; // Stop script execution after redirect
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,33 +160,40 @@
                 </form>
         </header>
         <h1 class="text-3xl font-bold text-center mt-6">เมนู</h1>
-    <div class="mx-6 mt-6 grid grid-cols-2 gap-6">
-        <div class="bg-white p-5 rounded-md text-center">
-            <img src="menu_img/menu101.png" alt="เบอร์เกอร์ไก่" class="w-[150px] object-cover rounded-md mx-auto">
-            <h3 class="font-semibold text-lg">เบอร์เกอร์อะไรสักอย่าง</h3>
-            <p>ราคา: 45 บาท</p>
-            <div class="w-[100%] flex mt-3 justify-center">
-                <div class="item-center flex justify-center">
-                    <button class="w-6 mx-3 rounded-full bg-orange-100 hover:bg-orange-200" id="button-1" onclick="decrement('quantity1', 'button-1')" disabled>-</button>
-                        <p class="mx-3" id="quantity1">0</p>
-                    <button class="w-6 mx-3 rounded-full bg-orange-300 hover:bg-orange-200 transition-all" onclick="increment('quantity1', 'button-1')">+</button>
-                </div>
-            </div>
-        </div>
-        <div class="bg-white p-5 rounded-md text-center">
-            <img src="menu_img/menu102.png" alt="เบอร์เกอร์ไก้" class="w-[150px] object-cover rounded-md mx-auto">
-            <h3 class="font-semibold text-lg">เบอร์เกอร์หมูเบคอนฮาลาล</h3>
-            <p>ราคา: 45 บาท</p>
-            <div class="w-[100%] flex mt-2 justify-center">
-                <div class="item-center flex justify-center">
-                    <button class="w-6 mx-3 rounded-full bg-orange-100 hover:bg-orange-200" id="button-2" onclick="decrement('quantity2', 'button-2')" disabled>-</button>
-                        <p class="mx-3" id="quantity2">0</p>
-                    <button class="w-6 mx-3 rounded-full bg-orange-300 hover:bg-orange-200 transition-all" onclick="increment('quantity2', 'button-2')">+</button>
-                </div>
-            </div>
-        </div> 
-    </div>
-    <div>
+    <?php
+        $db = new MyDB();
+        if (!$db) {
+            die($db->lastErrorMsg());
+        } else {
+            $sql = "SELECT * FROM menu;";
+            $ret = $db->query($sql);
+        
+            if ($ret->numColumns() > 0) {
+                echo '<div class="mx-6 mt-6 grid grid-cols-2 gap-6">';
+                while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+                    echo '<div class="bg-white p-5 rounded-md text-center">';
+                    echo '<img src="' . $row["img_path"] . '" alt="' . $row["menu_name"] . '" class="w-[150px] object-cover rounded-md mx-auto">';
+                    echo '<h3 class="font-semibold text-lg">' . $row["menu_name"] . '</h3>';
+                    echo '<p>' . $row["description"] . '</p>';
+                    echo '<p>ราคา: ' . $row["price"] . ' บาท</p>';
+                    // เพิ่มฟอร์มสำหรับส่งข้อมูลเมนูที่เลือกไปยัง cart.php
+                    echo '<form action="cart.php" method="post">';
+                    echo '<input type="hidden" name="menu_no" value="' . $row["menu_no"] . '">';
+                    echo '<input type="hidden" name="menu_name" value="' . $row["menu_name"] . '">';
+                    echo '<input type="hidden" name="price" value="' . $row["price"] . '">';
+                    // เพิ่มปุ่มสำหรับเพิ่มรายการอาหารลงในตะกร้า
+                    echo '<div class="w-full flex justify-center">';
+                    echo '<button type="submit" name="add_to_cart" class="w-6 mx-3 rounded-full bg-orange-300 hover:bg-orange-200">+</button>';
+                    echo '<p class="mx-3" id="quantity' . $row["menu_no"] . '">0</p>';
+                    echo '<button type="button" class="w-6 mx-3 rounded-full bg-orange-100 hover:bg-orange-200" onclick="decrement(\'quantity' . $row["menu_no"] . '\')">-</button>';
+                    echo '</div>';
+                    echo '</form>';
+                    echo '</div>';
+                }
+                echo '</div>';
+            }
+        }
+    ?>
     <form action="cart.php" method="post" class="mx-auto fixed bottom-[20px] right-[20px]">
         <label class="">
             <input type="submit" name="submit" value="สั่งอาหาร" class="hidden rounded-full text-center p-2 m-4 bg-orange-300 hover:cursor-pointer hover:bg-orange-200 big round">
@@ -280,6 +336,9 @@
         updateTableStatus(oldTableId, 'ว่าง');
     }
 }
+
+
+    
 
     </script>
 
