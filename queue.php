@@ -25,8 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['queue_no'])) {
     // Assuming the variables $menu_no, $type, $quantity, $dateTime, and $total are defined elsewhere in your code
     
     // Prepare the INSERT INTO order_history query
-    $sqlHistory = "INSERT INTO order_history (history_no, menu_no, `type`, quantity, note, date_time, total, review_id) 
-                    SELECT $history_no, menu_no, `type`, quantity, NULL, date_time, total, NULL
+    $sqlHistory = "INSERT INTO order_history (history_no, menu_no, `type`, quantity, date_time, total, review_id) 
+                    SELECT $history_no, menu_no, `type`, quantity, date_time, total, NULL
                     FROM `order` 
                     WHERE queue_no = $queue_no";
     

@@ -59,15 +59,14 @@ if ($row && isset($row['max_queue_no'])) {
       $menuNo = $item['menu_no'];
       $type = isset($_SESSION['order_type']) ? ($_SESSION['order_type'] == 'takeaway' ? 'สั่งกลับบ้าน' : '') : 'ทานที่ร้าน';
       $quantity = $item['quantity'];
-      $note = ''; // สำหรับเพิ่มรายการหมายเหตุ
       $total = $item['price'] * $quantity;
       
 
       // เตรียมคำสั่ง SQL สำหรับเพิ่มข้อมูลลงในฐานข้อมูล
       $sql =<<<EOF
-      INSERT INTO `order` (queue_no, menu_no, `type`, quantity, note, date_time, total)
-        VALUES ('$queue_no', '$menuNo', '$type', '$quantity', '$note', '$dateTime', '$total');
-    EOF;
+      INSERT INTO `order` (queue_no, menu_no, `type`, quantity, date_time, total)
+        VALUES ('$queue_no', '$menuNo', '$type', '$quantity', '$dateTime', '$total');
+EOF;
 
       // ทำการ execute คำสั่ง SQL
       $ret = $db->exec($sql);

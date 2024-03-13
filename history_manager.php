@@ -75,10 +75,10 @@
                   <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase sm:w-[300px]">หมายเลขเมนู</th>
                   <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">ประเภท</th>
                   <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">จำนวน</th>
-                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">หมายเหตุ</th>
                   <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">วัน-เวลา</th>
                   <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">รวม</th>
-                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">รหัสรีวิว</th>
+                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">รีวิว</th>
+                  <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">คะแนน</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-200 ">
