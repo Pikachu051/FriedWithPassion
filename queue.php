@@ -102,7 +102,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['queue_no'])) {
     if (!$ret) {
         echo $db->lastErrorMsg();
     } else {
+        $found = false;     
         while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+            $found = true;
             $queue_no = $row['queue_no'];
             $date_time = $row['date_time'];
             $total_quantity = $row['total_quantity'];
@@ -133,14 +135,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['queue_no'])) {
                     </form>
                   </div>";
         }
+        
     }
-    ?>
-
-
-    <!-- สิ้นสุดตัวอย่างการใส่ข้อมูลของคิว 1 คิว -->
-    </div>
+    echo "</div>
   </div>
-</div>
+</div>";
+if (!$found) {
+    echo "<p class='text-gray-500 text-base text-center'>ยังไม่มีออเดอร์ ณ ตอนนี้</p>";
+}
+?>
 </body>
 <script>
     function menu() {
