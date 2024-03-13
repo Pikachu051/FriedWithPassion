@@ -20,10 +20,15 @@ if ($ret === false) {
 
 if ($ret->numColumns() > 0) {
   while($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+    $que = "SELECT * FROM menu WHERE menu_no =" . $row['menu_no'];
+    $menu_result = $db->query($que);
+    $menu_row = $menu_result->fetchArray(SQLITE3_ASSOC);
+
     if ($row['review_id'] === null) {
       echo "<tr class=\"hover:bg-orange-200\">
               <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 history-no\">" . $row["history_no"] . "</td>
               <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 menu-no \">" . $row["menu_no"] . "</td>
+              <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 menu-no \">" .  $menu_row["menu_name"] . "</td>
               <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 type\">" . $row["type"] . "</td>
               <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 quantity\">" . $row["quantity"] . "</td>
               <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 date_time\">" . $row["date_time"] . "</td>
@@ -44,9 +49,12 @@ if ($ret->numColumns() > 0) {
     $review_row = $review_result->fetchArray(SQLITE3_ASSOC);
     $comment = $review_row ? $review_row['comment'] : '';
 
+    
+
     echo "<tr class=\"hover:bg-orange-200\">
               <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 history-no\">" . $row["history_no"] . "</td>
               <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 menu-no \">" . $row["menu_no"] . "</td>
+              <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 menu-no \">" .  $menu_row["menu_name"] . "</td>
               <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 type\">" . $row["type"] . "</td>
               <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 quantity\">" . $row["quantity"] . "</td>
               <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 date_time\">" . $row["date_time"] . "</td>
