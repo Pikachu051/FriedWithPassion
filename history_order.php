@@ -20,6 +20,20 @@ if ($ret === false) {
 
 if ($ret->numColumns() > 0) {
   while($row = $ret->fetchArray(SQLITE3_ASSOC)) {
+    if ($row['review_id'] === null) {
+      echo "<tr class=\"hover:bg-orange-200\">
+              <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 history-no\">" . $row["history_no"] . "</td>
+              <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 menu-no \">" . $row["menu_no"] . "</td>
+              <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 type\">" . $row["type"] . "</td>
+              <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 quantity\">" . $row["quantity"] . "</td>
+              <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 date_time\">" . $row["date_time"] . "</td>
+              <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 total\">" . number_format($row["total"], 2) . "</td>
+              <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 review-id\"> - </td>
+              <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 review-score\"> - </td>
+              <td class=\"px-6 py-4 whitespace-nowrap text-end text-sm font-medium\">
+              </td>
+            </tr>";;
+    } else {
     $query = "SELECT * FROM review WHERE review_id =" . $row['review_id'];
     $review_result = $db->query($query);
     
@@ -42,6 +56,7 @@ if ($ret->numColumns() > 0) {
               <td class=\"px-6 py-4 whitespace-nowrap text-end text-sm font-medium\">
               </td>
             </tr>";
+    }
   }
 }
 
