@@ -129,7 +129,7 @@ require_once "_managerStart.php";
                 <label for='menu_no'>รหัสเมนู:</label>
                 </div>
                 <div class='col-75'>
-                <input type='number' class='form-control bg-orange-50 px-4 py-2 text-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300' id='menu_no' name='menu_no' value=''>
+                <input type='number' class='form-control bg-orange-50 px-4 py-2 ml-3 text-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300' id='menu_no' name='menu_no' value=''>
                 </div>
             </div>";
         echo "<div class='row'>
