@@ -121,13 +121,13 @@ require_once "_managerStart.php";
         $id = $_GET['invalue'];
         displayRecordDetails($db, $id);
     } else {
-        echo "<form method='post' class='mt-3'>";
+        echo "<form method=\"post\" class=\"mt-3\" enctype=\"multipart/form-data\">";
         echo "<div class='row'>
                 <div class='col-25'>
                 <label for='menu_no'>รหัสเมนู:</label>
                 </div>
                 <div class='col-75'>
-                <input type='text' class='form-control' id='menu_no' name='menu_no' value=''>
+                <input type='number' class='form-control' id='menu_no' name='menu_no' value=''>
                 </div>
             </div>";
         echo "<div class='row'>
@@ -138,6 +138,17 @@ require_once "_managerStart.php";
                 <input type='text' class='form-control' id='menu_name' name='menu_name' value=''>
                 </div>
             </div>";
+
+        echo "<div class='row'>
+            <div class='col-25'>
+            <label for='menu_name'>รูปภาพ:</label>
+            </div>
+            <div class='col-75'>
+            <img src='' alt='Menu Image' style='width:100px;height:auto;'>
+            <input type='file' name='menu_image' id='menu_image'>
+            </div>
+        </div>";
+        
         echo "<div class='row'>
                 <div class='col-25'>
                 <label for='description'>รายละเอียด:</label>
@@ -164,8 +175,11 @@ require_once "_managerStart.php";
         echo "<input type='radio' id='sold_out' name='stock' value='หมด'>";
         echo "<label for='sold_out'>หมด</label></div>";
         echo "</div>";
-        echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button> ";
+        echo "<button type='submit' class='p-2 bg-green-300 rounded-md hover:bg-green-200 px-4' name='add'>Add</button> ";
+        echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button>  ";
         echo "<button type='submit' class='p-2 bg-red-300 rounded-md hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
+      echo "<button type='submit' class='p-2 bg-gray-800 rounded-md hover:bg-gray-800 px-4' name='clear'>Clear</button> ";
+
         echo "</form><br>";
     }
 
@@ -176,13 +190,13 @@ require_once "_managerStart.php";
 
         if ($result->numColumns() > 0) {
             $row = $result->fetchArray(SQLITE3_ASSOC);
-            echo "<form method='post' class='mt-3'>";
+            echo "<form method=\"post\" class=\"mt-3\" enctype=\"multipart/form-data\">";
         echo "<div class='row'>
                 <div class='col-25'>
                 <label for='menu_no'>รหัสเมนู:</label>
                 </div>
                 <div class='col-75'>
-                <input type='text' class='form-control' id='menu_no' name='menu_no' value='". $row["menu_no"]."'>
+                <input type='number' class='form-control' id='menu_no' name='menu_no' value='". $row["menu_no"]."'>
                 </div>
             </div>";
         echo "<div class='row'>
@@ -191,6 +205,15 @@ require_once "_managerStart.php";
                 </div>
                 <div class='col-75'>
                 <input type='text' class='form-control' id='menu_name' name='menu_name' value='". $row["menu_name"] ."'>
+                </div>
+            </div>";
+            echo "<div class='row'>
+                <div class='col-25'>
+                <label for='menu_name'>รูปภาพ:</label>
+                </div>
+                <div class='col-75'>
+                <img src='" . $row["img_path"] . "' alt='Menu Image' style='width:100px;height:auto;'>
+                <input type='file' name='menu_image' id='menu_image'>
                 </div>
             </div>";
         echo "<div class='row'>
@@ -219,20 +242,23 @@ require_once "_managerStart.php";
         echo "<input type='radio' id='sold_out' name='stock' value='หมด'>";
         echo "<label for='sold_out'>หมด</label></div>";
         echo "</div>";
-        echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button> ";
+        echo "<button type='submit' class='p-2 bg-green-300 rounded-md hover:bg-green-200 px-4' name='add'>Add</button> ";
+        echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button>";
         echo "<button type='submit' class='p-2 bg-red-300 rounded-md hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
+      echo "<button type='submit' class='p-2 bg-gray-800 rounded-md hover:bg-gray-800 px-4' name='clear'>Clear</button> ";
+
         echo "</form><br>";
 
             
 
         } else {
-            echo "<form method='post' class='mt-3'>";
+            echo "<form method=\"post\" class=\"mt-3\" enctype=\"multipart/form-data\">";
         echo "<div class='row'>
                 <div class='col-25'>
                 <label for='menu_no'>รหัสเมนู:</label>
                 </div>
                 <div class='col-75'>
-                <input type='text' class='form-control' id='menu_no' name='menu_no' value=''>
+                <input type='number' class='form-control' id='menu_no' name='menu_no' value=''>
                 </div>
             </div>";
         echo "<div class='row'>
@@ -269,12 +295,58 @@ require_once "_managerStart.php";
         echo "<input type='radio' id='sold_out' name='stock' value='หมด'>";
         echo "<label for='sold_out'>หมด</label></div>";
         echo "</div>";
-        echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button> ";
+        echo "<button type='submit' class='p-2 bg-green-300 rounded-md hover:bg-green-200 px-4' name='add'>Add</button> ";
+        echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button>";
         echo "<button type='submit' class='p-2 bg-red-300 rounded-md hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
+      echo "<button type='submit' class='p-2 bg-gray-800 rounded-md hover:bg-gray-800 px-4' name='clear'>Clear</button> ";
+        
         echo "</form><br>";
             
         }
     }
+
+    if (isset($_POST['add'])) {
+        $menu_no = $_POST['menu_no'];
+        $menu_name = $_POST['menu_name'];
+        $description = $_POST['description'];
+        $price = $_POST['price'];
+        $stock = $_POST['stock'];
+    
+        // ตรวจสอบว่ามีไฟล์รูปถูกอัปโหลดมาหรือไม่
+        if (isset($_FILES['menu_image'])) {
+            $file_name = $_FILES['menu_image']['name'];
+            $file_temp = $_FILES['menu_image']['tmp_name'];
+            $file_size = $_FILES['menu_image']['size'];
+            $file_error = $_FILES['menu_image']['error'];
+    
+            // ตรวจสอบว่าไม่มีข้อผิดพลาดของไฟล์
+            if ($file_error === 0) {
+                // กำหนดตำแหน่งเก็บไฟล์รูป
+                $target_dir = "menu_img/";
+                $target_file = $target_dir . $file_name;
+    
+                // ย้ายไฟล์รูปไปยังตำแหน่งที่กำหนด
+                if (move_uploaded_file($file_temp, $target_file)) {
+                    // สร้างคำสั่ง SQL เพื่อเพิ่มข้อมูลลงในฐานข้อมูล
+                    $sql = "INSERT INTO menu (menu_no, menu_name, `description`, price, stock, img_path) VALUES ('$menu_no', '$menu_name', '$description', '$price', '$stock', '$target_file')";
+    
+                    // ทำการ execute คำสั่ง SQL
+                    if ($db->exec($sql)) {
+                        echo "<div class='alert alert-success mt-3' role='alert'>Record added successfully</div>";
+                    } else {
+                        echo "<div class='alert alert-danger mt-3' role='alert'>Error adding record</div>";
+                    }
+                } else {
+                    echo "<div class='alert alert-danger mt-3' role='alert'>Error uploading image file</div>";
+                }
+            } else {
+                echo "<div class='alert alert-danger mt-3' role='alert'>Error uploading image file</div>";
+            }
+        } else {
+            echo "<div class='alert alert-danger mt-3' role='alert'>Please upload an image file</div>";
+        }
+    }
+    
 
     if (isset($_POST['update'])) {
         $menu_no = $_POST['menu_no'];
@@ -286,12 +358,50 @@ require_once "_managerStart.php";
         $sql = "UPDATE menu SET menu_name='$menu_name', description='$description', price='$price', stock='$stock' WHERE menu_no=$menu_no";
         if ($db->exec($sql)) {
             echo "<div class='alert alert-success mt-3' role='alert'>Record updated successfully</div>";
+    
+            if (isset($_FILES['menu_image'])) {
+                $file_name = $_FILES['menu_image']['name'];
+                $file_temp = $_FILES['menu_image']['tmp_name'];
+                $file_size = $_FILES['menu_image']['size'];
+                $file_error = $_FILES['menu_image']['error'];
+    
+                // Check for file errors
+                if ($file_error === 0) {
+                    $sql_existing_img = "SELECT img_path FROM menu WHERE menu_no=$menu_no";
+                    $result_existing_img = $db->querySingle($sql_existing_img);
+    
+                    // If there's an existing image, delete it
+                    if ($result_existing_img) {
+                        unlink($result_existing_img); // Delete the existing image
+                    }
+    
+                    $target_dir = "menu_img/";
+                    
+                    // Move the uploaded file to the target directory
+                    if (move_uploaded_file($file_temp, $target_dir . $file_name)) {
+                        // Update the image path in the database
+                        $img_path = $target_dir . $file_name;
+                        $sql_update_img = "UPDATE menu SET img_path='$img_path' WHERE menu_no=$menu_no";
+                        if ($db->exec($sql_update_img)) {
+                            echo "<div class='alert alert-success mt-3' role='alert'>File uploaded successfully</div>";
+                        } else {
+                            echo "<div class='alert alert-danger mt-3' role='alert'>Error updating image path in the database</div>";
+                        }
+                    } else {
+                        echo "<div class='alert alert-danger mt-3' role='alert'>Error moving uploaded file</div>";
+                    }
+                } else {
+                    echo "<div class='alert alert-danger mt-3' role='alert'>Error uploading file</div>";
+                }
+            }
+    
             // Refresh the page to reflect updated data
             echo "<meta http-equiv='refresh' content='0'>";
         } else {
             echo "<div class='alert alert-danger mt-3' role='alert'>Error updating record</div>";
         }
     }
+    
 
     if (isset($_POST['delete'])) {
         $id = $_POST['menu_no'];
@@ -303,6 +413,14 @@ require_once "_managerStart.php";
             $error = $db->lastErrorMsg();
             echo "<div class='alert alert-danger mt-3' role='alert'>Error deleting record</div>";
         }
+    }
+
+    if (isset($_POST['clear'])) {
+        // เซตค่าฟอร์มเป็นค่าว่างหรือค่าเริ่มต้นที่ต้องการ
+        echo "<script>window.location = window.location.href.split('?')[0];</script>";
+        // หรือใช้ header() เพื่อเรียกหน้าเว็บใหม่
+        // header("Refresh:0");
+        // exit(); // ต้องทำการออกจากการรัน script หลังจาก redirect เพื่อให้การทำงานของ header() มีผล
     }
 
     // Display all records

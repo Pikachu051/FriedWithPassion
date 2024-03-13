@@ -4,6 +4,7 @@
         $this->open('fwp.db');
         }
     }
+    session_start();
 
     $db = new MyDB();
     if(!$db) {
@@ -30,6 +31,8 @@
         if(!$ret || !$ret2) {
             echo $db->lastErrorMsg();
         } else {
+
+            session_destroy();
             header('Location: selfservice.php');
         }
     }

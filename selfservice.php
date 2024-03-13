@@ -156,7 +156,7 @@
                 echo '<div class="mx-6 mt-6 grid grid-cols-2 gap-6">';
                 while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
                     $menuInCart = isMenuInCart($row["menu_no"]);
-                    if ($menuInCart) {
+                    if ($menuInCart){
                         echo '<div class="bg-white p-5 rounded-md text-center mx-0 my-auto">';
                         echo '<img src="' . $row["img_path"] . '" alt="' . $row["menu_name"] . '" class="w-[150px] object-cover rounded-md mx-auto">';
                         echo '<h3 class="font-semibold text-lg mt-4">' . $row["menu_name"] . '</h3>';
@@ -173,7 +173,20 @@
                         echo '</div>';
                         echo '</form>';
                         echo '</div>';
-                    } else {
+
+                    }else if($row['stock'] == 'หมด'){
+                        echo '<div class="bg-white p-5 rounded-md text-center mx-0 my-auto">';
+                        echo '<img src="' . $row["img_path"] . '" alt="' . $row["menu_name"] . '" class="w-[150px] object-cover rounded-md mx-auto">';
+                        echo '<h3 class="font-semibold text-lg mt-4">' . $row["menu_name"] . '</h3>';
+                        echo '<p>' . $row["description"] . '</p>';
+                        echo '<p>ราคา: ' . $row["price"] . ' บาท</p>';
+                        echo '<div class="w-full flex justify-center mt-4">';
+                        echo '<button type="submit" disabled name="add_to_cart" id="'. $row["menu_no"] .'" class="p-3 mx-3 rounded-full bg-orange-100 hover:cursor-no-drop">หมด</button>';
+                        echo '</div>';
+                        echo '</form>';
+                        echo '</div>';
+
+                    }else {
                         echo '<div class="bg-white p-5 rounded-md text-center my-auto mx-0">';
                         echo '<img src="' . $row["img_path"] . '" alt="' . $row["menu_name"] . '" class="w-[150px] object-cover rounded-md mx-auto">';
                         echo '<h3 class="font-semibold text-lg mt-4">' . $row["menu_name"] . '</h3>';

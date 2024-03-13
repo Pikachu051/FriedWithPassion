@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +24,7 @@
     <div class="bg-orange-100 text-center">
         <h1 class="text-3xl font-bold text-center mt-6">คิวของคุณ</h1>
         <div class="bg-white p-5 rounded-lg w-[450px] m-5 shadow-md text-center mx-auto">
-            <h3 class="text-xl font-semibold">คิวหมายเลข #....</h3>
+            <h3 class="text-xl font-semibold"><?php echo "หมายเลขคิว: #" . $_SESSION['queue_no']; ?></h3>
             <h3 class="text-lg font-semibold text-green-500">อาหารพร้อมแล้ว</h3>
             <p class="mt-4">ขอบคุณที่ใช้บริการ <strong>FriedWithPassion</strong><br>หวังว่าคุณจะชอบอาหารและบริการของพวกเรา</p>
             <p class="mb-6 mt-2">โปรดนำเงินไปชำระที่เคาน์เตอร์และรับอาหารได้เลยครับ</p>
