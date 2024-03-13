@@ -132,7 +132,7 @@ require_once '_managerStart.php';  // !! ใส่ทุกหน้าของ
             chart.render();
         }
     </script>
-    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    <script src="canvasjs-chart-3.7.43/canvasjs.min.js"></script>
 </body>
 
 </html>
