@@ -42,31 +42,6 @@ require_once '_managerStart.php';
     <div class="flex items-center justify-center my-4">
       <input type="text" id="searchInput" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300" placeholder="วันที่และเวลา...">
     </div>
-
-    <script>
-      // Function to filter table rows based on user input
-      function filterTable() {
-        // Get the input value and convert it to lowercase
-        var input = document.getElementById("searchInput").value.toLowerCase();
-        
-        // Get all table rows
-        var rows = document.querySelectorAll("tbody tr");
-        
-        // Loop through each row and hide/show based on the input value
-        rows.forEach(function(row) {
-          var name = row.querySelector(".date_time").textContent.toLowerCase();
-          
-          if (name.includes(input)) {
-            row.style.display = "";
-          } else {
-            row.style.display = "none";
-          }
-        });
-      }
-      
-      // Add event listener to the search input
-      document.getElementById("searchInput").addEventListener("input", filterTable);
-    </script>
     <div class="flex flex-col w-[80vw]">
       <div class="overflow-x-hidden mx-auto my-4">
         <div class="p-1.5 min-w-full inline-block align-middle">
