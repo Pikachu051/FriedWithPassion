@@ -92,7 +92,7 @@ if (isset($_POST["delemp"])) {
                 <p id="welcome" class="mt-4 font-semibold text-lg"></p>
                 <p>(Manager)</p>
                 <form method="post">
-                    <a href="manage_Accounts.php" class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">จัดการบัญชีผู้ใช้</a>
+                    <a href="manage_Accounts.php" class="block bg-orange-100 hover:bg-orange-200 text-black rounded-md text-base py-2 px-4 mt-4">จัดการบัญชีผู้ใช้</a>
                     <a href="history_manager.php" class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">ประวัติการสั่งซื้อ</a>
                     <a href="menu_manager.php" class="block bg-orange-400 hover:bg-orange-500 text-white text-base rounded-md py-2 px-4 mt-4">จัดการเมนู</a>
                     <a href="logout.php" id="logout" class="block bg-red-400 hover:bg-red-500 text-white text-base rounded-md py-2 px-4 mt-4">ออกจากระบบ</a>

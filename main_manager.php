@@ -37,22 +37,17 @@ if (!$db) {
     <div class="container">
 
         <div class="main flex h-[100vh] w-[100vw]">
-            <div class="left bg-orange-300 p-4 w-1/5">
-                <a class="" href="main_manager.php"><img src="public/fwp-logo-color.png"
-                        class="my-0 mx-auto w-auto h-[50px]"></a>
-                <p id="welcome" class="mt-4 font-semibold text-lg"></p>
-                <p>(Manager)</p>
-                <form method="post">
-                    <a href="manage_Accounts.php"
-                        class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">จัดการบัญชีผู้ใช้</a>
-                    <a href="history_manager.php"
-                        class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">ประวัติการสั่งซื้อ</a>
-                    <a href="menu_manager.php"
-                        class="block bg-orange-400 hover:bg-orange-500 text-white text-base rounded-md py-2 px-4 mt-4">จัดการเมนู</a>
-                    <a href="logout.php" id="logout"
-                        class="block bg-red-400 hover:bg-red-500 text-white text-base rounded-md py-2 px-4 mt-4">ออกจากระบบ</a>
-                </form>
-            </div>
+        <div class="left bg-orange-300 p-6 w-1/5">
+                    <a class="" href="main_manager.php"><img src="public/fwp-logo-color.png" class="my-0 mx-auto w-auto h-[50px]"></a>
+                    <p id="welcome" class="mt-4 font-semibold text-lg"></p>
+                    <p>(Manager)</p>
+                    <form method="post">
+                        <a href="manage_Accounts.php" class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">จัดการบัญชีผู้ใช้</a>
+                        <a href="history_manager.php" class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">ประวัติการสั่งซื้อ</a>
+                        <a href="menu_manager.php" class="block bg-orange-400 hover:bg-orange-500 text-white text-base rounded-md py-2 px-4 mt-4">จัดการเมนู</a>
+                        <a href="logout.php" id="logout" class="block bg-red-400 hover:bg-red-500 text-white text-base rounded-md py-2 px-4 mt-4">ออกจากระบบ</a>
+                    </form>
+                </div>
             <div class="content bg-orange-100 p-4 flex-1">
                 <h1 class="font-bold text-3xl ml-4 mt-3">ยินดีต้อนรับ</h1>
                 <div class="time font-semibold text-xl ml-4">
