@@ -1,5 +1,15 @@
 <?php 
 require_once '_managerStart.php';  // !! ใส่ทุกหน้าของผู้จัดการ !!
+class MyDB extends SQLite3 {
+    function __construct() {
+    $this->open('fwp.db');
+    }
+}
+
+$db = new MyDB();
+if(!$db) {
+    die($db->lastErrorMsg());
+}
 ?>
 
 <!DOCTYPE html>
@@ -42,16 +52,27 @@ require_once '_managerStart.php';  // !! ใส่ทุกหน้าของ
                     <h3 id="date"></h3>
                 </div>
                 <div class="inside flex mt-8 mx-6">
-                    <div class="sub_left bg-orange-300 p-4 flex-1 mr-4 rounded-lg">
-                        <h2 class="font-medium text-lg">ยอดขาย ณ เวลานี้</h2>
-                        <div id="myChart"></div> <!-- ตรงนี้ ตอนแรกเป็น <canvas> แต่มันไม่ขึ้น T-T --> 
+                    <div class="sub_left bg-orange-300 p-4 mr-4 rounded-lg h-[200px] shadow-lg">
+                        <h2 class="font-medium text-lg">ยอดขายวันนี้</h2>
+                        <?php
+                        date_default_timezone_set('Asia/Bangkok');
+                        $currentDate = date('Y-m-d'); // Get current date in 'YYYY-MM-DD' format
+                        $query = "SELECT SUM(total) AS total_sale FROM order_history WHERE substr(date_time, 1, 10) = '$currentDate'";
+                        $result = $db->query($query);
+                        if (!$result){
+                            die($db->lastErrorMsg());
+                        }
+                        $row = $result->fetchArray(SQLITE3_ASSOC);
+                        $totalSale = $row['total_sale'];
+                        $totalSale = number_format($totalSale, 2);
+                        ?>
+                        <h2 class="font-bold text-4xl text-center mt-auto flex items-center justify-center h-full mx-4 pb-4"><?php echo $totalSale; ?> บาท</h2>
+                         <!-- ตรงนี้ ตอนแรกเป็น <canvas> แต่มันไม่ขึ้น T-T --> 
                     </div>
 
-                    <div class="sub_right bg-orange-300 rounded-lg p-4 w-2/5">
-                        <h2 class="font-medium text-lg">สถานะเมนู</h2>
-                        <div class="menu">
-
-                        </div>
+                    <div class="sub_right bg-orange-300 rounded-lg flex-1 p-4 shadow-lg">
+                        <h2 class="font-medium text-lg">ยอดขายรายเดือน</h2>
+                        <div id="chart" class="p-5 bg-orange-300 mr-10 mb-10"></div>
                     </div>
                 </div>
             </div>
@@ -59,7 +80,6 @@ require_once '_managerStart.php';  // !! ใส่ทุกหน้าของ
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         var fname = "<?php echo $_SESSION['user']; ?>";
         document.getElementById('welcome').innerHTML = "ผู้จัดการ" + fname;
@@ -96,8 +116,8 @@ require_once '_managerStart.php';  // !! ใส่ทุกหน้าของ
         require_once "saleChart.php";
         ?>
         window.onload = function () {
-            var chart = new CanvasJS.Chart("myChart", {
-                //backgroundColor: "#FFEDD5",
+            var chart = new CanvasJS.Chart("chart", {
+                backgroundColor: "#FFEDD5",
                 animationEnabled: true,
                 title: {
                     text: "รายได้ของร้าน FWP",
@@ -132,7 +152,7 @@ require_once '_managerStart.php';  // !! ใส่ทุกหน้าของ
             chart.render();
         }
     </script>
-    <script src="canvasjs-chart-3.7.43/canvasjs.min.js"></script>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </body>
 
 </html>
