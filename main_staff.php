@@ -93,7 +93,7 @@
                 </h3>
                 <p class="mt-1 text-gray-500">
                     <?php
-                        $sql = "SELECT COUNT(*) FROM `order`";
+                        $sql = "SELECT COUNT(DISTINCT queue_no) FROM `order`";
                         $result = $db->query($sql);
                         $row = $result->fetchArray(SQLITE3_NUM);
                         if ($row[0] == 0) {
@@ -107,7 +107,7 @@
                     <?php
                         date_default_timezone_set('Asia/Bangkok');
                         $fifteenMinutesAgo = date('Y-m-d H:i:s', strtotime('-15 minutes'));
-                        $sql = "SELECT COUNT(*) FROM `order` WHERE `date_time` < '$fifteenMinutesAgo'";
+                        $sql = "SELECT COUNT(DISTINCT queue_no) FROM `order` WHERE `date_time` < '$fifteenMinutesAgo'";
                         $result = $db->query($sql);
                         $row = $result->fetchArray(SQLITE3_NUM);
                         echo "คิวที่ช้ามาก: " . $row[0] . " คิว";
