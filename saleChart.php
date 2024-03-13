@@ -1,16 +1,4 @@
 <?php
-class MyDB extends SQLite3
-{
-    function __construct()
-    {
-        $this->open('fwp.db');
-    }
-}
-
-$db = new MyDB();
-if (!$db) {
-    die($db->lastErrorMsg());
-}
 
 $thaiMonthNames = array(
     '01' => 'มกราคม',

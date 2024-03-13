@@ -1,13 +1,15 @@
-<?php 
+<?php
 require_once '_managerStart.php';  // !! ใส่ทุกหน้าของผู้จัดการ !!
-class MyDB extends SQLite3 {
-    function __construct() {
-    $this->open('fwp.db');
+class MyDB extends SQLite3
+{
+    function __construct()
+    {
+        $this->open('fwp.db');
     }
 }
 
 $db = new MyDB();
-if(!$db) {
+if (!$db) {
     die($db->lastErrorMsg());
 }
 ?>
@@ -36,14 +38,19 @@ if(!$db) {
 
         <div class="main flex h-[100vh] w-[100vw]">
             <div class="left bg-orange-300 p-4 w-1/5">
-                <a class="" href="main_manager.php"><img src="public/fwp-logo-color.png" class="my-0 mx-auto w-auto h-[50px]"></a>
+                <a class="" href="main_manager.php"><img src="public/fwp-logo-color.png"
+                        class="my-0 mx-auto w-auto h-[50px]"></a>
                 <p id="welcome" class="mt-4 font-semibold text-lg"></p>
                 <p>(Manager)</p>
                 <form method="post">
-                    <a href="manage_Accounts.php" class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">จัดการบัญชีผู้ใช้</a>
-                    <a href="history_manager.php" class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">ประวัติการสั่งซื้อ</a>
-                    <a href="menu_manager.php" class="block bg-orange-400 hover:bg-orange-500 text-white text-base rounded-md py-2 px-4 mt-4">จัดการเมนู</a>
-                    <a href="logout.php" id="logout" class="block bg-red-400 hover:bg-red-500 text-white text-base rounded-md py-2 px-4 mt-4">ออกจากระบบ</a>
+                    <a href="manage_Accounts.php"
+                        class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">จัดการบัญชีผู้ใช้</a>
+                    <a href="history_manager.php"
+                        class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">ประวัติการสั่งซื้อ</a>
+                    <a href="menu_manager.php"
+                        class="block bg-orange-400 hover:bg-orange-500 text-white text-base rounded-md py-2 px-4 mt-4">จัดการเมนู</a>
+                    <a href="logout.php" id="logout"
+                        class="block bg-red-400 hover:bg-red-500 text-white text-base rounded-md py-2 px-4 mt-4">ออกจากระบบ</a>
                 </form>
             </div>
             <div class="content bg-orange-100 p-4 flex-1">
@@ -59,20 +66,23 @@ if(!$db) {
                         $currentDate = date('Y-m-d'); // Get current date in 'YYYY-MM-DD' format
                         $query = "SELECT SUM(total) AS total_sale FROM order_history WHERE substr(date_time, 1, 10) = '$currentDate'";
                         $result = $db->query($query);
-                        if (!$result){
+                        if (!$result) {
                             die($db->lastErrorMsg());
                         }
                         $row = $result->fetchArray(SQLITE3_ASSOC);
                         $totalSale = $row['total_sale'];
                         $totalSale = number_format($totalSale, 2);
                         ?>
-                        <h2 class="font-bold text-4xl text-center mt-auto flex items-center justify-center h-full mx-4 pb-4"><?php echo $totalSale; ?> บาท</h2>
-                         <!-- ตรงนี้ ตอนแรกเป็น <canvas> แต่มันไม่ขึ้น T-T --> 
+                        <h2
+                            class="font-bold text-4xl text-center mt-auto flex items-center justify-center h-full mx-4 pb-4">
+                            <?php echo $totalSale; ?> บาท
+                        </h2>
+                        <!-- ตรงนี้ ตอนแรกเป็น <canvas> แต่มันไม่ขึ้น T-T -->
                     </div>
 
                     <div class="sub_right bg-orange-300 rounded-lg flex-1 p-4 shadow-lg">
                         <h2 class="font-medium text-lg">ยอดขายรายเดือน</h2>
-                        <div id="chart" class="p-5 bg-orange-300 mr-10 mb-10"></div>
+                        <div class="mt-3" id="myChart" style="height: 400px; width: 100%;"></div>
                     </div>
                 </div>
             </div>
@@ -116,19 +126,19 @@ if(!$db) {
         require_once "saleChart.php";
         ?>
         window.onload = function () {
-            var chart = new CanvasJS.Chart("chart", {
+            var chart = new CanvasJS.Chart("myChart", {
                 backgroundColor: "#FFEDD5",
                 animationEnabled: true,
                 title: {
                     text: "รายได้ของร้าน FWP",
                     fontFamily: 'Prompt',
                     padding: {
-     top: 10,
-   },
+                        top: 10,
+                    },
                 },
-                toolTip:{
+                toolTip: {
                     fontFamily: 'Prompt',
- },
+                },
                 axisY: {
                     labelFontFamily: 'Prompt',
                     titleFontFamily: 'Prompt',
