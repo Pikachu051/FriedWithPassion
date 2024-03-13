@@ -1,4 +1,5 @@
 <?php
+require_once '_managerStart.php';
 // 1. Connect to Database 
 class MyDB extends SQLite3 {
     function __construct() {
@@ -172,5 +173,9 @@ if (isset($_POST["delemp"])) {
 
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        var fname = "<?php echo $_SESSION['user']; ?>";
+        document.getElementById('welcome').innerHTML = "ผู้จัดการ" + fname;
+    </script>
 </body>
 </html>

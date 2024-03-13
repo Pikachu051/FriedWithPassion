@@ -431,6 +431,10 @@ require_once "_managerStart.php";
     ?>
 </div>
 </div>
+<script>
+        var fname = "<?php echo $_SESSION['user']; ?>";
+        document.getElementById('welcome').innerHTML = "ผู้จัดการ" + fname;
+</script>
 
 <!-- Bootstrap JS -->
 <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->

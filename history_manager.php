@@ -1,3 +1,6 @@
+<?php
+require_once '_managerStart.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,6 +99,8 @@
 </div>
 </body>
 <script>
+  var fname = "<?php echo $_SESSION['user']; ?>";
+  document.getElementById('welcome').innerHTML = "ผู้จัดการ" + fname;
   function menu() {
     var x = document.getElementById("collapse");
     var y = document.getElementById("icon_open");

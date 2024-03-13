@@ -87,7 +87,6 @@ if (!$db) {
                 </div>
             </div>
         </div>
-
     </div>
 
     <script>
