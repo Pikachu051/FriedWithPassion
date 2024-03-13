@@ -21,9 +21,8 @@ if ($ret->numColumns() > 0) {
               <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 menu-no \">" . $row["menu_no"] . "</td>
               <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 type\">" . $row["type"] . "</td>
               <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 quantity\">" . $row["quantity"] . "</td>
-              <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 note\">" . $row["note"] . "</td>
               <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 date_time\">" . $row["date_time"] . "</td>
-              <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 total\">" . $row["total"] . "</td>
+              <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 total\">" . number_format($row["total"], 2) . "</td>
               <td class=\"px-6 py-4 whitespace-nowrap text-sm text-gray-800 reveiw-id\">" . $row["review_id"] . "</td>
               <td class=\"px-6 py-4 whitespace-nowrap text-end text-sm font-medium\">
               </td>

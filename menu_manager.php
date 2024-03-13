@@ -19,42 +19,43 @@ require_once "_managerStart.php";
         }
         .container {
                 /* background-color: #fff; */
-                width: 100%;
+                /* width: 100%; */
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .col-25 {
         float: left;
-        width: 25%;
+        width: 100%;
         margin-top: 6px;
         }
 
         .col-75 {
         float: left;
-        width: 75%;
+        width: 100%;
         margin-top: 6px;
         }
     </style>
     <div class="main flex w-[100vw]">
-        <div class="left bg-orange-300 p-6 w-1/5">
+    <div class="left bg-orange-300 p-6 w-1/5">
                     <a class="" href="main_manager.php"><img src="public/fwp-logo-color.png" class="my-0 mx-auto w-auto h-[50px]"></a>
                     <p id="welcome" class="mt-4 font-semibold text-lg"></p>
                     <p>(Manager)</p>
                     <form method="post">
                         <a href="manage_Accounts.php" class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">จัดการบัญชีผู้ใช้</a>
                         <a href="history_manager.php" class="block bg-orange-400 hover:bg-orange-500 text-white rounded-md text-base py-2 px-4 mt-4">ประวัติการสั่งซื้อ</a>
-                        <a href="menu_manager.php" class="block bg-orange-400 hover:bg-orange-500 text-white text-base rounded-md py-2 px-4 mt-4">จัดการเมนู</a>
+                        <a href="menu_manager.php" class="block bg-orange-100 hover:bg-orange-200 text-black text-base rounded-md py-2 px-4 mt-4">จัดการเมนู</a>
                         <a href="logout.php" id="logout" class="block bg-red-400 hover:bg-red-500 text-white text-base rounded-md py-2 px-4 mt-4">ออกจากระบบ</a>
                     </form>
                 </div>
-    <div class="container">
     
+    <div class="container w-[80%]">
     <div class="flex flex-col">
         <div class="overflow-x-hidden mx-auto my-4">
-            <div class="p-1.5 min-w-full inline-block align-middle">
+            <div class="p-1 px-4 py-2 ml-3.5 min-w-full inline-block align-middle">
             <div class="overflow-hidden">
                 <div class="text-center">
                     <h1 class="font-bold text-[32px] text-center mt-0 sm:text-[38px]">จัดการเมนู</h1>
                 </div>
+                
                 <table class="min-w-full divide-y divide-gray-200 rounded-md">
                 <thead>
                     <tr>
@@ -121,13 +122,14 @@ require_once "_managerStart.php";
         $id = $_GET['invalue'];
         displayRecordDetails($db, $id);
     } else {
-        echo "<form method=\"post\" class=\"mt-3\" enctype=\"multipart/form-data\">";
+        echo "<div class=\"mx-auto\">";
+        echo "<form method=\"post\" class=\"mt-6\" enctype=\"multipart/form-data\">";
         echo "<div class='row'>
                 <div class='col-25'>
                 <label for='menu_no'>รหัสเมนู:</label>
                 </div>
                 <div class='col-75'>
-                <input type='number' class='form-control' id='menu_no' name='menu_no' value=''>
+                <input type='number' class='form-control bg-orange-50 px-4 py-2 text-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300' id='menu_no' name='menu_no' value=''>
                 </div>
             </div>";
         echo "<div class='row'>
@@ -135,7 +137,7 @@ require_once "_managerStart.php";
                 <label for='menu_name'>ชื่อเมนู:</label>
                 </div>
                 <div class='col-75'>
-                <input type='text' class='form-control' id='menu_name' name='menu_name' value=''>
+                <input type='text' class='form-control bg-orange-50 p-1 px-4 py-2 ml-3 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300' id='menu_name' name='menu_name' value=''>
                 </div>
             </div>";
 
@@ -145,7 +147,7 @@ require_once "_managerStart.php";
             </div>
             <div class='col-75'>
             <img src='' alt='Menu Image' style='width:100px;height:auto;'>
-            <input type='file' name='menu_image' id='menu_image'>
+            <input type='file' name='menu_image'  id='menu_image'>
             </div>
         </div>";
         
@@ -154,7 +156,7 @@ require_once "_managerStart.php";
                 <label for='description'>รายละเอียด:</label>
                 </div>
                 <div class='col-75'>
-                <input type='text' class='form-control' id='description' name='description' value=''>
+                <input type='text' class='form-control bg-orange-50 p-1 px-4 py-2 ml-3 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300' id='description' name='description' value=''>
                 </div>
             </div>";
         echo "<div class='row'>
@@ -162,27 +164,26 @@ require_once "_managerStart.php";
                 <label for='price'>ราคา:</label>
                 </div>
                 <div class='col-75'>
-                <input type='text' class='form-control' id='price' name='price' value=''>
+                <input type='text' class='form-control bg-orange-50 p-1 px-4 py-2 ml-3 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300' id='price' name='price' value=''>
                 </div>
             </div>";
         echo "<div class='row'>
             <div class='col-25'>
             <label for='stock'>สถานะ:</label>
             </div>
-            <div class='col-75'>";
-        echo "<input type='radio' id='available' name='stock' value='มีอยู่' checked>";
+            <div class='col-75 mb-4'>";
+        echo "<input type='radio' class='mr-2' id='available' name='stock' value='มีอยู่' checked>";
         echo "<label for='available'>มีอยู่</label><br>";
-        echo "<input type='radio' id='sold_out' name='stock' value='หมด'>";
+        echo "<input type='radio' class='mr-2' id='sold_out' name='stock' value='หมด'>";
         echo "<label for='sold_out'>หมด</label></div>";
         echo "</div>";
-        echo "<button type='submit' class='p-2 bg-green-300 rounded-md hover:bg-green-200 px-4' name='add'>Add</button> ";
-        echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button>  ";
-        echo "<button type='submit' class='p-2 bg-red-300 rounded-md hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
-      echo "<button type='submit' class='p-2 bg-gray-800 rounded-md hover:bg-gray-800 px-4' name='clear'>Clear</button> ";
+        echo "<button type='submit' class='p-2 bg-green-300 rounded-md mx-2 hover:bg-green-200 px-4' name='add'>Add</button> ";
+        echo "<button type='submit' class='p-2 bg-orange-300 rounded-md mx-2 hover:bg-orange-200 px-4' name='update'>Update</button>  ";
+        echo "<button type='submit' class='p-2 bg-red-300 rounded-md mx-2 hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
+        echo "<button type='submit' class='mb-6 p-2 bg-gray-300 rounded-md mx-2 hover:bg-gray-200 px-4' name='clear'>Clear</button> ";
 
-        echo "</form><br>";
+        echo "</form><br></div>";
     }
-
     // Function to display record details for editing
     function displayRecordDetails($db, $id) {
         $sql = "SELECT * FROM menu WHERE menu_no= '$id' ";
@@ -190,62 +191,62 @@ require_once "_managerStart.php";
 
         if ($result->numColumns() > 0) {
             $row = $result->fetchArray(SQLITE3_ASSOC);
-            echo "<form method=\"post\" class=\"mt-3\" enctype=\"multipart/form-data\">";
+            echo "<form method=\"post\" class=\"mt-6\" enctype=\"multipart/form-data\">";
         echo "<div class='row'>
                 <div class='col-25'>
-                <label for='menu_no'>รหัสเมนู:</label>
+                <label for='menu_no' class='font-semibold'>รหัสเมนู:</label>
                 </div>
                 <div class='col-75'>
-                <input type='number' class='form-control' id='menu_no' name='menu_no' value='". $row["menu_no"]."'>
+                <input type='number' class='form-control bg-orange-50 p-1 px-4 py-2 ml-3 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300' id='menu_no' name='menu_no' value='". $row["menu_no"]."'>
                 </div>
             </div>";
         echo "<div class='row'>
                 <div class='col-25'>
-                <label for='menu_name'>ชื่อเมนู:</label>
+                <label for='menu_name' class='font-semibold'>ชื่อเมนู:</label>
                 </div>
                 <div class='col-75'>
-                <input type='text' class='form-control' id='menu_name' name='menu_name' value='". $row["menu_name"] ."'>
+                <input type='text' class='form-control bg-orange-50 p-1 px-4 py-2 ml-3 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300' id='menu_name' name='menu_name' value='". $row["menu_name"] ."'>
                 </div>
             </div>";
             echo "<div class='row'>
                 <div class='col-25'>
-                <label for='menu_name'>รูปภาพ:</label>
+                <label for='menu_name' class='font-semibold'>รูปภาพ:</label>
                 </div>
                 <div class='col-75'>
                 <img src='" . $row["img_path"] . "' alt='Menu Image' style='width:100px;height:auto;'>
-                <input type='file' name='menu_image' id='menu_image'>
+                <input type='file' name='menu_image'  id='menu_image'>
                 </div>
             </div>";
         echo "<div class='row'>
                 <div class='col-25'>
-                <label for='description'>รายละเอียด:</label>
+                <label for='description' class='font-semibold'>รายละเอียด:</label>
                 </div>
                 <div class='col-75'>
-                <input type='text' class='form-control' id='description' name='description' value='". $row["description"] ."'>
+                <input type='text' class='form-control bg-orange-50 p-1 px-4 py-2 ml-3 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300' id='description' name='description' value='". $row["description"] ."'>
                 </div>
             </div>";
         echo "<div class='row'>
                 <div class='col-25'>
-                <label for='price'>ราคา:</label>
+                <label for='price' class='font-semibold'>ราคา:</label>
                 </div>
                 <div class='col-75'>
-                <input type='text' class='form-control' id='price' name='price' value='". $row["price"] ."'>
+                <input type='text' class='form-control bg-orange-50 p-1 px-4 py-2 ml-3 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300' id='price' name='price' value='". $row["price"] ."'>
                 </div>
             </div>";
         echo "<div class='row'>
             <div class='col-25'>
-            <label for='stock'>สถานะ:</label>
+            <label for='stock' class='font-semibold'>สถานะ:</label>
             </div>
-            <div class='col-75'>";
-        echo "<input type='radio' id='available' name='stock' value='มีอยู่' checked>";
+            <div class='col-75 mb-4'>";
+        echo "<input type='radio' class='mr-2' id='available' name='stock' value='มีอยู่' checked>";
         echo "<label for='available'>มีอยู่</label><br>";
-        echo "<input type='radio' id='sold_out' name='stock' value='หมด'>";
+        echo "<input type='radio' class='mr-2' id='sold_out' name='stock' value='หมด'>";
         echo "<label for='sold_out'>หมด</label></div>";
         echo "</div>";
-        echo "<button type='submit' class='p-2 bg-green-300 rounded-md hover:bg-green-200 px-4' name='add'>Add</button> ";
-        echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button>";
-        echo "<button type='submit' class='p-2 bg-red-300 rounded-md hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
-      echo "<button type='submit' class='p-2 bg-gray-800 rounded-md hover:bg-gray-800 px-4' name='clear'>Clear</button> ";
+        echo "<button type='submit' class='p-2 bg-green-300 rounded-md mx-2 hover:bg-green-200 px-4' name='add'>Add</button> ";
+        echo "<button type='submit' class='p-2 bg-orange-300 rounded-md mx-2 hover:bg-orange-200 px-4' name='update'>Update</button>";
+        echo "<button type='submit' class='p-2 bg-red-300 rounded-md mx-2 hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
+      echo "<button type='submit' class='mb-6 p-2 bg-gray-300 rounded-md mx-2 hover:bg-gray-200 px-4' name='clear'>Clear</button> ";
 
         echo "</form><br>";
 
@@ -255,50 +256,50 @@ require_once "_managerStart.php";
             echo "<form method=\"post\" class=\"mt-3\" enctype=\"multipart/form-data\">";
         echo "<div class='row'>
                 <div class='col-25'>
-                <label for='menu_no'>รหัสเมนู:</label>
+                <label for='menu_no' class='font-semibold'>รหัสเมนู:</label>
                 </div>
                 <div class='col-75'>
-                <input type='number' class='form-control' id='menu_no' name='menu_no' value=''>
+                <input type='number' class='form-control bg-orange-50 p-1 px-4 py-2 ml-3 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300' id='menu_no' name='menu_no' value=''>
                 </div>
             </div>";
         echo "<div class='row'>
                 <div class='col-25'>
-                <label for='menu_name'>ชื่อเมนู:</label>
+                <label for='menu_name' class='font-semibold'>ชื่อเมนู:</label>
                 </div>
                 <div class='col-75'>
-                <input type='text' class='form-control' id='menu_name' name='menu_name' value=''>
+                <input type='text' class='form-control bg-orange-50 p-1 px-4 py-2 ml-3 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300' id='menu_name' name='menu_name' value=''>
                 </div>
             </div>";
         echo "<div class='row'>
                 <div class='col-25'>
-                <label for='description'>รายละเอียด:</label>
+                <label for='description' class='font-semibold'>รายละเอียด:</label>
                 </div>
                 <div class='col-75'>
-                <input type='text' class='form-control' id='description' name='description' value=''>
+                <input type='text' class='form-control bg-orange-50 p-1 px-4 py-2 ml-3 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300' id='description' name='description' value=''>
                 </div>
             </div>";
         echo "<div class='row'>
                 <div class='col-25'>
-                <label for='price'>ราคา:</label>
+                <label for='price' class='font-semibold'>ราคา:</label>
                 </div>
                 <div class='col-75'>
-                <input type='text' class='form-control' id='price' name='price' value=''>
+                <input type='text' class='form-control bg-orange-50 p-1 px-4 py-2 ml-3 rounded-md text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-300' id='price' name='price' value=''>
                 </div>
             </div>";
         echo "<div class='row'>
             <div class='col-25'>
-            <label for='stock'>สถานะ:</label>
+            <label for='stock' class='font-semibold'>สถานะ:</label>
             </div>
-            <div class='col-75'>";
-        echo "<input type='radio' id='available' name='stock' value='มีอยู่' checked>";
+            <div class='col-75 mb-4'>";
+        echo "<input type='radio' class='mr-2' id='available' name='stock' value='มีอยู่' checked>";
         echo "<label for='available'>มีอยู่</label><br>";
-        echo "<input type='radio' id='sold_out' name='stock' value='หมด'>";
+        echo "<input type='radio' class='mr-2' id='sold_out' name='stock' value='หมด'>";
         echo "<label for='sold_out'>หมด</label></div>";
         echo "</div>";
-        echo "<button type='submit' class='p-2 bg-green-300 rounded-md hover:bg-green-200 px-4' name='add'>Add</button> ";
-        echo "<button type='submit' class='p-2 bg-orange-300 rounded-md hover:bg-orange-200 px-4' name='update'>Update</button>";
-        echo "<button type='submit' class='p-2 bg-red-300 rounded-md hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
-      echo "<button type='submit' class='p-2 bg-gray-800 rounded-md hover:bg-gray-800 px-4' name='clear'>Clear</button> ";
+        echo "<button type='submit' class='p-2 bg-green-300 rounded-md mx-2 hover:bg-green-200 px-4' name='add'>Add</button> ";
+        echo "<button type='submit' class='p-2 bg-orange-300 rounded-md mx-2 hover:bg-orange-200 px-4' name='update'>Update</button>";
+        echo "<button type='submit' class='p-2 bg-red-300 rounded-md mx-2 hover:bg-red-200 px-4 pl-6' name='delete'>Delete</button>";
+      echo "<button type='submit' class='mb-6 p-2 bg-gray-300 rounded-md mx-2 hover:bg-gray-200 px-4' name='clear'>Clear</button> ";
         
         echo "</form><br>";
             
@@ -429,6 +430,7 @@ require_once "_managerStart.php";
     // Close connection
     $db->close();
     ?>
+    
 </div>
 </div>
 
