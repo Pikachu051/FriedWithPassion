@@ -12,8 +12,6 @@
     }
 
     date_default_timezone_set('Asia/Bangkok');
-
-    // Check if there are any active queues remaining
     $sql_check_queue = "SELECT * FROM `order` WHERE queue_no = " . $_SESSION['queue_no'];
     $ret_check_queue = $db->query($sql_check_queue);
     if(!$ret_check_queue || $ret_check_queue->fetchArray(SQLITE3_ASSOC) === false) {
