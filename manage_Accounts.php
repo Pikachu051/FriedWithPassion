@@ -14,8 +14,6 @@ if(!$db) {
 }
 
 if (isset($_POST["addemp"])) {
-    // Handle adding employee
-    // Assuming you get these values from form inputs
     $e_id = $_POST['idbox'];
     $firstname = $_POST['fnbox'];
     $lastname = $_POST['lnbox'];
@@ -23,17 +21,16 @@ if (isset($_POST["addemp"])) {
     $email = $_POST['emailbox'];
     $phone = $_POST['phonebox'];
     $position = $_POST['posbox'];
+    $hash = password_hash("fwp1234", PASSWORD_DEFAULT);
 
     $addEmpSql = "INSERT INTO employees (emp_id, first_name, last_name, sex, email, phone, position)
                VALUES ($e_id, '$firstname', '$lastname', '$sex', '$email', '$phone', '$position')";
-    $addAccSql = "INSERT INTO accounts (username, pass, emp_id) VALUES ('fwp' || $e_id, 'fwp1234', $e_id)";
     $db->exec($addEmpSql);
+    $addAccSql = "INSERT INTO accounts (username, pass, emp_id) VALUES ('fwp' || $e_id, '$hash', $e_id)";
     $db->exec($addAccSql);
 }
 
 if (isset($_POST["editemp"])) {
-    // Handle editing employee
-    // Assuming you get these values from form inputs
     $e_id = $_POST['idbox'];
     $firstname = $_POST['fnbox'];
     $lastname = $_POST['lnbox'];
